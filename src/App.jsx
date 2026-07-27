@@ -157,7 +157,7 @@ const handleDownloadPDF = (noteTitle, elementId) => {
     };
 
     if (editMode) {
-      axios.put(`https://javanoteshubb-backend.onrender.com/notes/${currentNoteId}`, noteData)
+      axios.put(`https://javanoteshubb-backend.onrender.com/api/notes/${currentNoteId}`, noteData)
         .then(() => {
           alert("Note updated successfully! ✨");
           setShowModal(false);
@@ -165,7 +165,7 @@ const handleDownloadPDF = (noteTitle, elementId) => {
         })
         .catch(() => alert("Error updating note"));
     } else {
-      axios.post("https://javanoteshubb-backend.onrender.com/notes", noteData)
+      axios.post("https://javanoteshubb-backend.onrender.com/api/notes", noteData)
         .then(() => {
           alert("Note added successfully! 🎉");
           setShowModal(false);
@@ -182,7 +182,7 @@ const handleDownloadPDF = (noteTitle, elementId) => {
   // Delete Note Handler
   const handleDeleteNote = (id) => {
     if (window.confirm("Are you sure you want to delete this note?")) {
-      axios.delete(`https://javanoteshubb-backend.onrender.com/notes/${id}`)
+      axios.delete(`https://javanoteshubb-backend.onrender.com/api/notes/${id}`)
         .then(() => {
           fetchNotes();
         })
