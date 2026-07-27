@@ -281,9 +281,10 @@ const handleDownloadPDF = (noteTitle, elementId) => {
           />
 
           {/* 👑 SHOW "ADD NOTE" BUTTON ONLY IF USER IS ADMIN */}
-          {currentUser.role === 'ADMIN' && (
+          {/* SHOW "ADD NOTE" BUTTON FOR ADMIN EMAIL */}
+          {(currentUser?.role === 'ADMIN' || currentUser?.email === 'pandeymurari571@gmail.com') && (
             <button className="add-btn" onClick={handleOpenAddModal}>
-              ➕ Add Note
+              + Add Note
             </button>
           )}
 
@@ -291,7 +292,7 @@ const handleDownloadPDF = (noteTitle, elementId) => {
           {/* User Profile Badge & Logout Button */}
           <div className="user-badge">
             <span className="user-name-glow">
-              {currentUser.role === 'ADMIN' ? '👑' : '🎓'} {currentUser.name}
+              {currentUser?.role === 'ADMIN' || currentUser?.email === 'pandeymurari571@gmail.com' ? '👑 ' : '🎓 '} {currentUser.name}
             </span>
             <button className="logout-btn" onClick={handleLogout}>Logout</button>
           </div>
