@@ -351,8 +351,7 @@ const handleDownloadPDF = (noteTitle, elementId) => {
                         </div>
                       )}
 
-                  </div>
-                </div>
+
 
                                 {/* Note Content */}
                                  <div
