@@ -343,16 +343,14 @@ const handleDownloadPDF = (noteTitle, elementId) => {
                     </button>
 
                     {/* Edit/Delete Buttons for Admin */}
-                    {currentUser.role === 'ADMIN' && (
-                      <>
-                        <button className="edit-btn" onClick={() => handleOpenEditModal(note)}>
-                          ✏️ Edit
-                        </button>
-                        <button className="delete-btn" onClick={() => handleDeleteNote(note.id)}>
-                          🗑️ Delete
-                        </button>
-                      </>
-                    )}
+
+                      {(currentUser?.role === 'ADMIN' || currentUser?.email === 'pandeymurari571@gmail.com') && (
+                        <div style={{ display: 'flex', gap: '10px' }}>
+                          <button className="edit-btn" onClick={() => handleOpenEditModal(note)}>✏️ Edit</button>
+                          <button className="delete-btn" onClick={() => handleDeleteNote(note.id)}>🗑️ Delete</button>
+                        </div>
+                      )}
+
                   </div>
                 </div>
 
