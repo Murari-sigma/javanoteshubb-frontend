@@ -110,9 +110,10 @@ const handleDownloadPDF = (noteTitle, elementId) => {
         password: authPassword
       })
       .then((res) => {
-        setCurrentUser(res.data);
-        localStorage.setItem("java_notes_user", JSON.stringify(res.data));
-        alert(`Welcome back, ${res.data.name}! 👋`);
+        const user = res.data;
+        localStorage.setItem("java_notes_user", JSON.stringify(user));
+        setCurrentUser(user);
+        setShowAuthModal(false);
       })
       .catch((err) => {
         alert(err.response?.data || "Invalid Email or Password!");
@@ -281,18 +282,20 @@ const handleDownloadPDF = (noteTitle, elementId) => {
           />
 
           {/* 👑 SHOW "ADD NOTE" BUTTON ONLY IF USER IS ADMIN */}
-          {/* SHOW "ADD NOTE" BUTTON FOR ADMIN EMAIL */}
-          {(currentUser?.role === 'ADMIN' || currentUser?.email === 'pandeymurari571@gmail.com') && (
-            <button className="add-btn" onClick={handleOpenAddModal}>
-              + Add Note
-            </button>
-          )}
+
+        {(currentUser?.role === 'ADMIN' || currentUser?.email === 'pandeymurari571@gmail.com') && (
+          <button className="add-btn" onClick={handleOpenAddModal}>
+            + Add Note
+          </button>
+        )}
 
 
           {/* User Profile Badge & Logout Button */}
           <div className="user-badge">
             <span className="user-name-glow">
-              {currentUser?.role === 'ADMIN' || currentUser?.email === 'pandeymurari571@gmail.com' ? '👑 ' : '🎓 '} {currentUser.name}
+              {(currentUser?.role === 'ADMIN' || currentUser?.email === 'pandeymurari571@gmail.com') ? '👑 ' : '🎓 '}
+              {currentUser?.name}
+
             </span>
             <button className="logout-btn" onClick={handleLogout}>Logout</button>
           </div>
@@ -407,7 +410,7 @@ const handleDownloadPDF = (noteTitle, elementId) => {
                          </main>
 
                          {/* Add / Edit Modal */}
-                         {showModal && currentUser.role === "ADMIN" && (
+                         {showModal && (
                            <div className="modal-overlay">
                              <div className="modal-box">
                                <h2>{editMode ? "✏️ Edit Note" : "➕ Add New Note"}</h2>
