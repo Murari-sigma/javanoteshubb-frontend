@@ -50,7 +50,7 @@ function App() {
   // Fetch Notes Function
   const fetchNotes = () => {
     setLoading(true);
-    axios.get(`http://localhost:8080/notes/category/${selectedTopic}`)
+    axios.get(`https://javanoteshubb-backend.onrender.com/notes/category/${selectedTopic}`)
       .then((response) => {
         setNotes(response.data);
         setLoading(false);
@@ -91,7 +91,7 @@ const handleDownloadPDF = (noteTitle, elementId) => {
   const handleAuthSubmit = (e) => {
     e.preventDefault();
     if (isSignup) {
-      axios.post("http://localhost:8080/auth/signup", {
+      axios.post("https://javanoteshubb-backend.onrender.com/auth/signup", {
         name: authName,
         email: authEmail,
         password: authPassword
@@ -105,7 +105,7 @@ const handleDownloadPDF = (noteTitle, elementId) => {
         alert(err.response?.data || "Signup Error!");
       });
     } else {
-      axios.post("http://localhost:8080/auth/login", {
+      axios.post("https://javanoteshubb-backend.onrender.com/auth/login", {
         email: authEmail,
         password: authPassword
       })
@@ -156,7 +156,7 @@ const handleDownloadPDF = (noteTitle, elementId) => {
     };
 
     if (editMode) {
-      axios.put(`http://localhost:8080/notes/${currentNoteId}`, noteData)
+      axios.put(`https://javanoteshubb-backend.onrender.com/notes/${currentNoteId}`, noteData)
         .then(() => {
           alert("Note updated successfully! ✨");
           setShowModal(false);
@@ -164,7 +164,7 @@ const handleDownloadPDF = (noteTitle, elementId) => {
         })
         .catch(() => alert("Error updating note"));
     } else {
-      axios.post("http://localhost:8080/notes", noteData)
+      axios.post("https://javanoteshubb-backend.onrender.com/notes", noteData)
         .then(() => {
           alert("Note added successfully! 🎉");
           setShowModal(false);
@@ -181,7 +181,7 @@ const handleDownloadPDF = (noteTitle, elementId) => {
   // Delete Note Handler
   const handleDeleteNote = (id) => {
     if (window.confirm("Are you sure you want to delete this note?")) {
-      axios.delete(`http://localhost:8080/notes/${id}`)
+      axios.delete(`https://javanoteshubb-backend.onrender.com/notes/${id}`)
         .then(() => {
           fetchNotes();
         })
