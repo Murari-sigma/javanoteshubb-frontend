@@ -408,7 +408,7 @@ const handleDownloadPDF = (noteTitle, elementId) => {
                              <p className="no-notes">
                                No notes available for this topic.
                              </p>
-                           )}
+                           }
                          </main>
 
                          {/* Add / Edit Modal */}
