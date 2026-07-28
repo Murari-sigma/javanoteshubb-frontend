@@ -89,44 +89,44 @@ const handleDownloadPDF = (noteTitle, elementId) => {
 
   // Auth Submit (Login / Signup)
   const handleAuthSubmit = (e) => {
-    e.preventDefault();
-    if (isSignup) {
-      axios.post("https://javanoteshubb-backend.onrender.com/auth/signup", {
-        name: authName,
-        email: authEmail,
-        password: authPassword
-      })
-      .then(() => {
-        alert("Registration Successful! Please login with your details. 🎉");
-        setIsSignup(false);
-        setAuthPassword("");
-      })
-      .catch((err) => {
-        alert(err.response?.data || "Signup Error!");
-      });
-    } else {
-      // Login Call
-      axios.post("https://javanoteshubb-backend.onrender.com/auth/login", {
-        email: authEmail,
-        password: authPassword
-      })
-      .then((res) => {
-        // Agar response object hai to wo use karo, nahi to email ke sath object bana lo
-        const userData = (typeof res.data === 'object' && res.data !== null)
-          ? res.data
-          : { email: authEmail, name: authEmail.split('@')[0] };
+      e.preventDefault();
 
-        localStorage.setItem("java_notes_user", JSON.stringify(userData));
-        setCurrentUser(userData);
+      if (isSignup) {
+        axios.post("https://javanoteshubb-backend.onrender.com/auth/signup", {
+          name: authName,
+          email: authEmail,
+          password: authPassword
+        })
+        .then((res) => {
+          alert("Registration Successful! Please Login.");
+          setIsSignup(false); // Signup ke baad Login form par bhej dega
+        })
+        .catch((err) => {
+          console.error("Signup Error:", err);
+          alert(err.response?.data?.message || err.response?.data || "Signup Failed!");
+        });
+      } else {
+        axios.post("https://javanoteshubb-backend.onrender.com/auth/login", {
+          email: authEmail,
+          password: authPassword
+        })
+        .then((res) => {
+          // Response data object check
+          const userData = (typeof res.data === 'object' && res.data !== null)
+            ? res.data
+            : { email: authEmail, name: authEmail.split('@')[0] };
 
-        alert("Login Successful! 🎉");
-      })
-      .catch((err) => {
-        console.error("Login Fail:", err);
-        alert(err.response?.data || "Invalid Email or Password!");
-      });
-}
-};
+          localStorage.setItem("java_notes_user", JSON.stringify(userData));
+          setCurrentUser(userData);
+          setShowAuthModal(false); // Modal close karega
+          alert("Login Successful! 🎉");
+        })
+        .catch((err) => {
+          console.error("Login Error:", err);
+          alert(err.response?.data?.message || err.response?.data || "Invalid Email or Password!");
+        });
+      }
+    };
   // Logout Handler
   const handleLogout = () => {
     localStorage.removeItem("java_notes_user");
@@ -163,7 +163,7 @@ const handleDownloadPDF = (noteTitle, elementId) => {
     };
 
     if (editMode) {
-      axios.put(`https://javanoteshubb-backend.onrender.com/api/notes/${currentNoteId}`, noteData)
+      axios.put(`https://javanoteshubb-backend.onrender.com/auth/notes/${currentNoteId}`, noteData)
         .then(() => {
           alert("Note updated successfully! ✨");
           setShowModal(false);
@@ -171,7 +171,7 @@ const handleDownloadPDF = (noteTitle, elementId) => {
         })
         .catch(() => alert("Error updating note"));
     } else {
-      axios.post("https://javanoteshubb-backend.onrender.com/api/notes", noteData)
+      axios.post("https://javanoteshubb-backend.onrender.com/auth/notes", noteData)
         .then(() => {
           alert("Note added successfully! 🎉");
           setShowModal(false);
@@ -297,17 +297,28 @@ const handleDownloadPDF = (noteTitle, elementId) => {
 
 
           {/* User Profile Badge & Logout Button */}
-          <div className="user-badge">
-            <span className="user-name-glow">
-              {(currentUser?.role === 'ADMIN' || currentUser?.email === 'pandeymurari571@gmail.com') ? '👑 ' : '🎓 '}
-              {currentUser?.name}
 
-            </span>
-            <button className="logout-btn" onClick={handleLogout}>Logout</button>
-          </div>
-        </div>
-      </nav>
-
+                    {currentUser ? (
+                      <div className="user-badge">
+                        <span className="user-name-glow">
+                          {(currentUser?.role === 'ADMIN' || currentUser?.email === 'pandeymurari571@gmail.com') ? '👑 ' : '🎓 '}
+                          {currentUser?.name || currentUser?.email}
+                        </span>
+                        <button className="logout-btn" onClick={handleLogout}>Logout</button>
+                      </div>
+                    ) : (
+                      /* Jab login nahi hai tab ye wala login options dikhega */
+                      <div className="auth-trigger-group">
+                        <button className="login-btn" onClick={() => setIsSignup(false)}>
+                          Login
+                        </button>
+                        <button className="signup-btn" onClick={() => setIsSignup(true)}>
+                          Signup
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </nav>
       {/* Main Layout */}
       <div className="main-layout">
         {/* Left Sidebar */}
