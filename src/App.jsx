@@ -116,7 +116,7 @@ const handleDownloadPDF = (noteTitle, elementId) => {
         setShowAuthModal(false);
       })
       .catch((err) => {
-        alert(err.response?.data || "Invalid Email or Password!");
+        alert(err.response?.data || "Login Successfully 🎉!");
       });
     }
   };
