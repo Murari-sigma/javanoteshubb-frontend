@@ -4,8 +4,9 @@ import html2pdf from 'html2pdf.js';
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import './App.css';
 
-const TOPICS = [
+const topicsList = [
   "Core Java", "Advanced Java", "JDBC", "Servlet", "JSP",
   "Maven", "Hibernate", "JPA", "Spring", "Spring Boot",
   "Spring Security", "REST API", "Microservices", "MySQL",
@@ -16,7 +17,6 @@ function App() {
   // Auth States
   const [currentUser, setCurrentUser] = useState(null);
   const [isSignup, setIsSignup] = useState(false);
-  const [showAuthModal, setShowAuthModal] = useState(false);
 
   // Auth Form Input States
   const [authName, setAuthName] = useState("");
@@ -46,24 +46,48 @@ function App() {
     }
   }, []);
 
+
   // Fetch Notes Function
-  const fetchNotes = async (topic) => {
+  const fetchNotes = () => {
     setLoading(true);
-    try {
-      const res = await axios.get(`https://javanoteshubb-backend.onrender.com/notes/category/${encodeURIComponent(topic)}`);
-      setNotes(res.data);
-    } catch (err) {
-      console.error("Error fetching notes:", err);
-    } finally {
-      setLoading(false);
-    }
+    axios.get(`https://javanoteshubb-backend.onrender.com/notes/category/${selectedTopic}`)
+      .then((response) => {
+        setNotes(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching notes:", error);
+        setNotes([]);
+        setLoading(false);
+      });
   };
 
   useEffect(() => {
-    fetchNotes(selectedTopic);
-  }, [selectedTopic]);
+    if (currentUser) {
+      fetchNotes();
+    }
+  }, [selectedTopic, currentUser]);
 
-  // Auth Submit Handler
+
+const handleDownloadPDF = (noteTitle, elementId) => {
+  const element = document.getElementById(elementId);
+  if (!element) {
+    alert("Note content not found!");
+    return;
+  }
+
+  const opt = {
+    margin: [0.4, 0.4, 0.4, 0.4],
+    filename: `${noteTitle.replace(/[^a-zA-Z0-9]/g, '_')}_Notes.pdf`,
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 2 },
+    jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+  };
+
+  html2pdf().set(opt).from(element).save();
+};
+
+  // Auth Submit (Login / Signup)
   const handleAuthSubmit = (e) => {
     e.preventDefault();
     if (isSignup) {
@@ -73,144 +97,226 @@ function App() {
         password: authPassword
       })
       .then(() => {
-        alert("Registration Successful! Please Login.");
+        alert("Registration Successful! Please login with your details. 🎉");
         setIsSignup(false);
+        setAuthPassword("");
       })
-      .catch(err => {
-        alert(err.response?.data || "Signup Failed!");
+      .catch((err) => {
+        alert(err.response?.data || "Signup Error!");
       });
     } else {
+      // Login Call
       axios.post("https://javanoteshubb-backend.onrender.com/auth/login", {
         email: authEmail,
         password: authPassword
       })
       .then((res) => {
+        // Agar response object hai to wo use karo, nahi to email ke sath object bana lo
         const userData = (typeof res.data === 'object' && res.data !== null)
           ? res.data
           : { email: authEmail, name: authEmail.split('@')[0] };
 
         localStorage.setItem("java_notes_user", JSON.stringify(userData));
         setCurrentUser(userData);
-        setShowAuthModal(false);
+
         alert("Login Successful! 🎉");
       })
       .catch((err) => {
         console.error("Login Fail:", err);
         alert(err.response?.data || "Invalid Email or Password!");
       });
-    }
-  };
-
+}
+};
+  // Logout Handler
   const handleLogout = () => {
     localStorage.removeItem("java_notes_user");
     setCurrentUser(null);
   };
 
+  // Open Form for Adding New Note
   const handleOpenAddModal = () => {
     setEditMode(false);
+    setCurrentNoteId(null);
     setNewTitle("");
     setNewCategory(selectedTopic);
     setNewContent("");
     setShowModal(true);
   };
 
+  // Open Form for Editing Existing Note
   const handleOpenEditModal = (note) => {
     setEditMode(true);
     setCurrentNoteId(note.id);
     setNewTitle(note.title);
-    setNewCategory(note.category || selectedTopic);
+    setNewCategory(note.category);
     setNewContent(note.content);
     setShowModal(true);
   };
 
-  const handleSaveNote = async (e) => {
+  // Save / Update Note Handler
+  const handleSaveNote = (e) => {
     e.preventDefault();
-    const noteData = { title: newTitle, category: newCategory, content: newContent };
-    try {
-      if (editMode) {
-        await axios.put(`https://javanoteshubb-backend.onrender.com/notes/${currentNoteId}`, noteData);
-      } else {
-        await axios.post("https://javanoteshubb-backend.onrender.com/notes", noteData);
-      }
-      setShowModal(false);
-      fetchNotes(selectedTopic);
-    } catch (err) {
-      console.error("Error saving note:", err);
-      alert("Failed to save note!");
-    }
-  };
-
-  const handleDeleteNote = async (id) => {
-    if (window.confirm("Are you sure you want to delete this note?")) {
-      try {
-        await axios.delete(`https://javanoteshubb-backend.onrender.com/notes/${id}`);
-        fetchNotes(selectedTopic);
-      } catch (err) {
-        console.error("Error deleting note:", err);
-        alert("Failed to delete note!");
-      }
-    }
-  };
-
-  const handleDownloadPDF = (title, elementId) => {
-    const element = document.getElementById(elementId);
-    if (!element) return;
-    const opt = {
-      margin: 10,
-      filename: `${title.replace(/\s+/g, '_')}.pdf`,
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    const noteData = {
+      title: newTitle,
+      category: newCategory,
+      content: newContent
     };
-    if (window.html2pdf) {
-      window.html2pdf().set(opt).from(element).save();
+
+    if (editMode) {
+      axios.put(`https://javanoteshubb-backend.onrender.com/api/notes/${currentNoteId}`, noteData)
+        .then(() => {
+          alert("Note updated successfully! ✨");
+          setShowModal(false);
+          fetchNotes();
+        })
+        .catch(() => alert("Error updating note"));
     } else {
-      alert("PDF library is loading or not available. Please print using Ctrl+P!");
-      window.print();
+      axios.post("https://javanoteshubb-backend.onrender.com/api/notes", noteData)
+        .then(() => {
+          alert("Note added successfully! 🎉");
+          setShowModal(false);
+          if (newCategory === selectedTopic) {
+            fetchNotes();
+          } else {
+            setSelectedTopic(newCategory);
+          }
+        })
+        .catch(() => alert("Error adding note"));
     }
   };
 
-  return (
-    <div className="app-container">
-      {/* Header */}
-      <header className="navbar">
-        <div className="nav-brand">
-          <h2>☕ JavaNotesHub</h2>
+  // Delete Note Handler
+  const handleDeleteNote = (id) => {
+    if (window.confirm("Are you sure you want to delete this note?")) {
+      axios.delete(`https://javanoteshubb-backend.onrender.com/api/notes/${id}`)
+        .then(() => {
+          fetchNotes();
+        })
+        .catch(() => alert("Error deleting note"));
+    }
+  };
+
+  const filteredTopics = topicsList.filter(topic =>
+    topic.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  // 🔒 IF NOT LOGGED IN -> SHOW LOGIN / SIGNUP SCREEN
+  if (!currentUser) {
+    return (
+      <div className="auth-container">
+        <div className="auth-card">
+          <div className="logo-container" style={{ justifyContent: 'center', marginBottom: '1.5rem' }}>
+            <img
+              src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg"
+              alt="Java Logo"
+              width="40"
+            />
+            <h2>Java Developer Notes</h2>
+          </div>
+          <h3>{isSignup ? "Create Student Account" : "Welcome Back! Please Login"}</h3>
+
+          <form onSubmit={handleAuthSubmit}>
+            {isSignup && (
+              <div className="form-group">
+                <label>Full Name:</label>
+                <input
+                  type="text"
+                  required
+                  placeholder="e.g. Rahul Sharma"
+                  value={authName}
+                  onChange={(e) => setAuthName(e.target.value)}
+                />
+              </div>
+            )}
+
+            <div className="form-group">
+              <label>Email Address:</label>
+              <input
+                type="email"
+                required
+                placeholder="name@example.com"
+                value={authEmail}
+                onChange={(e) => setAuthEmail(e.target.value)}
+              />
+            </div>
+
+            <div className="form-group">
+              <label>Password:</label>
+              <input
+                type="password"
+                required
+                placeholder="••••••••"
+                value={authPassword}
+                onChange={(e) => setAuthPassword(e.target.value)}
+              />
+            </div>
+
+            <button type="submit" className="auth-btn">
+              {isSignup ? "Sign Up" : "Login"}
+            </button>
+          </form>
+
+          <p className="toggle-auth" onClick={() => setIsSignup(!isSignup)}>
+            {isSignup ? "Already have an account? Login here" : "Don't have an account? Sign Up here"}
+          </p>
         </div>
-        <div className="nav-search">
+      </div>
+    );
+  }
+
+  // 🔓 IF LOGGED IN -> MAIN APPLICATION VIEW
+  return (
+    <div>
+      {/* Navbar */}
+      <nav className="navbar">
+        <div className="logo-container">
+          <img
+            src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg"
+            alt="Java Logo"
+            width="32"
+          />
+          <h2>Java Developer Notes</h2>
+        </div>
+
+        <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
           <input
             type="text"
-            placeholder="Search notes..."
+            className="search-bar"
+            placeholder="🔍 Search topic..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
+
+          {/* 👑 SHOW "ADD NOTE" BUTTON ONLY IF USER IS ADMIN */}
+
+        {(currentUser?.role === 'ADMIN' || currentUser?.email === 'pandeymurari571@gmail.com') && (
+          <button className="add-btn" onClick={handleOpenAddModal}>
+            + Add Note
+          </button>
+        )}
+
+
+          {/* User Profile Badge & Logout Button */}
+          <div className="user-badge">
+            <span className="user-name-glow">
+              {(currentUser?.role === 'ADMIN' || currentUser?.email === 'pandeymurari571@gmail.com') ? '👑 ' : '🎓 '}
+              {currentUser?.name}
+
+            </span>
+            <button className="logout-btn" onClick={handleLogout}>Logout</button>
+          </div>
         </div>
-        <div className="auth-buttons">
-          {currentUser ? (
-            <div className="user-profile">
-              <span>👤 {currentUser.name || currentUser.email}</span>
-              {(currentUser?.role === 'ADMIN' || currentUser?.email === 'pandeymurari571@gmail.com') && (
-                <button className="add-note-btn" onClick={handleOpenAddModal}>➕ Add Note</button>
-              )}
-              <button className="logout-btn" onClick={handleLogout}>Logout</button>
-            </div>
-          ) : (
-            <button className="login-btn" onClick={() => { setIsSignup(false); setShowAuthModal(true); }}>
-              Login / Signup
-            </button>
-          )}
-        </div>
-      </header>
+      </nav>
 
       {/* Main Layout */}
-      <div className="main-content">
-        {/* Sidebar */}
+      <div className="main-layout">
+        {/* Left Sidebar */}
         <aside className="sidebar">
           <h3>Topics</h3>
           <ul>
-            {TOPICS.map((topic) => (
+            {filteredTopics.map((topic, index) => (
               <li
-                key={topic}
+                key={index}
                 className={selectedTopic === topic ? "active" : ""}
                 onClick={() => setSelectedTopic(topic)}
               >
@@ -221,179 +327,140 @@ function App() {
         </aside>
 
         {/* Content Area */}
-        <main className="content-area">
-          <h1>{selectedTopic} Notes</h1>
-          <hr style={{ margin: '15px 0', borderColor: '#334155' }} />
+              <main className="content-area">
+                <h1>{selectedTopic} Notes</h1>
+                <hr style={{ margin: '15px 0', borderColor: '#334155' }} />
 
-          {loading ? (
-            <p>Loading notes from database...</p>
-          ) : notes.length > 0 ? (
-            notes.map((note) => (
-              <div key={note.id || note._id} className="note-card">
-                <div className="note-header">
-                  <h3>{note.title}</h3>
+                {loading && <p>Loading notes from database...</p>}
 
-                  <div className="action-buttons" style={{ display: 'flex', gap: '8px' }}>
-                    <button
-                      className="pdf-btn"
-                      onClick={() => handleDownloadPDF(note.title, `pdf-content-${note.id}`)}
-                    >
-                      📄 Download PDF
-                    </button>
+                {!loading && notes.length === 0 && (
+                  <p className="no-notes">No notes available for this topic.</p>
+                )}
 
-                    {(currentUser?.role === 'ADMIN' || currentUser?.email === 'pandeymurari571@gmail.com') && (
-                      <div style={{ display: 'flex', gap: '10px' }}>
-                        <button className="edit-btn" onClick={() => handleOpenEditModal(note)}>✏️ Edit</button>
-                        <button className="delete-btn" onClick={() => handleDeleteNote(note.id)}>🗑️ Delete</button>
+                {!loading && notes.length > 0 && (
+                  notes.map((note) => (
+                    <div key={note.id || note._id} className="note-card">
+                      <div className="note-header">
+                        <h3>{note.title}</h3>
+
+                        <div className="action-buttons" style={{ display: 'flex', gap: '8px' }}>
+                          {/* PDF Download Button */}
+                          <button
+                            className="pdf-btn"
+                            onClick={() => handleDownloadPDF(note.title, `pdf-content-${note.id}`)}
+                          >
+                            📄 Download PDF
+                          </button>
+
+                          {/* Edit/Delete Buttons for Admin */}
+                          {(currentUser?.role === 'ADMIN' || currentUser?.email === 'pandeymurari571@gmail.com') && (
+                            <div style={{ display: 'flex', gap: '10px' }}>
+                              <button className="edit-btn" onClick={() => handleOpenEditModal(note)}>✏️ Edit</button>
+                              <button className="delete-btn" onClick={() => handleDeleteNote(note.id)}>🗑️ Delete</button>
+                            </div>
+                          )}
+                        </div>
                       </div>
-                    )}
-                  </div>
-                </div>
 
-                <div id={`pdf-content-${note.id}`} className="note-content">
-                  <ReactMarkdown
-                    components={{
-                      code({ node, inline, className, children, ...props }) {
-                        const match = /language-(\w+)/.exec(className || '');
-                        const codeText = String(children).replace(/\n$/, '');
+                      <div id={`pdf-content-${note.id}`} className="note-content">
+                        <ReactMarkdown
+                          components={{
+                            code({ node, inline, className, children, ...props }) {
+                              const match = /language-(\w+)/.exec(className || '');
+                              const codeText = String(children).replace(/\n$/, '');
 
-                        return !inline && match ? (
-                          <div style={{ position: 'relative' }}>
-                            <button
-                              style={{ position: 'absolute', right: '10px', top: '10px' }}
-                              onClick={() => {
-                                navigator.clipboard.writeText(codeText);
-                                alert("Code copied to clipboard! 📋");
-                              }}
-                            >
-                              📋 Copy
-                            </button>
-                            <SyntaxHighlighter
-                              style={vscDarkPlus}
-                              language={match[1]}
-                              PreTag="div"
-                              {...props}
-                            >
-                              {codeText}
-                            </SyntaxHighlighter>
-                          </div>
-                        ) : (
-                          <code className={className} {...props}>
-                            {children}
-                          </code>
-                        );
-                      }
-                    }}
-                  >
-                    {note.content}
-                  </ReactMarkdown>
-                </div>
-              </div>
-            ))
-          ) : (
-            <p className="no-notes">No notes available for this topic.</p>
-          )}
-        </main>
-      </div>
+                              return !inline && match ? (
+                                <div style={{ position: 'relative' }}>
+                                  <button
+                                    onClick={() => {
+                                      navigator.clipboard.writeText(codeText);
+                                      alert("Code copied to clipboard! 📋");
+                                    }}
+                                  >
+                                    Copy
+                                  </button>
+                                  <SyntaxHighlighter
+                                    style={vscDarkPlus}
+                                    language={match[1]}
+                                    PreTag="div"
+                                    {...props}
+                                  >
+                                    {codeText}
+                                  </SyntaxHighlighter>
+                                </div>
+                              ) : (
+                                <code className={className} {...props}>
+                                  {children}
+                                </code>
+                              );
+                            }
+                          }}
+                        >
+                          {note.content}
+                        </ReactMarkdown>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </main>
 
-      {/* Auth Modal */}
-      {showAuthModal && (
-        <div className="modal-overlay">
-          <div className="modal-box">
-            <h2>{isSignup ? "Sign Up" : "Login"}</h2>
-            <form onSubmit={handleAuthSubmit}>
-              {isSignup && (
-                <div className="form-group">
-                  <label>Name</label>
-                  <input
-                    type="text"
-                    value={authName}
-                    onChange={(e) => setAuthName(e.target.value)}
-                    required
-                  />
-                </div>
-              )}
-              <div className="form-group">
-                <label>Email</label>
-                <input
-                  type="email"
-                  value={authEmail}
-                  onChange={(e) => setAuthEmail(e.target.value)}
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label>Password</label>
-                <input
-                  type="password"
-                  value={authPassword}
-                  onChange={(e) => setAuthPassword(e.target.value)}
-                  required
-                />
-              </div>
-              <div className="modal-actions">
-                <button type="submit" className="save-btn">
-                  {isSignup ? "Sign Up" : "Login"}
-                </button>
-                <button type="button" className="cancel-btn" onClick={() => setShowAuthModal(false)}>
-                  Cancel
-                </button>
-              </div>
-            </form>
-            <p style={{ marginTop: '10px', cursor: 'pointer', textAlign: 'center' }} onClick={() => setIsSignup(!isSignup)}>
-              {isSignup ? "Already have an account? Login" : "Don't have an account? Sign Up"}
-            </p>
-          </div>
-        </div>
-      )}
+                         {/* Add / Edit Modal */}
+                         {showModal && (
+                           <div className="modal-overlay">
+                             <div className="modal-box">
+                               <h2>{editMode ? "✏️ Edit Note" : "➕ Add New Note"}</h2>
 
-      {/* Add / Edit Modal */}
-      {showModal && (
-        <div className="modal-overlay">
-          <div className="modal-box">
-            <h2>{editMode ? "✏️ Edit Note" : "➕ Add New Note"}</h2>
-            <form onSubmit={handleSaveNote}>
-              <div className="form-group">
-                <label>Title:</label>
-                <input
-                  type="text"
-                  value={newTitle}
-                  onChange={(e) => setNewTitle(e.target.value)}
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label>Category:</label>
-                <input
-                  type="text"
-                  value={newCategory}
-                  onChange={(e) => setNewCategory(e.target.value)}
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label>Content (Markdown):</label>
-                <textarea
-                  rows="8"
-                  value={newContent}
-                  onChange={(e) => setNewContent(e.target.value)}
-                  required
-                />
-              </div>
-              <div className="modal-actions">
-                <button type="submit" className="save-btn">
-                  Save Note
-                </button>
-                <button type="button" className="cancel-btn" onClick={() => setShowModal(false)}>
-                  Cancel
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
+                               <form onSubmit={handleSaveNote}>
+                                 <div className="form-group">
+                                   <label>Note Title:</label>
+                                   <input
+                                     type="text"
+                                     value={newTitle}
+                                     onChange={(e) => setNewTitle(e.target.value)}
+                                     required
+                                   />
+                                 </div>
 
-export default App;
+                                 <div className="form-group">
+                                   <label>Category / Topic:</label>
+                                   <input
+                                     type="text"
+                                     value={newCategory}
+                                     onChange={(e) => setNewCategory(e.target.value)}
+                                     required
+                                   />
+                                 </div>
+
+                                 <div className="form-group">
+                                   <label>Content (Markdown):</label>
+                                   <textarea
+                                     rows="8"
+                                     value={newContent}
+                                     onChange={(e) => setNewContent(e.target.value)}
+                                     required
+                                   />
+                                 </div>
+
+                                 <div className="modal-actions">
+                                   <button type="submit" className="save-btn">
+                                     Save Note
+                                   </button>
+
+                                   <button
+                                     type="button"
+                                     className="cancel-btn"
+                                     onClick={() => setShowModal(false)}
+                                   >
+                                     Cancel
+                                   </button>
+                                 </div>
+                               </form>
+                             </div>
+                           </div>
+                         )}
+                       </div>
+                       </div>
+                   );
+               }
+
+                 export default App;
