@@ -105,22 +105,27 @@ const handleDownloadPDF = (noteTitle, elementId) => {
         alert(err.response?.data || "Signup Error!");
       });
     } else {
+      // Login Call
       axios.post("https://javanoteshubb-backend.onrender.com/auth/login", {
         email: authEmail,
         password: authPassword
       })
       .then((res) => {
-        const user = res.data;
-        localStorage.setItem("java_notes_user", JSON.stringify(user));
-        setCurrentUser(user);
+        // Agar response object hai to wo use karo, nahi to email ke sath object bana lo
+        const userData = (typeof res.data === 'object' && res.data !== null)
+          ? res.data
+          : { email: authEmail, name: authEmail.split('@')[0] };
+
+        localStorage.setItem("java_notes_user", JSON.stringify(userData));
+        setCurrentUser(userData);
         setShowAuthModal(false);
+        alert("Login Successful! 🎉");
       })
       .catch((err) => {
-        alert(err.response?.data || "Login Successfully 🎉!");
+        console.error("Login Fail:", err);
+        alert(err.response?.data || "Invalid Email or Password!");
       });
     }
-  };
-
   // Logout Handler
   const handleLogout = () => {
     localStorage.removeItem("java_notes_user");
