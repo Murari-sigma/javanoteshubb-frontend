@@ -23,6 +23,10 @@ function App() {
   const [authEmail, setAuthEmail] = useState("");
   const [authPassword, setAuthPassword] = useState("");
 
+  // Forgot Password States
+  const [showForgot, setShowForgot] = useState(false);
+  const [forgotEmail, setForgotEmail] = useState("");
+
   // App Main States
   const [selectedTopic, setSelectedTopic] = useState("Core Java");
   const [searchQuery, setSearchQuery] = useState("");
@@ -111,15 +115,18 @@ const handleDownloadPDF = (noteTitle, elementId) => {
           password: authPassword
         })
         .then((res) => {
-          // Response data object check
-          const userData = (typeof res.data === 'object' && res.data !== null)
-            ? res.data
-            : { email: authEmail, name: authEmail.split('@')[0] };
 
-          localStorage.setItem("java_notes_user", JSON.stringify(userData));
+          const userData = res.data;
+
+          localStorage.setItem(
+            "java_notes_user",
+            JSON.stringify(userData)
+          );
+
           setCurrentUser(userData);
-          setShowAuthModal(false); // Modal close karega
+
           alert("Login Successful! 🎉");
+
         })
         .catch((err) => {
           console.error("Login Error:", err);
@@ -129,9 +136,38 @@ const handleDownloadPDF = (noteTitle, elementId) => {
     };
   // Logout Handler
   const handleLogout = () => {
-    localStorage.removeItem("java_notes_user");
-    setCurrentUser(null);
+
+      localStorage.removeItem("java_notes_user");
+      localStorage.removeItem("token");
+
+      setCurrentUser(null);
+
   };
+
+    // Forgot Password
+   const handleForgotPassword = async () => {
+     if (!forgotEmail) {
+       alert("Please enter your email.");
+       return;
+     }
+
+     try {
+       const res = await axios.post(
+         "https://javanoteshubb-backend.onrender.com/auth/forgot-password",
+         {
+           email: forgotEmail,
+         }
+       );
+
+       alert(res.data.message || "Reset link sent successfully.");
+       setShowForgot(false);
+       setForgotEmail("");
+     } catch (err) {
+       alert(
+         err.response?.data?.message || "Unable to send reset link."
+       );
+     }
+   };
 
   // Open Form for Adding New Note
   const handleOpenAddModal = () => {
@@ -254,12 +290,61 @@ const handleDownloadPDF = (noteTitle, elementId) => {
             <button type="submit" className="auth-btn">
               {isSignup ? "Sign Up" : "Login"}
             </button>
+            {!isSignup && (
+              <p
+                className="forgot-password"
+                onClick={() => setShowForgot(true)}
+              >
+                Forgot Password?
+              </p>
+            )}
           </form>
 
-          <p className="toggle-auth" onClick={() => setIsSignup(!isSignup)}>
-            {isSignup ? "Already have an account? Login here" : "Don't have an account? Sign Up here"}
+          <p
+            className="toggle-auth"
+            onClick={() => setIsSignup(!isSignup)}
+          >
+            {isSignup
+              ? "Already have an account? Login here"
+              : "Don't have an account? Sign Up here"}
           </p>
         </div>
+        {showForgot && (
+          <div className="modal-overlay">
+            <div className="modal-box">
+              <h2>Forgot Password</h2>
+
+              <div className="form-group">
+                <label>Email Address:</label>
+
+                <input
+                  type="email"
+                  placeholder="Enter your registered email"
+                  value={forgotEmail}
+                  onChange={(e) => setForgotEmail(e.target.value)}
+                />
+              </div>
+
+              <div className="modal-actions">
+                <button
+                  type="button"
+                  className="save-btn"
+                  onClick={handleForgotPassword}
+                >
+                  Send Reset Link
+                </button>
+
+              <button
+                type="button"
+                className="cancel-btn"
+                onClick={() => setShowForgot(false)}
+              >
+                Cancel
+              </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     );
   }
@@ -470,6 +555,7 @@ const handleDownloadPDF = (noteTitle, elementId) => {
                            </div>
                          )}
                        </div>
+
                        </div>
                    );
                }
