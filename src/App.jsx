@@ -223,14 +223,24 @@ const handleDownloadPDF = (noteTitle, elementId) => {
 
   // Delete Note Handler
   const handleDeleteNote = (id) => {
-    if (window.confirm("Are you sure you want to delete this note?")) {
-      axios.delete(`https://javanoteshubb-backend.onrender.com/api/notes/${id}`)
-        .then(() => {
-          fetchNotes();
-        })
-        .catch(() => alert("Error deleting note"));
-    }
-  };
+      if (!id) {
+        alert("Invalid Note ID!");
+        return;
+      }
+
+      if (window.confirm("Are you sure you want to delete this note?")) {
+        axios.delete(`https://javanoteshubb-backend.onrender.com/api/notes/${id}`)
+          .then(() => {
+            alert("Note Deleted Successfully! 🗑️");
+            // UI se instantly note remove karne ke liye:
+            setNotes(notes.filter((note) => (note.id || note._id) !== id));
+          })
+          .catch((err) => {
+            console.error("Delete Error:", err);
+            alert(err.response?.data?.message || err.response?.data || "Error deleting note!");
+          });
+      }
+    };
 
   const filteredTopics = topicsList.filter(topic =>
     topic.toLowerCase().includes(searchQuery.toLowerCase())
@@ -258,7 +268,7 @@ const handleDownloadPDF = (noteTitle, elementId) => {
                 <input
                   type="text"
                   required
-                  placeholder="e.g. Rahul Sharma"
+                  placeholder="e.g. Murari Pandey"
                   value={authName}
                   onChange={(e) => setAuthName(e.target.value)}
                 />
@@ -452,7 +462,12 @@ const handleDownloadPDF = (noteTitle, elementId) => {
                           {(currentUser?.role === 'ADMIN' || currentUser?.email === 'pandeymurari571@gmail.com') && (
                             <div style={{ display: 'flex', gap: '10px' }}>
                               <button className="edit-btn" onClick={() => handleOpenEditModal(note)}>✏️ Edit</button>
-                              <button className="delete-btn" onClick={() => handleDeleteNote(note.id)}>🗑️ Delete</button>
+                              <button
+                                className="delete-btn"
+                                onClick={() => handleDeleteNote(note.id || note._id)}
+                              >
+                                🗑️ Delete
+                              </button>
                             </div>
                           )}
                         </div>
