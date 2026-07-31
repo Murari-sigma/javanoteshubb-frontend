@@ -199,7 +199,7 @@ const handleDownloadPDF = (noteTitle, elementId) => {
     };
 
     if (editMode) {
-      axios.put(`https://javanoteshubb-backend.onrender.com/auth/notes/${currentNoteId}`, noteData)
+      axios.put(`https://javanoteshubb-backend.onrender.com/notes/${currentNoteId}`, noteData)
         .then(() => {
           alert("Note updated successfully! ✨");
           setShowModal(false);
@@ -207,7 +207,7 @@ const handleDownloadPDF = (noteTitle, elementId) => {
         })
         .catch(() => alert("Error updating note"));
     } else {
-      axios.post("https://javanoteshubb-backend.onrender.com/auth/notes", noteData)
+      axios.post("https://javanoteshubb-backend.onrender.com/notes", noteData)
         .then(() => {
           alert("Note added successfully! 🎉");
           setShowModal(false);
@@ -229,7 +229,7 @@ const handleDownloadPDF = (noteTitle, elementId) => {
       }
 
       if (window.confirm("Are you sure you want to delete this note?")) {
-        axios.delete(`https://javanoteshubb-backend.onrender.com/api/notes/${id}`)
+        axios.delete(`https://javanoteshubb-backend.onrender.com/notes/${id}`)
           .then(() => {
             alert("Note Deleted Successfully! 🗑️");
             // UI se instantly note remove karne ke liye:
