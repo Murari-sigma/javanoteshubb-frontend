@@ -382,112 +382,94 @@ const handleDownloadPDF = (noteTitle, elementId) => {
           <h2>Java Developer Notes</h2>
         </div>
 
-        <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
-          <input
-            type="text"
-            className="search-bar"
-            placeholder="🔍 Search topic..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
+               {currentUser ? (
+                 <>
+                   {/* 3 Line Menu Button */}
+                   <div
+                     className="menu-icon"
+                     onClick={() => setShowMenu(!showMenu)}
+                   >
+                     ☰
+                   </div>
 
-          {/* 👑 SHOW "ADD NOTE" BUTTON ONLY IF USER IS ADMIN */}
+                   {showMenu && (
+                     <div className="menu-dropdown">
 
-        {(currentUser?.role === 'ADMIN' || currentUser?.email === 'pandeymurari571@gmail.com') && (
-          <button className="add-btn" onClick={handleOpenAddModal}>
-            + Add Note
-          </button>
-        )}
+                       <button
+                         className="menu-item home-item"
+                         onClick={() => {
+                           setSelectedTopic(null);
+                           setShowMenu(false);
+                           window.scrollTo({
+                             top: 0,
+                             behavior: "smooth",
+                           });
+                         }}
+                       >
+                         🏠 Back to Home
+                       </button>
 
+                       <hr />
 
-          {/* User Profile Badge & Logout Button */}
+                       <button
+                         className="menu-item logout-item"
+                         onClick={() => {
+                           handleLogout();
+                           setShowMenu(false);
+                         }}
+                       >
+                         🚪 Logout
+                       </button>
 
-                  {currentUser ? (
-                    <>
-                      {/* 3 Dot Menu */}
-                     <div
-                       className="menu-icon"
-                       onClick={() => setShowMenu(!showMenu)}
-                     >
-                       ☰
+                       <hr />
+
+                       <h4>📚 Topics</h4>
+
+                       <input
+                         type="text"
+                         placeholder="Search Topic..."
+                         value={menuSearch}
+                         onChange={(e) => setMenuSearch(e.target.value)}
+                         className="menu-search"
+                       />
+
+                       <div className="menu-topic-list">
+                         {filteredMenuTopics.map((topic) => (
+                           <div
+                             key={topic}
+                             className="menu-item"
+                             onClick={() => {
+                               setSelectedTopic(topic);
+                               setShowMenu(false);
+                             }}
+                           >
+                             📘 {topic}
+                           </div>
+                         ))}
+                       </div>
+
                      </div>
+                   )}
+                 </>
+               ) : (
+                 <div className="auth-trigger-group">
+                   <button
+                     className="login-btn"
+                     onClick={() => setIsSignup(false)}
+                   >
+                     Login
+                   </button>
 
-                  {showMenu && (
-                    <div className="menu-dropdown">
-
-                        {/* Back to Home */}
-                        <button
-                          className="menu-item home-item"
-                          onClick={() => {
-                            setSelectedTopic(null);   // Home show karega
-                            setShowMenu(false);       // Menu band
-                            window.scrollTo({
-                              top: 0,
-                              behavior: "smooth",
-                            });
-                          }}
-                        >
-                          🏠 Back to Home
-                        </button>
-
-                        <hr />
+                   <button
+                     className="signup-btn"
+                     onClick={() => setIsSignup(true)}
+                   >
+                     Signup
+                   </button>
+                 </div>
+               )}
 
 
-                      <button
-                        className="menu-item logout-item"
-                        onClick={handleLogout}
-                      >
-                        🚪 Logout
-                      </button>
-
-                      <hr />
-
-                      <h4>📚 Topics</h4>
-
-                      <input
-                        type="text"
-                        placeholder="Search Topic..."
-                        value={menuSearch}
-                        onChange={(e) => setMenuSearch(e.target.value)}
-                        className="menu-search"
-                      />
-
-                      <div className="menu-topic-list">
-                        {filteredMenuTopics.map((topic) => (
-                          <div
-                            key={topic}
-                            className="menu-item"
-                            onClick={() => {
-                              setSelectedTopic(topic);
-                              setShowMenu(false);
-                            }}
-                          >
-                            📘 {topic}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                    </>
-                  ) : (
-                    <div className="auth-trigger-group">
-                      <button
-                        className="login-btn"
-                        onClick={() => setIsSignup(false)}
-                      >
-                        Login
-                      </button>
-
-                      <button
-                        className="signup-btn"
-                        onClick={() => setIsSignup(true)}
-                      >
-                        Signup
-                      </button>
-                    </div>
-                  )}
-
-                  </div>
                 </nav>
       {/* Main Layout */}
       <div className="main-layout">

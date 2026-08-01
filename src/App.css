@@ -525,23 +525,25 @@ p.toggle-auth:hover {
     }
 
     /* 3 Dot */
-  .menu-icon{
-      width:45px;
-      height:45px;
-      background:#2563eb;   /* Add Note button jaisa */
-      color:#fff;
-      border-radius:10px;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      font-size:24px;
-      cursor:pointer;
-      box-shadow:0 4px 10px rgba(37,99,235,.4);
-  }
+.menu-icon{
+    width:45px;
+    height:45px;
+    background:#2563eb;
+    color:#fff;
+    border-radius:10px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:24px;
+    cursor:pointer;
+    box-shadow:0 4px 10px rgba(37,99,235,.4);
+    transition:.3s;
+    flex-shrink:0;
+}
 
-  .menu-icon{
-      margin-left:auto;
-  }
+.menu-icon:hover{
+    background:#1d4ed8;
+}
 
     /* Full Screen Menu */
     .menu-dropdown{
