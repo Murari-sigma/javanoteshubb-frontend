@@ -14,6 +14,15 @@ const topicsList = [
 ];
 
 function App() {
+
+    const [showMenu, setShowMenu] = useState(false);
+    const [menuSearch, setMenuSearch] = useState("");
+
+    const filteredMenuTopics = topicsList.filter(topic =>
+      topic.toLowerCase().includes(menuSearch.toLowerCase())
+    );
+
+
   // Auth States
   const [currentUser, setCurrentUser] = useState(null);
   const [isSignup, setIsSignup] = useState(false);
@@ -393,25 +402,91 @@ const handleDownloadPDF = (noteTitle, elementId) => {
 
           {/* User Profile Badge & Logout Button */}
 
-                    {currentUser ? (
-                      <div className="user-badge">
-                        <span className="user-name-glow">
-                          {(currentUser?.role === 'ADMIN' || currentUser?.email === 'pandeymurari571@gmail.com') ? '👑 ' : '🎓 '}
-                          {currentUser?.name || currentUser?.email}
-                        </span>
-                        <button className="logout-btn" onClick={handleLogout}>Logout</button>
+                  {currentUser ? (
+                    <>
+                      {/* 3 Dot Menu */}
+                      <div
+                        className="menu-icon"
+                        onClick={() => setShowMenu(!showMenu)}
+                      >
+                        ⋮
                       </div>
-                    ) : (
-                      /* Jab login nahi hai tab ye wala login options dikhega */
-                      <div className="auth-trigger-group">
-                        <button className="login-btn" onClick={() => setIsSignup(false)}>
-                          Login
-                        </button>
-                        <button className="signup-btn" onClick={() => setIsSignup(true)}>
-                          Signup
-                        </button>
-                      </div>
-                    )}
+
+                      {showMenu && (
+                        <div className="menu-dropdown">
+
+                          {/* User Name */}
+                          <div className="menu-user">
+                            {(currentUser?.role === "ADMIN" ||
+                              currentUser?.email === "pandeymurari571@gmail.com")
+                              ? "👑 "
+                              : "🎓 "}
+                            {currentUser?.name || currentUser?.email}
+                          </div>
+
+                          <hr />
+
+                          {/* Logout */}
+                          <button
+                            className="menu-item logout-item"
+                            onClick={() => {
+                              handleLogout();
+                              setShowMenu(false);
+                            }}
+                          >
+                            🚪 Logout
+                          </button>
+
+                          <hr />
+
+                          <h4>📚 Topics</h4>
+
+                          {/* Search */}
+                          <input
+                            type="text"
+                            placeholder="Search Topic..."
+                            value={menuSearch}
+                            onChange={(e) => setMenuSearch(e.target.value)}
+                            className="menu-search"
+                          />
+
+                          {/* Topic List */}
+                          <div className="menu-topic-list">
+                            {filteredMenuTopics.map((topic) => (
+                              <div
+                                key={topic}
+                                className="menu-item"
+                                onClick={() => {
+                                  setSelectedTopic(topic);
+                                  setShowMenu(false);
+                                }}
+                              >
+                                📘 {topic}
+                              </div>
+                            ))}
+                          </div>
+
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    <div className="auth-trigger-group">
+                      <button
+                        className="login-btn"
+                        onClick={() => setIsSignup(false)}
+                      >
+                        Login
+                      </button>
+
+                      <button
+                        className="signup-btn"
+                        onClick={() => setIsSignup(true)}
+                      >
+                        Signup
+                      </button>
+                    </div>
+                  )}
+
                   </div>
                 </nav>
       {/* Main Layout */}

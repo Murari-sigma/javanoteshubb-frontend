@@ -445,4 +445,134 @@ p.toggle-auth:hover {
     padding: 24px 18px;
     border-radius: 16px;
   }
+
+
+  .menu-btn{
+    background:none;
+    border:none;
+    color:white;
+    font-size:26px;
+    cursor:pointer;
+  }
+
+  .user-badge{
+    position:relative;
+  }
+
+  .menu-dropdown{
+    position:absolute;
+    top:45px;
+    right:0;
+    width:280px;
+    background:#1e293b;
+    border-radius:12px;
+    padding:15px;
+    box-shadow:0 8px 25px rgba(0,0,0,.4);
+    z-index:9999;
+  }
+
+  .menu-search{
+    width:100%;
+    padding:10px;
+    margin:10px 0;
+    border-radius:8px;
+    border:none;
+    background:#0f172a;
+    color:white;
+  }
+
+  .menu-topic-list{
+    max-height:250px;
+    overflow-y:auto;
+  }
+
+  .menu-item{
+    padding:10px;
+    border-radius:8px;
+    cursor:pointer;
+  }
+
+  .menu-item:hover{
+    background:#2563eb;
+  }
+
+  .logout-item{
+    width:100%;
+    background:#ef4444;
+    color:white;
+    border:none;
+  }
+
+  /* ===========================
+     3 DOT FULL SCREEN MENU
+  =========================== */
+/* Desktop */
+.menu-icon,
+.menu-dropdown{
+    display:none;
+}
+
+/* Mobile */
+@media (max-width:5000px){
+
+    .sidebar{
+        display:none;
+    }
+
+
+  .menu-user{
+    font-size:20px;
+    font-weight:700;
+    color:white;
+    margin-bottom:20px;
+  }
+
+  .menu-dropdown h4{
+    color:#38bdf8;
+    margin:20px 0 10px;
+  }
+
+  .menu-search{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    background:#1e293b;
+    color:white;
+    outline:none;
+    margin-bottom:20px;
+  }
+
+  .menu-topic-list{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+
+  .menu-item{
+    background:#1e293b;
+    padding:14px;
+    border-radius:10px;
+    color:white;
+    cursor:pointer;
+    transition:.3s;
+  }
+
+  .menu-item:hover{
+    background:#2563eb;
+  }
+
+  .logout-item{
+    width:100%;
+    background:#ef4444;
+    border:none;
+    color:white;
+    font-size:16px;
+    font-weight:600;
+  }
+
+  .logout-item:hover{
+    background:#dc2626;
+  }
+}
 }
