@@ -409,7 +409,7 @@ const handleDownloadPDF = (noteTitle, elementId) => {
                     className="menu-icon"
                     onClick={() => setShowMenu(!showMenu)}
                   >
-                    ⋮
+                    &#8942;
                   </div>
 
                   {showMenu && (
