@@ -382,6 +382,22 @@ const handleDownloadPDF = (noteTitle, elementId) => {
           <h2>Java Developer Notes</h2>
         </div>
 
+                 <div
+                   style={{
+                     display: "flex",
+                     alignItems: "center",
+                     gap: "10px",
+                     marginLeft: "auto",
+                   }}
+                 >
+                   {/* Add Note - Only Admin */}
+                   {(currentUser?.role === "ADMIN" ||
+                     currentUser?.email === "pandeymurari571@gmail.com") && (
+                     <button className="add-btn" onClick={handleOpenAddModal}>
+                       + Add Note
+                     </button>
+                   )}
+
                {currentUser ? (
                  <>
                    {/* 3 Line Menu Button */}
@@ -391,6 +407,7 @@ const handleDownloadPDF = (noteTitle, elementId) => {
                    >
                      ☰
                    </div>
+
 
                    {showMenu && (
                      <div className="menu-dropdown">
@@ -468,6 +485,7 @@ const handleDownloadPDF = (noteTitle, elementId) => {
                    </button>
                  </div>
                )}
+           </div>
 
 
                 </nav>
