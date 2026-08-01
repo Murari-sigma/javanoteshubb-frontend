@@ -607,5 +607,21 @@ p.toggle-auth:hover {
     .logout-item:hover{
         background:#dc2626;
     }
+    .home-item{
+      width:100%;
+      background:#2563eb;
+      border:none;
+      color:#fff;
+      font-size:16px;
+      font-weight:600;
+      padding:14px;
+      border-radius:10px;
+      margin-bottom:15px;
+      cursor:pointer;
+    }
+
+    .home-item:hover{
+      background:#1d4ed8;
+    }
 }
 }

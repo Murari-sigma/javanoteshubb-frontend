@@ -423,6 +423,25 @@ const handleDownloadPDF = (noteTitle, elementId) => {
 
                   {showMenu && (
                     <div className="menu-dropdown">
+
+                        {/* Back to Home */}
+                        <button
+                          className="menu-item home-item"
+                          onClick={() => {
+                            setSelectedTopic(null);   // Home show karega
+                            setShowMenu(false);       // Menu band
+                            window.scrollTo({
+                              top: 0,
+                              behavior: "smooth",
+                            });
+                          }}
+                        >
+                          🏠 Back to Home
+                        </button>
+
+                        <hr />
+
+
                       <button
                         className="menu-item logout-item"
                         onClick={handleLogout}
