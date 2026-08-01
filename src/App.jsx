@@ -405,21 +405,12 @@ const handleDownloadPDF = (noteTitle, elementId) => {
                   {currentUser ? (
                     <>
                       {/* 3 Dot Menu */}
-                  <div
-                    style={{
-                      position: "fixed",
-                      top: "15px",
-                      right: "15px",
-                      zIndex: 999999,
-                      color: "red",
-                      fontSize: "40px",
-                      background: "yellow",
-                      cursor: "pointer"
-                    }}
-                    onClick={() => setShowMenu(!showMenu)}
-                  >
-                    ⋮
-                  </div>
+                     <div
+                       className="menu-icon"
+                       onClick={() => setShowMenu(!showMenu)}
+                     >
+                       ☰
+                     </div>
 
                   {showMenu && (
                     <div className="menu-dropdown">
