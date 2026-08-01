@@ -406,10 +406,19 @@ const handleDownloadPDF = (noteTitle, elementId) => {
                     <>
                       {/* 3 Dot Menu */}
                   <div
-                    className="menu-icon"
+                    style={{
+                      position: "fixed",
+                      top: "15px",
+                      right: "15px",
+                      zIndex: 999999,
+                      color: "red",
+                      fontSize: "40px",
+                      background: "yellow",
+                      cursor: "pointer"
+                    }}
                     onClick={() => setShowMenu(!showMenu)}
                   >
-                    &#8942;
+                    ⋮
                   </div>
 
                   {showMenu && (
