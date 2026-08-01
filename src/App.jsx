@@ -405,69 +405,50 @@ const handleDownloadPDF = (noteTitle, elementId) => {
                   {currentUser ? (
                     <>
                       {/* 3 Dot Menu */}
-                      <div
-                        className="menu-icon"
-                        onClick={() => setShowMenu(!showMenu)}
+                  <div
+                    className="menu-icon"
+                    onClick={() => setShowMenu(!showMenu)}
+                  >
+                    ⋮
+                  </div>
+
+                  {showMenu && (
+                    <div className="menu-dropdown">
+                      <button
+                        className="menu-item logout-item"
+                        onClick={handleLogout}
                       >
-                        ⋮
-                      </div>
+                        🚪 Logout
+                      </button>
 
-                      {showMenu && (
-                        <div className="menu-dropdown">
+                      <hr />
 
-                          {/* User Name */}
-                          <div className="menu-user">
-                            {(currentUser?.role === "ADMIN" ||
-                              currentUser?.email === "pandeymurari571@gmail.com")
-                              ? "👑 "
-                              : "🎓 "}
-                            {currentUser?.name || currentUser?.email}
-                          </div>
+                      <h4>📚 Topics</h4>
 
-                          <hr />
+                      <input
+                        type="text"
+                        placeholder="Search Topic..."
+                        value={menuSearch}
+                        onChange={(e) => setMenuSearch(e.target.value)}
+                        className="menu-search"
+                      />
 
-                          {/* Logout */}
-                          <button
-                            className="menu-item logout-item"
+                      <div className="menu-topic-list">
+                        {filteredMenuTopics.map((topic) => (
+                          <div
+                            key={topic}
+                            className="menu-item"
                             onClick={() => {
-                              handleLogout();
+                              setSelectedTopic(topic);
                               setShowMenu(false);
                             }}
                           >
-                            🚪 Logout
-                          </button>
-
-                          <hr />
-
-                          <h4>📚 Topics</h4>
-
-                          {/* Search */}
-                          <input
-                            type="text"
-                            placeholder="Search Topic..."
-                            value={menuSearch}
-                            onChange={(e) => setMenuSearch(e.target.value)}
-                            className="menu-search"
-                          />
-
-                          {/* Topic List */}
-                          <div className="menu-topic-list">
-                            {filteredMenuTopics.map((topic) => (
-                              <div
-                                key={topic}
-                                className="menu-item"
-                                onClick={() => {
-                                  setSelectedTopic(topic);
-                                  setShowMenu(false);
-                                }}
-                              >
-                                📘 {topic}
-                              </div>
-                            ))}
+                            📘 {topic}
                           </div>
-
-                        </div>
-                      )}
+                        ))}
+                      </div>
+                    </div>
+                  )}
                     </>
                   ) : (
                     <div className="auth-trigger-group">
