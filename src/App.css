@@ -503,9 +503,7 @@ p.toggle-auth:hover {
     border:none;
   }
 
-  /* ===========================
-     3 DOT FULL SCREEN MENU
-  =========================== */
+
 /* ===========================
    MOBILE MENU
 =========================== */
@@ -609,4 +607,5 @@ p.toggle-auth:hover {
     .logout-item:hover{
         background:#dc2626;
     }
+}
 }
