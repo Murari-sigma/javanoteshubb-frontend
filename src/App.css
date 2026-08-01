@@ -539,6 +539,10 @@ p.toggle-auth:hover {
       box-shadow:0 4px 10px rgba(37,99,235,.4);
   }
 
+  .menu-icon{
+      margin-left:auto;
+  }
+
     /* Full Screen Menu */
     .menu-dropdown{
         display:block;
