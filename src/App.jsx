@@ -630,6 +630,44 @@ const handleDownloadPDF = (noteTitle, elementId) => {
                          </div>
                        )}
 
+                      {!loading && notes.length === 0 && selectedTopic === "Advanced Java" && (
+                        <div className="subtopics-grid">
+                          {[
+                            { num: '01', name: 'Synchronization', desc: 'synchronized keyword, locks, race conditions & thread-safe code.' },
+                            { num: '02', name: 'Executor Framework', desc: 'ThreadPool, ExecutorService, Callable, Future & scheduled tasks.' },
+                            { num: '03', name: 'Concurrency API', desc: 'CountDownLatch, Semaphore, CyclicBarrier & concurrent utilities.' },
+                            { num: '04', name: 'Generics', desc: 'Generic classes, bounded types, wildcards & type erasure in depth.' },
+                            { num: '05', name: 'Exception Handling', desc: 'Checked vs unchecked, custom exceptions, chaining & best practices.' },
+                            { num: '06', name: 'Lambda Expressions', desc: 'Functional interfaces, arrow syntax, method references & closures.' },
+                            { num: '07', name: 'Stream API', desc: 'filter, map, flatMap, reduce, collect & parallel streams.' },
+                            { num: '08', name: 'Functional Interfaces', desc: 'Predicate, Function, Consumer, Supplier & BiFunction with examples.' },
+                            { num: '09', name: 'JVM Architecture', desc: 'ClassLoader, runtime data areas, execution engine & JIT compiler.' },
+                            { num: '10', name: 'Memory Management (Heap & Stack)', desc: 'Heap vs Stack, object lifecycle, memory allocation & OutOfMemoryError.' },
+                            { num: '11', name: 'Garbage Collection (GC)', desc: 'GC algorithms, G1, ZGC, finalization & tuning GC performance.' },
+                            { num: '12', name: 'Reflection API', desc: 'Class introspection, dynamic method invocation & annotation processing.' },
+                            { num: '13', name: 'Annotations', desc: 'Built-in, custom annotations, retention policies & annotation processors.' },
+                            { num: '14', name: 'Serialization', desc: 'Serializable, ObjectInputStream/OutputStream, transient & versioning.' },
+                            { num: '15', name: 'Java I/O & NIO', desc: 'Streams, Readers/Writers, Path, Files, Channels & non-blocking I/O.' },
+                            { num: '16', name: 'JDBC', desc: 'Connection, Statement, PreparedStatement, ResultSet & transactions.' },
+                            { num: '17', name: 'Comparable vs Comparator', desc: 'Natural ordering, custom sorting, Comparator chaining & use cases.' },
+                            { num: '18', name: 'HashMap Internal Working', desc: 'Hashing, buckets, collision, load factor & Java 8 treeification.' },
+                            { num: '19', name: 'ConcurrentHashMap', desc: 'Segment locking, thread-safe operations & vs synchronized HashMap.' },
+                            { num: '20', name: 'Design Patterns', desc: 'Singleton, Factory, Builder, Strategy, Observer & when to use them.' },
+                            { num: '21', name: 'SOLID Principles', desc: 'SRP, OCP, LSP, ISP, DIP with real Java code examples.' },
+                            { num: '22', name: 'Immutable Class', desc: 'final fields, defensive copying, String immutability & benefits.' },
+                            { num: '23', name: 'Java 8 Features', desc: 'Optional, default methods, Date/Time API & Stream improvements.' },
+                          ].map((sub) => (
+                            <div key={sub.num} className="subtopic-card">
+                              <span className="subtopic-num">{sub.num}</span>
+                              <div>
+                                <h4>{sub.name}</h4>
+                                <p>{sub.desc}</p>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
                        {/* Notes List */}
                        {!loading && notes
                          .filter(note => note.title?.toLowerCase().includes(searchQuery.toLowerCase()))
