@@ -513,7 +513,7 @@ const handleDownloadPDF = (noteTitle, elementId) => {
                 {!loading && notes.length === 0 && (
                   <section className="hero">
                     <span className="hero-eyebrow">&lt;/&gt; developer.hub</span>
-                    <h1 className="hero-title">Welcome to Java Developer Hub</h1>
+                    <h1 className="hero-title">Welcome to Java Developer Hub ☕</h1>
                     <p className="hero-subtitle">
                       Your notes, organized — from Core Java basics to Spring Boot in production.
                     </p>
