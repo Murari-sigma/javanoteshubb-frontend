@@ -859,14 +859,42 @@ p.toggle-auth:hover {
     background: rgba(239, 68, 68, 0.2);
   }
 
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .logo-container h2 {
+  font-size: 1.3rem;
+  font-weight: 800;
   background: linear-gradient(135deg, #38bdf8 0%, #ffffff 50%, #7dd3fc 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.6));
-  font-weight: 800;
   letter-spacing: -0.5px;
+  margin: 0;
+  line-height: 1;
+}
+
+.auth-card .logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.auth-card .logo-container h2 {
+  font-size: 1.4rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #38bdf8 0%, #ffffff 50%, #7dd3fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.6));
+  margin: 0;
+  line-height: 1;
 }
 /* ===========================
    MOBILE MENU
