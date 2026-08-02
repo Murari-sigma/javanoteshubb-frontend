@@ -18,6 +18,7 @@ function App() {
     const [showMenu, setShowMenu] = useState(false);
     const [menuSearch, setMenuSearch] = useState("");
     const [showTopics, setShowTopics] = useState(false);
+    const [showContact, setShowContact] = useState(false);
 
     const filteredMenuTopics = topicsList.filter(topic =>
       topic.toLowerCase().includes(menuSearch.toLowerCase())
