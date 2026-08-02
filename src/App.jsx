@@ -578,7 +578,11 @@ const handleDownloadPDF = (noteTitle, elementId) => {
                              value={searchQuery}
                              onChange={(e) => setSearchQuery(e.target.value)}
                            />
-
+                           {(currentUser?.role === "ADMIN" || currentUser?.email === "pandeymurari571@gmail.com") && (
+                             <button className="add-btn" onClick={handleOpenAddModal}>
+                               + Add Note
+                             </button>
+                           )}
                          </div>
                        </div>
 
