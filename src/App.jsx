@@ -507,24 +507,79 @@ const handleDownloadPDF = (noteTitle, elementId) => {
           </ul>
         </aside>
 
-        {/* Content Area */}
-        <main className="content-area">
-          <h1>Welcome to Java Developer Hub</h1>
-          <hr style={{ margin: '15px 0', borderColor: '#334155' }} />
+              {/* Content Area */}
+              <main className="content-area">
 
-          {loading && <p>Loading notes from database...</p>}
+                {!loading && notes.length === 0 && (
+                  <section className="hero">
+                    <span className="hero-eyebrow">&lt;/&gt; developer.hub</span>
+                    <h1 className="hero-title">Welcome to Java Developer Hub</h1>
+                    <p className="hero-subtitle">
+                      Your notes, organized — from Core Java basics to Spring Boot in production.
+                    </p>
+                    <button className="start-btn" onClick={() => setShowAddNote(true)}>
+                      Start Learning
+                    </button>
+                  </section>
+                )}
 
-          {!loading && notes.length === 0 && (
-            <p className="no-notes">
-              Explore Core Java & Spring Boot topics from the sidebar menu, or click <strong>+ Add Note</strong> to create new notes!
-            </p>
-          )}
+                <hr style={{ margin: '15px 0', borderColor: '#334155' }} />
 
-          {!loading && notes.length > 0 && (
-            notes.map((note) => (
-              <div key={note.id || note._id} className="note-card">
-                <div className="note-header">
-                  <h3>{note.title}</h3>
+                {loading && <p>Loading notes from database...</p>}
+
+                {!loading && notes.length === 0 && (
+                  <>
+                    <h2 className="topics-heading">Explore Topics</h2>
+                    <div className="topics-grid">
+                      <div className="topic-card">
+                        <span className="topic-icon">{'{ }'}</span>
+                        <h3>Core Java</h3>
+                        <p>OOPs, collections, streams, exceptions & the fundamentals every backend dev needs.</p>
+                      </div>
+                      <div className="topic-card">
+                        <span className="topic-icon">⛓</span>
+                        <h3>Data Structures</h3>
+                        <p>Arrays, linked lists, trees, graphs & problem-solving patterns for interviews.</p>
+                      </div>
+                      <div className="topic-card">
+                        <span className="topic-icon">☕</span>
+                        <h3>Advanced Java</h3>
+                        <p>Multithreading, concurrency, JVM internals & memory management.</p>
+                      </div>
+                      <div className="topic-card">
+                        <span className="topic-icon">🌱</span>
+                        <h3>Spring</h3>
+                        <p>IoC, dependency injection, beans & the core of the Spring ecosystem.</p>
+                      </div>
+                      <div className="topic-card">
+                        <span className="topic-icon">🚀</span>
+                        <h3>Spring Boot</h3>
+                        <p>Auto-configuration, REST APIs, starters & building production-ready apps fast.</p>
+                      </div>
+                      <div className="topic-card">
+                        <span className="topic-icon">🔐</span>
+                        <h3>Spring Security</h3>
+                        <p>Authentication, authorization, JWT & securing your endpoints.</p>
+                      </div>
+                      <div className="topic-card">
+                        <span className="topic-icon">🗄</span>
+                        <h3>Hibernate</h3>
+                        <p>ORM mapping, sessions, caching & entity lifecycle.</p>
+                      </div>
+                      <div className="topic-card">
+                        <span className="topic-icon">📦</span>
+                        <h3>JPA</h3>
+                        <p>Repositories, queries, relationships & the Java persistence standard.</p>
+                      </div>
+                    </div>
+                  </>
+                )}
+
+                {!loading && notes.length > 0 && (
+                  notes.map((note) => (
+                    <div key={note.id || note._id} className="note-card">
+                      <div className="note-header">
+                        <h3>{note.title}</h3>
 
                         <div className="action-buttons" style={{ display: 'flex', gap: '8px' }}>
                           {/* PDF Download Button */}

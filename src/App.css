@@ -187,6 +187,115 @@ body {
   color: #38bdf8;
 }
 
+/* Hero Section */
+.hero {
+  text-align: center;
+  padding: 3rem 1rem 2rem;
+}
+
+.hero-eyebrow {
+  display: inline-block;
+  font-family: 'Courier New', monospace;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+  margin-bottom: 1.25rem;
+}
+
+.hero-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -1px;
+  margin-bottom: 0.75rem;
+}
+
+.hero-subtitle {
+  font-size: 1.05rem;
+  color: #94a3b8;
+  max-width: 520px;
+  margin: 0 auto 1.75rem;
+  line-height: 1.5;
+}
+
+.start-btn {
+  background: #ffffff;
+  color: #0f172a;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.start-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(56, 189, 248, 0.25);
+}
+
+/* Topics Grid */
+.topics-heading {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 1.5rem 0 1rem;
+}
+
+.topics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1.25rem;
+}
+
+.topic-card {
+  background: #1e293b;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+  cursor: pointer;
+}
+
+.topic-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(56, 189, 248, 0.4);
+}
+
+.topic-icon {
+  display: inline-block;
+  font-size: 1.4rem;
+  font-family: 'Courier New', monospace;
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.1);
+  width: 42px;
+  height: 42px;
+  line-height: 42px;
+  text-align: center;
+  border-radius: 10px;
+  margin-bottom: 0.9rem;
+}
+
+.topic-card h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 0.4rem;
+}
+
+.topic-card p {
+  font-size: 0.9rem;
+  color: #94a3b8;
+  line-height: 1.5;
+}
+
 .action-buttons {
   display: flex;
   gap: 8px;
