@@ -381,28 +381,11 @@ const handleDownloadPDF = (noteTitle, elementId) => {
             alt="Java Logo"
             width="32"
           />
-          <h2>Java Developer Notes</h2>
+          <h2>Java Developer</h2>
         </div>
 
-                 <div
-                   style={{
-                     display: "flex",
-                     alignItems: "center",
-                     gap: "10px",
-                     marginLeft: "auto",
-                   }}
-                 >
-                   {/* Add Note - Only Admin */}
-                   {(currentUser?.role === "ADMIN" ||
-                     currentUser?.email === "pandeymurari571@gmail.com") && (
-                     <button className="add-btn" onClick={handleOpenAddModal}>
-                       + Add Note
-                     </button>
-                   )}
 
-               {currentUser ? (
-                 <>
-                   {/* 3 Line Menu Button */}
+                               {/* 3 Line Menu Button */}
                    <div
                      className="menu-icon"
                      onClick={() => setShowMenu(!showMenu)}
@@ -410,100 +393,59 @@ const handleDownloadPDF = (noteTitle, elementId) => {
                      ☰
                    </div>
 
+                     {showMenu && (
+                       <div className="menu-dropdown">
+                         <button
+                           className="menu-item home-item"
+                           onClick={() => {
+                             setSelectedTopic(null);
+                             setShowTopics(false);
+                             setShowMenu(false);
+                             window.scrollTo({ top: 0, behavior: "smooth" });
+                           }}
+                         >
+                           🏠 Home
+                         </button>
 
-                   {showMenu && (
-                     <div className="menu-dropdown">
+                         <hr />
 
-                       <button
-                         className="menu-item home-item"
-                         onClick={() => {
-                           setSelectedTopic(null);
-                           setShowMenu(false);
-                           window.scrollTo({ top: 0, behavior: "smooth" });
-                         }}
-                       >
-                         🏠 Back to Home
-                       </button>
+                         <button
+                           className="menu-item"
+                           onClick={() => {
+                             setShowContact(true);
+                             setShowMenu(false);
+                           }}
+                         >
+                           📞 Contact Us
+                         </button>
 
-                            <hr />
-                       <button
-                         className="menu-item logout-item"
-                         onClick={() => {
-                           handleLogout();
-                           setShowMenu(false);
-                         }}
-                       >
-                         🚪 Logout
-                       </button>
+                         <hr />
 
-                       <hr />
+                         <button
+                           className="menu-item"
+                           onClick={() => {
+                             alert("No new notifications! 🔔");
+                             setShowMenu(false);
+                           }}
+                         >
+                           🔔 Notifications
+                         </button>
 
-                       <h4>📚 Topics</h4>
+                         <hr />
 
-                       <input
-                         type="text"
-                         placeholder="Search Topic..."
-                         value={menuSearch}
-                         onChange={(e) => setMenuSearch(e.target.value)}
-                         className="menu-search"
-                       />
-
-                       <div className="menu-topic-list">
-                         {filteredMenuTopics.map((topic) => (
-                           <div
-                             key={topic}
-                             className="menu-item"
-                             onClick={() => {
-                               setSelectedTopic(topic);
-                               setShowMenu(false);
-                             }}
-                           >
-                             📘 {topic}
-                           </div>
-                         ))}
+                         <button
+                           className="menu-item logout-item"
+                           onClick={() => {
+                             handleLogout();
+                             setShowMenu(false);
+                           }}
+                         >
+                           🚪 Logout
+                         </button>
                        </div>
-
-                     </div>
-                   )}
-                 </>
-               ) : (
-                 <div className="auth-trigger-group">
-                   <button
-                     className="login-btn"
-                     onClick={() => setIsSignup(false)}
-                   >
-                     Login
-                   </button>
-
-                   <button
-                     className="signup-btn"
-                     onClick={() => setIsSignup(true)}
-                   >
-                     Signup
-                   </button>
-                 </div>
-               )}
-           </div>
+                     )}
 
 
-                </nav>
-      {/* Main Layout */}
-      <div className="main-layout">
-        {/* Left Sidebar */}
-        <aside className="sidebar">
-          <h3>Topics</h3>
-          <ul>
-            {filteredTopics.map((topic, index) => (
-              <li
-                key={index}
-                className={selectedTopic === topic ? "active" : ""}
-                onClick={() => setSelectedTopic(topic)}
-              >
-                📘 {topic}
-              </li>
-            ))}
-          </ul>
-        </aside>
 
                  {/* Content Area */}
                  <main className="content-area">
@@ -856,7 +798,7 @@ const handleDownloadPDF = (noteTitle, elementId) => {
                              </div>
                            </div>
                          )}
-                       </div>
+                       </nav>
 
                        </div>
                    );
