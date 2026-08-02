@@ -206,44 +206,63 @@ body {
 .delete-btn { background: #ef4444; color: white; }
 .edit-btn:hover, .delete-btn:hover { opacity: 0.85; }
 
-/* Purana .markdown-content hata kar ye poora block paste kar do */
 
+/* ====================================================
+   BULLETPROOF FIX FOR MARKDOWN QUESTIONS & CONTENT
+==================================================== */
+
+/* Main Container Base */
 .markdown-content {
   line-height: 1.65;
   color: #cbd5e1;
   font-size: 0.95rem;
 }
 
-/* 1. SARE QUESTIONS/LIST ITEMS DEFAULT BLUE HONGE (Bina Hover Ke) */
-.markdown-content ol > li::marker {
-  color: #ffffff;
-  font-weight: 700;
-}
-
-.markdown-content ol > li,
-.markdown-content p code,
-.markdown-content pre {
+/* HAR EK TAG KO MANDATORY SOLID BLUE BANANE KE LIYE */
+.markdown-content p,
+.markdown-content li,
+.markdown-content ol li,
+.markdown-content ul li,
+.markdown-content code,
+.markdown-content pre,
+.markdown-content blockquote,
+.markdown-content h1,
+.markdown-content h2,
+.markdown-content h3,
+.markdown-content h4 {
   background-color: #2563eb !important; /* Standard Solid Blue */
   color: #ffffff !important;            /* Pure White Text */
-  padding: 12px 16px !important;
-  border-radius: 10px !important;
-  margin-top: 10px !important;
-  margin-bottom: 10px !important;
-  display: block;
-  font-weight: 600;
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
-  transition: all 0.2s ease;
+  padding: 10px 16px !important;
+  border-radius: 8px !important;
+  display: block !important;
+  margin: 10px 0 !important;
+  border: none !important;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25) !important;
+  transition: all 0.2s ease !important;
 }
 
-/* 2. JAB MOUSE CURSOR JAYEGA TAB AUR DARK BLUE HO JAYEGA */
-.markdown-content ol > li:hover,
-.markdown-content p code:hover,
-.markdown-content pre:hover {
-  background-color: #1d4ed8 !important; /* Deeper/Darker Blue on Hover */
+/* LIST NUMBERS (1., 2., 3.) KO WHITE RAKHNE KE LIYE */
+.markdown-content ol > li::marker,
+.markdown-content ul > li::marker {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+}
+
+/* HOVER EFFECT: CURSOR/TAP PAR DEEP BLUE */
+.markdown-content p:hover,
+.markdown-content li:hover,
+.markdown-content ol li:hover,
+.markdown-content code:hover,
+.markdown-content pre:hover,
+.markdown-content blockquote:hover,
+.markdown-content h1:hover,
+.markdown-content h2:hover,
+.markdown-content h3:hover,
+.markdown-content h4:hover {
+  background-color: #1d4ed8 !important; /* Darker Blue */
   transform: translateY(-1px);
   cursor: pointer;
 }
-
 /* ----------------------------------------------------
    4. AUTH (LOGIN / SIGNUP) - CLEAN CENTERED CARD
 ---------------------------------------------------- */
