@@ -211,54 +211,47 @@ body {
    FORCE BLUE BOX ON ALL MARKDOWN ELEMENTS
 ==================================================== */
 
-/* Standard Text Color Fix */
-.markdown-content {
-  color: #ffffff !important;
-}
-
-/* Har tarah ke Box/Question/List/Code ko Blue Banana */
+/* ALL MARKDOWN CONTAINERS & ELEMENTS FORCE BLUE */
+.markdown-content,
 .markdown-content *,
+.markdown-content p,
 .markdown-content li,
 .markdown-content code,
-.markdown-content mark,
 .markdown-content pre,
-.markdown-content blockquote,
-.markdown-content input {
-  background-color: #2563eb !important; /* Solid Blue Background */
-  color: #ffffff !important;            /* White Text Color */
+.markdown-content mark,
+.markdown-content div {
+  background: #2563eb !important;       /* Default Solid Blue Background */
+  background-color: #2563eb !important; /* Force Blue */
+  color: #ffffff !important;            /* Pure White Text */
   border: none !important;
   border-radius: 8px !important;
 }
 
-/* Target Specific Containers */
-.markdown-content ol > li,
-.markdown-content ul > li,
-.markdown-content p code,
-.markdown-content pre code {
-  display: block !important;
-  padding: 12px 16px !important;
-  margin: 10px 0 !important;
-  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3) !important;
-  transition: background-color 0.2s ease, transform 0.2s ease !important;
-}
-
-/* Hover Effect: Mouse ya Tap karne par Dark Blue */
-.markdown-content ol > li:hover,
-.markdown-content ul > li:hover,
+/* HOVER EFFECT: Hover karne par solid darker blue ho jayega */
+.markdown-content *:hover,
+.markdown-content li:hover,
 .markdown-content code:hover,
-.markdown-content mark:hover,
 .markdown-content pre:hover {
-  background-color: #1d4ed8 !important; /* Solid Darker Blue */
-  transform: translateY(-2px) !important;
+  background: #1d4ed8 !important;       /* Solid Darker Blue on Hover */
+  background-color: #1d4ed8 !important;
   cursor: pointer !important;
 }
 
-/* List Numbers Color */
-.markdown-content ol > li::marker {
-  color: #38bdf8 !important;
-  font-weight: bold !important;
+/* Margins & Paddings Fix */
+.markdown-content ol > li,
+.markdown-content ul > li,
+.markdown-content p code,
+.markdown-content pre {
+  padding: 12px 16px !important;
+  margin: 10px 0 !important;
+  display: block !important;
 }
 
+/* List Numbers (1, 2, 3...) */
+.markdown-content ol > li::marker {
+  color: #ffffff !important;
+  font-weight: bold !important;
+}
 /* ----------------------------------------------------
    4. AUTH (LOGIN / SIGNUP) - CLEAN CENTERED CARD
 ---------------------------------------------------- */
