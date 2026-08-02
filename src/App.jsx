@@ -17,6 +17,7 @@ function App() {
 
     const [showMenu, setShowMenu] = useState(false);
     const [menuSearch, setMenuSearch] = useState("");
+    const [showTopics, setShowTopics] = useState(false);
 
     const filteredMenuTopics = topicsList.filter(topic =>
       topic.toLowerCase().includes(menuSearch.toLowerCase())
@@ -507,58 +508,118 @@ const handleDownloadPDF = (noteTitle, elementId) => {
                  {/* Content Area */}
                  <main className="content-area">
 
-                   {/* HOME VIEW - jab koi topic select nahi */}
-                   {!selectedTopic && (
-                     <>
-                       <section className="hero">
-                         <span className="hero-eyebrow">&lt;/&gt; developer.hub</span>
-                         <h1 className="hero-title">Welcome to Java Developer Hub ☕</h1>
-                         <p className="hero-subtitle">
-                           Your notes, organized — from Core Java basics to Spring Boot in production.
-                         </p>
-                         <button className="start-btn" onClick={() => setSelectedTopic("Core Java")}>
-                           Start Learning
-                         </button>
-                       </section>
+                    {/* HOME VIEW */}
+                    {!selectedTopic && (
+                      <>
+                        {!showTopics && (
+                          <section className="hero">
+                            <span className="hero-eyebrow">&lt;/&gt; developer.hub</span>
+                            <h1 className="hero-title">Welcome to Java Developer Hub ☕</h1>
+                            <p className="hero-subtitle">
+                              Your notes, organized — from Core Java basics to Spring Boot in production.
+                            </p>
+                            <button className="start-btn" onClick={() => setShowTopics(true)}>
+                              Start Learning
+                            </button>
+                          </section>
+                        )}
 
-                       <hr style={{ margin: '15px 0', borderColor: '#334155' }} />
+                        {!showTopics && (
+                          <>
+                            <hr style={{ margin: '15px 0', borderColor: '#334155' }} />
+                            <h2 className="topics-heading">Explore Topics</h2>
+                            <div className="topics-grid">
+                              {[
+                                { icon: '{ }', name: 'Core Java', desc: 'OOPs, collections, streams, exceptions & the fundamentals every backend dev needs.' },
+                                { icon: '☕', name: 'Advanced Java', desc: 'Multithreading, concurrency, JVM internals & memory management.' },
+                                { icon: '🔌', name: 'JDBC', desc: 'Database connectivity, PreparedStatement, ResultSet & transaction management.' },
+                                { icon: '🌐', name: 'Servlet', desc: 'HTTP request/response lifecycle, filters, session management & web app fundamentals.' },
+                                { icon: '📄', name: 'JSP', desc: 'Java Server Pages, JSTL, EL expressions & dynamic web content generation.' },
+                                { icon: '📦', name: 'Maven', desc: 'Build automation, dependency management, POM.xml & project lifecycle.' },
+                                { icon: '🗄', name: 'Hibernate', desc: 'ORM mapping, sessions, caching & entity lifecycle.' },
+                                { icon: '💎', name: 'JPA', desc: 'Repositories, queries, relationships & the Java persistence standard.' },
+                                { icon: '🌱', name: 'Spring', desc: 'IoC, dependency injection, beans & the core of the Spring ecosystem.' },
+                                { icon: '🚀', name: 'Spring Boot', desc: 'Auto-configuration, REST APIs, starters & building production-ready apps fast.' },
+                                { icon: '🔐', name: 'Spring Security', desc: 'Authentication, authorization, JWT & securing your endpoints.' },
+                                { icon: '🔗', name: 'REST API', desc: 'RESTful design, HTTP methods, status codes & API best practices.' },
+                                { icon: '🧩', name: 'Microservices', desc: 'Service decomposition, Eureka, API Gateway & distributed systems patterns.' },
+                                { icon: '🗃️', name: 'MySQL', desc: 'SQL queries, joins, indexes, stored procedures & database design.' },
+                                { icon: '🐙', name: 'Git & GitHub', desc: 'Version control, branching, merging, pull requests & collaboration.' },
+                                { icon: '🐳', name: 'Docker', desc: 'Containerization, Dockerfile, images & deploying Java apps with Docker Compose.' },
+                                { icon: '☁️', name: 'AWS', desc: 'EC2, S3, RDS, IAM & deploying Spring Boot apps on the cloud.' },
+                                { icon: '🎯', name: 'Interview Questions', desc: 'Top Java & Spring Boot interview questions & HR round preparation.' },
+                                { icon: '🏗️', name: 'Projects', desc: 'End-to-end Java projects — REST APIs, microservices & full-stack apps.' },
+                              ].map((topic) => (
+                                <div key={topic.name} className="topic-card">
+                                  <span className="topic-icon">{topic.icon}</span>
+                                  <h3>{topic.name}</h3>
+                                  <p>{topic.desc}</p>
+                                </div>
+                              ))}
+                            </div>
+                          </>
+                        )}
 
-                       <h2 className="topics-heading">Explore Topics</h2>
-                       <div className="topics-grid">
-                         {[
-                           { icon: '{ }', name: 'Core Java', desc: 'OOPs, collections, streams, exceptions & the fundamentals every backend dev needs.' },
-                           { icon: '⛓', name: 'Advanced Java', desc: 'Multithreading, concurrency, JVM internals & memory management.' },
-                           { icon: '🔌', name: 'JDBC', desc: 'Database connectivity, PreparedStatement, ResultSet & transaction management.' },
-                           { icon: '🌐', name: 'Servlet', desc: 'HTTP request/response lifecycle, filters, session management & web app fundamentals.' },
-                           { icon: '📄', name: 'JSP', desc: 'Java Server Pages, JSTL, EL expressions & dynamic web content generation.' },
-                           { icon: '📦', name: 'Maven', desc: 'Build automation, dependency management, POM.xml & project lifecycle.' },
-                           { icon: '🗄', name: 'Hibernate', desc: 'ORM mapping, sessions, caching & entity lifecycle.' },
-                           { icon: '💎', name: 'JPA', desc: 'Repositories, queries, relationships & the Java persistence standard.' },
-                           { icon: '🌱', name: 'Spring', desc: 'IoC, dependency injection, beans & the core of the Spring ecosystem.' },
-                           { icon: '🚀', name: 'Spring Boot', desc: 'Auto-configuration, REST APIs, starters & building production-ready apps fast.' },
-                           { icon: '🔐', name: 'Spring Security', desc: 'Authentication, authorization, JWT & securing your endpoints.' },
-                           { icon: '🔗', name: 'REST API', desc: 'RESTful design, HTTP methods, status codes & API best practices.' },
-                           { icon: '🧩', name: 'Microservices', desc: 'Service decomposition, Eureka, API Gateway & distributed systems patterns.' },
-                           { icon: '🗃️', name: 'MySQL', desc: 'SQL queries, joins, indexes, stored procedures & database design.' },
-                           { icon: '🐙', name: 'Git & GitHub', desc: 'Version control, branching, merging, pull requests & collaboration.' },
-                           { icon: '🐳', name: 'Docker', desc: 'Containerization, Dockerfile, images & deploying Java apps with Docker Compose.' },
-                           { icon: '☁️', name: 'AWS', desc: 'EC2, S3, RDS, IAM & deploying Spring Boot apps on the cloud.' },
-                           { icon: '🎯', name: 'Interview Questions', desc: 'Top Java & Spring Boot interview questions & HR round preparation.' },
-                           { icon: '🏗️', name: 'Projects', desc: 'End-to-end Java projects — REST APIs, microservices & full-stack apps.' },
-                         ].map((topic) => (
-                           <div
-                             key={topic.name}
-                             className="topic-card"
-                             onClick={() => setSelectedTopic(topic.name)}
-                           >
-                             <span className="topic-icon">{topic.icon}</span>
-                             <h3>{topic.name}</h3>
-                             <p>{topic.desc}</p>
-                           </div>
-                         ))}
-                       </div>
-                     </>
-                   )}
+                        {showTopics && (
+                          <>
+                            <div className="topic-view-header">
+                              <button className="back-home-btn" onClick={() => setShowTopics(false)}>
+                                ← Back
+                              </button>
+                              <h2 className="topic-view-title">📚 Choose a Topic</h2>
+                            </div>
+                            <input
+                              type="text"
+                              className="topic-search-input"
+                              placeholder="🔍 Search topic..."
+                              value={searchQuery}
+                              onChange={(e) => setSearchQuery(e.target.value)}
+                              style={{ margin: '0.75rem 0', width: '100%', boxSizing: 'border-box' }}
+                            />
+                            <hr style={{ margin: '15px 0', borderColor: '#334155' }} />
+                            <div className="topics-grid">
+                              {[
+                                { icon: '{ }', name: 'Core Java', desc: 'OOPs, collections, streams, exceptions & the fundamentals every backend dev needs.' },
+                                { icon: '☕', name: 'Advanced Java', desc: 'Multithreading, concurrency, JVM internals & memory management.' },
+                                { icon: '🔌', name: 'JDBC', desc: 'Database connectivity, PreparedStatement, ResultSet & transaction management.' },
+                                { icon: '🌐', name: 'Servlet', desc: 'HTTP request/response lifecycle, filters, session management & web app fundamentals.' },
+                                { icon: '📄', name: 'JSP', desc: 'Java Server Pages, JSTL, EL expressions & dynamic web content generation.' },
+                                { icon: '📦', name: 'Maven', desc: 'Build automation, dependency management, POM.xml & project lifecycle.' },
+                                { icon: '🗄', name: 'Hibernate', desc: 'ORM mapping, sessions, caching & entity lifecycle.' },
+                                { icon: '💎', name: 'JPA', desc: 'Repositories, queries, relationships & the Java persistence standard.' },
+                                { icon: '🌱', name: 'Spring', desc: 'IoC, dependency injection, beans & the core of the Spring ecosystem.' },
+                                { icon: '🚀', name: 'Spring Boot', desc: 'Auto-configuration, REST APIs, starters & building production-ready apps fast.' },
+                                { icon: '🔐', name: 'Spring Security', desc: 'Authentication, authorization, JWT & securing your endpoints.' },
+                                { icon: '🔗', name: 'REST API', desc: 'RESTful design, HTTP methods, status codes & API best practices.' },
+                                { icon: '🧩', name: 'Microservices', desc: 'Service decomposition, Eureka, API Gateway & distributed systems patterns.' },
+                                { icon: '🗃️', name: 'MySQL', desc: 'SQL queries, joins, indexes, stored procedures & database design.' },
+                                { icon: '🐙', name: 'Git & GitHub', desc: 'Version control, branching, merging, pull requests & collaboration.' },
+                                { icon: '🐳', name: 'Docker', desc: 'Containerization, Dockerfile, images & deploying Java apps with Docker Compose.' },
+                                { icon: '☁️', name: 'AWS', desc: 'EC2, S3, RDS, IAM & deploying Spring Boot apps on the cloud.' },
+                                { icon: '🎯', name: 'Interview Questions', desc: 'Top Java & Spring Boot interview questions & HR round preparation.' },
+                                { icon: '🏗️', name: 'Projects', desc: 'End-to-end Java projects — REST APIs, microservices & full-stack apps.' },
+                              ]
+                                .filter(t => t.name.toLowerCase().includes(searchQuery.toLowerCase()))
+                                .map((topic) => (
+                                  <div
+                                    key={topic.name}
+                                    className="topic-card"
+                                    onClick={() => {
+                                      setSelectedTopic(topic.name);
+                                      setShowTopics(false);
+                                      setSearchQuery("");
+                                    }}
+                                  >
+                                    <span className="topic-icon">{topic.icon}</span>
+                                    <h3>{topic.name}</h3>
+                                    <p>{topic.desc}</p>
+                                  </div>
+                                ))}
+                            </div>
+                          </>
+                        )}
+                      </>
+                    )}
 
                    {/* TOPIC VIEW - jab topic select ho */}
                    {selectedTopic && (
