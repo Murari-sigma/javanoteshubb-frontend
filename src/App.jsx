@@ -445,7 +445,67 @@ const handleDownloadPDF = (noteTitle, elementId) => {
                        </div>
                      )}
 
+                    {showContact && (
+                      <div className="modal-overlay" onClick={() => setShowContact(false)}>
+                        <div className="contact-page" onClick={(e) => e.stopPropagation()}>
 
+                          <button className="back-home-btn" onClick={() => setShowContact(false)}
+                            style={{marginBottom: '1rem'}}>
+                            ← Back
+                          </button>
+
+                          <h2 className="contact-title">📬 Contact Us</h2>
+                          <p className="contact-subtitle">Feel free to reach out — always here to help!</p>
+
+                          <div className="contact-cards">
+
+                            <a href="mailto:pandeymurari571@gmail.com" className="contact-card">
+                              <div className="contact-card-icon">📧</div>
+                              <div>
+                                <p className="contact-card-label">Email</p>
+                                <p className="contact-card-value">pandeymurari571@gmail.com</p>
+                              </div>
+                            </a>
+
+                            <a href="https://linkedin.com/in/murari-sigma7" target="_blank"
+                              rel="noreferrer" className="contact-card">
+                              <div className="contact-card-icon">💼</div>
+                              <div>
+                                <p className="contact-card-label">LinkedIn</p>
+                                <p className="contact-card-value">murari-sigma7</p>
+                              </div>
+                            </a>
+
+                            <a href="https://github.com/Murari-sigma" target="_blank"
+                              rel="noreferrer" className="contact-card">
+                              <div className="contact-card-icon">🐙</div>
+                              <div>
+                                <p className="contact-card-label">GitHub</p>
+                                <p className="contact-card-value">Murari-sigma</p>
+                              </div>
+                            </a>
+
+                            <a href="https://instagram.com" target="_blank"
+                              rel="noreferrer" className="contact-card">
+                              <div className="contact-card-icon">📸</div>
+                              <div>
+                                <p className="contact-card-label">Instagram</p>
+                                <p className="contact-card-value">@murari_sigma</p>
+                              </div>
+                            </a>
+
+                            <a href="tel:+91XXXXXXXXXX" className="contact-card">
+                              <div className="contact-card-icon">📞</div>
+                              <div>
+                                <p className="contact-card-label">Phone</p>
+                                <p className="contact-card-value">+91 8235070324</p>
+                              </div>
+                            </a>
+
+                          </div>
+                        </div>
+                      </div>
+                    )}
 
                  {/* Content Area */}
                  <main className="content-area">
