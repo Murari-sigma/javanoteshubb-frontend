@@ -578,17 +578,29 @@ const handleDownloadPDF = (noteTitle, elementId) => {
                              value={searchQuery}
                              onChange={(e) => setSearchQuery(e.target.value)}
                            />
-                           {(currentUser?.role === "ADMIN" || currentUser?.email === "pandeymurari571@gmail.com") && (
-                             <button className="add-btn" onClick={handleOpenAddModal}>
-                               + Add Note
-                             </button>
-                           )}
+
                          </div>
                        </div>
 
                        <hr style={{ margin: '15px 0', borderColor: '#334155' }} />
 
                        {loading && <p>Loading notes...</p>}
+
+                       {selectedSubtopic && (
+                         <div className="subtopic-view-header">
+                           <button className="back-home-btn" onClick={() => setSelectedSubtopic(null)}>
+                             ← Back to Topics
+                           </button>
+                           <h3 className="topic-view-title">📘 {selectedSubtopic}</h3>
+
+                           {/* Add Note - Sirf Admin */}
+                           {(currentUser?.role === "ADMIN" || currentUser?.email === "pandeymurari571@gmail.com") && (
+                             <button className="add-btn" onClick={handleOpenAddModal}>
+                               + Add Note
+                             </button>
+                           )}
+                         </div>
+                       )}
 
                        {/* Core Java subtopics - jab notes nahi hain */}
                        {!loading && notes.length === 0 && selectedTopic === "Core Java" && (
@@ -676,6 +688,7 @@ const handleDownloadPDF = (noteTitle, elementId) => {
                              <div className="note-header">
                                <h3>{note.title}</h3>
                                <div className="note-actions">
+
                                  {/* Download - sabke liye */}
                                  <button
                                    className="download-btn"
@@ -683,7 +696,8 @@ const handleDownloadPDF = (noteTitle, elementId) => {
                                  >
                                    ⬇️ Download
                                  </button>
-                                 {/* Edit/Delete - sirf Admin */}
+
+                                 {/* Edit + Delete - Sirf Admin */}
                                  {(currentUser?.role === "ADMIN" || currentUser?.email === "pandeymurari571@gmail.com") && (
                                    <>
                                      <button className="edit-btn" onClick={() => handleOpenEditModal(note)}>
@@ -694,6 +708,7 @@ const handleDownloadPDF = (noteTitle, elementId) => {
                                      </button>
                                    </>
                                  )}
+
                                </div>
                              </div>
                              <div id={`note-${note.id || note._id}`} className="note-content">
