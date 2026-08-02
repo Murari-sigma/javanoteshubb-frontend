@@ -37,6 +37,7 @@ function App() {
   const [forgotEmail, setForgotEmail] = useState("");
 
   // App Main States
+  const [selectedSubtopic, setSelectedSubtopic] = useState(null);
   const [selectedTopic, setSelectedTopic] = useState("Core Java");
   const [searchQuery, setSearchQuery] = useState("");
   const [notes, setNotes] = useState([]);
