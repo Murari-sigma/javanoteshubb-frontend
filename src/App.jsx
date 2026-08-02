@@ -268,7 +268,7 @@ const handleDownloadPDF = (noteTitle, elementId) => {
               alt="Java Logo"
               width="40"
             />
-            <h2>Java Developer Notes</h2>
+            <h2>Java Developer</h2>
           </div>
           <h3>{isSignup ? "Create Student Account" : "Welcome Back! Please Login"}</h3>
 
