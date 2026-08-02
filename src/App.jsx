@@ -538,6 +538,77 @@ const handleDownloadPDF = (noteTitle, elementId) => {
                         <p>Arrays, linked lists, trees, graphs & problem-solving patterns for interviews.</p>
                       </div>
                       <div className="topic-card">
+                        <span className="topic-icon">🔌</span>
+                        <h3>JDBC</h3>
+                        <p>Database connectivity, PreparedStatement, ResultSet & transaction management in Java.</p>
+                      </div>
+
+                      <div className="topic-card">
+                        <span className="topic-icon">🌐</span>
+                        <h3>Servlet</h3>
+                        <p>HTTP request/response lifecycle, filters, session management & web app fundamentals.</p>
+                      </div>
+
+                      <div className="topic-card">
+                        <span className="topic-icon">📄</span>
+                        <h3>JSP</h3>
+                        <p>Java Server Pages, JSTL, EL expressions & dynamic web content generation.</p>
+                      </div>
+
+                      <div className="topic-card">
+                        <span className="topic-icon">📦</span>
+                        <h3>Maven</h3>
+                        <p>Build automation, dependency management, POM.xml & project lifecycle management.</p>
+                      </div>
+
+                      <div className="topic-card">
+                        <span className="topic-icon">🔗</span>
+                        <h3>REST API</h3>
+                        <p>RESTful design, HTTP methods, status codes, Postman testing & API best practices.</p>
+                      </div>
+
+                      <div className="topic-card">
+                        <span className="topic-icon">🧩</span>
+                        <h3>Microservices</h3>
+                        <p>Service decomposition, Eureka, API Gateway, Feign client & distributed systems patterns.</p>
+                      </div>
+
+                      <div className="topic-card">
+                        <span className="topic-icon">🗃️</span>
+                        <h3>MySQL</h3>
+                        <p>SQL queries, joins, indexes, stored procedures & database design for Java apps.</p>
+                      </div>
+
+                      <div className="topic-card">
+                        <span className="topic-icon">🐙</span>
+                        <h3>Git & GitHub</h3>
+                        <p>Version control, branching, merging, pull requests & collaborative workflow strategies.</p>
+                      </div>
+
+                      <div className="topic-card">
+                        <span className="topic-icon">🐳</span>
+                        <h3>Docker</h3>
+                        <p>Containerization, Dockerfile, images, volumes & deploying Java apps with Docker Compose.</p>
+                      </div>
+
+                      <div className="topic-card">
+                        <span className="topic-icon">☁️</span>
+                        <h3>AWS</h3>
+                        <p>EC2, S3, RDS, IAM, Elastic Beanstalk & deploying Spring Boot apps on the cloud.</p>
+                      </div>
+
+                      <div className="topic-card">
+                        <span className="topic-icon">🎯</span>
+                        <h3>Interview Questions</h3>
+                        <p>Top Java & Spring Boot interview questions, coding problems & HR round preparation.</p>
+                      </div>
+
+                      <div className="topic-card">
+                        <span className="topic-icon">🏗️</span>
+                        <h3>Projects</h3>
+                        <p>End-to-end Java projects — REST APIs, microservices, full-stack apps & resume-worthy builds.</p>
+                      </div>
+                      <div className="topic-card">
                         <span className="topic-icon">☕</span>
                         <h3>Advanced Java</h3>
                         <p>Multithreading, concurrency, JVM internals & memory management.</p>
