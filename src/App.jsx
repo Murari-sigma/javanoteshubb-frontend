@@ -39,7 +39,7 @@ function App() {
 
   // App Main States
   const [selectedSubtopic, setSelectedSubtopic] = useState(null);
-  const [selectedTopic, setSelectedTopic] = useState("Core Java");
+  const [selectedTopic, setSelectedTopic] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [notes, setNotes] = useState([]);
   const [loading, setLoading] = useState(false);
