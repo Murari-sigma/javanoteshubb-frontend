@@ -417,17 +417,13 @@ const handleDownloadPDF = (noteTitle, elementId) => {
                          onClick={() => {
                            setSelectedTopic(null);
                            setShowMenu(false);
-                           window.scrollTo({
-                             top: 0,
-                             behavior: "smooth",
-                           });
+                           window.scrollTo({ top: 0, behavior: "smooth" });
                          }}
                        >
                          🏠 Back to Home
                        </button>
 
-                       <hr />
-
+                            <hr />
                        <button
                          className="menu-item logout-item"
                          onClick={() => {
