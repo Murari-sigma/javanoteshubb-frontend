@@ -503,216 +503,189 @@ const handleDownloadPDF = (noteTitle, elementId) => {
           </ul>
         </aside>
 
-              {/* Content Area */}
-              <main className="content-area">
+                 {/* Content Area */}
+                 <main className="content-area">
 
-                {!loading && notes.length === 0 && (
-                  <section className="hero">
-                    <span className="hero-eyebrow">&lt;/&gt; developer.hub</span>
-                    <h1 className="hero-title">Welcome to Java Developer Hub ☕</h1>
-                    <p className="hero-subtitle">
-                      Your notes, organized — from Core Java basics to Spring Boot in production.
-                    </p>
-                    <button className="start-btn" onClick={() => setShowAddNote(true)}>
-                      Start Learning
-                    </button>
-                  </section>
-                )}
+                   {/* HOME VIEW - jab koi topic select nahi */}
+                   {!selectedTopic && (
+                     <>
+                       <section className="hero">
+                         <span className="hero-eyebrow">&lt;/&gt; developer.hub</span>
+                         <h1 className="hero-title">Welcome to Java Developer Hub ☕</h1>
+                         <p className="hero-subtitle">
+                           Your notes, organized — from Core Java basics to Spring Boot in production.
+                         </p>
+                         <button className="start-btn" onClick={() => setSelectedTopic("Core Java")}>
+                           Start Learning
+                         </button>
+                       </section>
 
-                <hr style={{ margin: '15px 0', borderColor: '#334155' }} />
+                       <hr style={{ margin: '15px 0', borderColor: '#334155' }} />
 
-                {loading && <p>Loading notes from database...</p>}
+                       <h2 className="topics-heading">Explore Topics</h2>
+                       <div className="topics-grid">
+                         {[
+                           { icon: '{ }', name: 'Core Java', desc: 'OOPs, collections, streams, exceptions & the fundamentals every backend dev needs.' },
+                           { icon: '⛓', name: 'Advanced Java', desc: 'Multithreading, concurrency, JVM internals & memory management.' },
+                           { icon: '🔌', name: 'JDBC', desc: 'Database connectivity, PreparedStatement, ResultSet & transaction management.' },
+                           { icon: '🌐', name: 'Servlet', desc: 'HTTP request/response lifecycle, filters, session management & web app fundamentals.' },
+                           { icon: '📄', name: 'JSP', desc: 'Java Server Pages, JSTL, EL expressions & dynamic web content generation.' },
+                           { icon: '📦', name: 'Maven', desc: 'Build automation, dependency management, POM.xml & project lifecycle.' },
+                           { icon: '🗄', name: 'Hibernate', desc: 'ORM mapping, sessions, caching & entity lifecycle.' },
+                           { icon: '💎', name: 'JPA', desc: 'Repositories, queries, relationships & the Java persistence standard.' },
+                           { icon: '🌱', name: 'Spring', desc: 'IoC, dependency injection, beans & the core of the Spring ecosystem.' },
+                           { icon: '🚀', name: 'Spring Boot', desc: 'Auto-configuration, REST APIs, starters & building production-ready apps fast.' },
+                           { icon: '🔐', name: 'Spring Security', desc: 'Authentication, authorization, JWT & securing your endpoints.' },
+                           { icon: '🔗', name: 'REST API', desc: 'RESTful design, HTTP methods, status codes & API best practices.' },
+                           { icon: '🧩', name: 'Microservices', desc: 'Service decomposition, Eureka, API Gateway & distributed systems patterns.' },
+                           { icon: '🗃️', name: 'MySQL', desc: 'SQL queries, joins, indexes, stored procedures & database design.' },
+                           { icon: '🐙', name: 'Git & GitHub', desc: 'Version control, branching, merging, pull requests & collaboration.' },
+                           { icon: '🐳', name: 'Docker', desc: 'Containerization, Dockerfile, images & deploying Java apps with Docker Compose.' },
+                           { icon: '☁️', name: 'AWS', desc: 'EC2, S3, RDS, IAM & deploying Spring Boot apps on the cloud.' },
+                           { icon: '🎯', name: 'Interview Questions', desc: 'Top Java & Spring Boot interview questions & HR round preparation.' },
+                           { icon: '🏗️', name: 'Projects', desc: 'End-to-end Java projects — REST APIs, microservices & full-stack apps.' },
+                         ].map((topic) => (
+                           <div
+                             key={topic.name}
+                             className="topic-card"
+                             onClick={() => setSelectedTopic(topic.name)}
+                           >
+                             <span className="topic-icon">{topic.icon}</span>
+                             <h3>{topic.name}</h3>
+                             <p>{topic.desc}</p>
+                           </div>
+                         ))}
+                       </div>
+                     </>
+                   )}
 
-                {!loading && notes.length === 0 && (
-                  <>
-                    <h2 className="topics-heading">Explore Topics</h2>
-                    <div className="topics-grid">
-                      <div className="topic-card">
-                        <span className="topic-icon">{'{ }'}</span>
-                        <h3>Core Java</h3>
-                        <p>OOPs, collections, streams, exceptions & the fundamentals every backend dev needs.</p>
-                      </div>
-                      <div className="topic-card">
-                        <span className="topic-icon">⛓</span>
-                        <h3>Data Structures</h3>
-                        <p>Arrays, linked lists, trees, graphs & problem-solving patterns for interviews.</p>
-                      </div>
-                      <div className="topic-card">
-                        <span className="topic-icon">🔌</span>
-                        <h3>JDBC</h3>
-                        <p>Database connectivity, PreparedStatement, ResultSet & transaction management in Java.</p>
-                      </div>
+                   {/* TOPIC VIEW - jab topic select ho */}
+                   {selectedTopic && (
+                     <>
+                       {/* Topic Header */}
+                       <div className="topic-view-header">
+                         <button className="back-home-btn" onClick={() => setSelectedTopic(null)}>
+                           ← Back to Home
+                         </button>
+                         <h2 className="topic-view-title">📘 {selectedTopic}</h2>
 
-                      <div className="topic-card">
-                        <span className="topic-icon">🌐</span>
-                        <h3>Servlet</h3>
-                        <p>HTTP request/response lifecycle, filters, session management & web app fundamentals.</p>
-                      </div>
+                         {/* Search + Add Note */}
+                         <div className="topic-view-actions">
+                           <input
+                             type="text"
+                             className="topic-search-input"
+                             placeholder="🔍 Search notes..."
+                             value={searchQuery}
+                             onChange={(e) => setSearchQuery(e.target.value)}
+                           />
+                           {(currentUser?.role === "ADMIN" || currentUser?.email === "pandeymurari571@gmail.com") && (
+                             <button className="add-btn" onClick={handleOpenAddModal}>
+                               + Add Note
+                             </button>
+                           )}
+                         </div>
+                       </div>
 
-                      <div className="topic-card">
-                        <span className="topic-icon">📄</span>
-                        <h3>JSP</h3>
-                        <p>Java Server Pages, JSTL, EL expressions & dynamic web content generation.</p>
-                      </div>
+                       <hr style={{ margin: '15px 0', borderColor: '#334155' }} />
 
-                      <div className="topic-card">
-                        <span className="topic-icon">📦</span>
-                        <h3>Maven</h3>
-                        <p>Build automation, dependency management, POM.xml & project lifecycle management.</p>
-                      </div>
+                       {loading && <p>Loading notes...</p>}
 
-                      <div className="topic-card">
-                        <span className="topic-icon">🔗</span>
-                        <h3>REST API</h3>
-                        <p>RESTful design, HTTP methods, status codes, Postman testing & API best practices.</p>
-                      </div>
+                       {/* Core Java subtopics - jab notes nahi hain */}
+                       {!loading && notes.length === 0 && selectedTopic === "Core Java" && (
+                         <div className="subtopics-grid">
+                           {[
+                             { num: '01', name: 'Introduction to Java', desc: 'History, JDK/JRE/JVM, how Java works, platform independence.' },
+                             { num: '02', name: 'Java Basics', desc: 'Data types, variables, operators, type casting & input/output.' },
+                             { num: '03', name: 'Control Statements', desc: 'if-else, switch, loops (for, while, do-while) & break/continue.' },
+                             { num: '04', name: 'Arrays', desc: 'Single & multi-dimensional arrays, array methods & common problems.' },
+                             { num: '05', name: 'Methods (Functions)', desc: 'Method declaration, parameters, return types, overloading & recursion.' },
+                             { num: '06', name: 'OOP (Class, Object, Constructor)', desc: 'Classes, objects, constructors, this keyword & instance vs static.' },
+                             { num: '07', name: 'Packages', desc: 'Built-in & user-defined packages, import statements & access.' },
+                             { num: '08', name: 'Access Modifiers', desc: 'public, private, protected, default & their scope rules.' },
+                             { num: '09', name: 'String Handling', desc: 'String, StringBuilder, StringBuffer, methods & immutability.' },
+                             { num: '10', name: 'Wrapper Classes', desc: 'Integer, Double, Character — autoboxing, unboxing & utility methods.' },
+                             { num: '11', name: 'Exception Handling', desc: 'try-catch-finally, throws, custom exceptions & exception hierarchy.' },
+                             { num: '12', name: 'Collections Framework', desc: 'List, Set, Map, Queue — ArrayList, HashMap, LinkedList & more.' },
+                             { num: '13', name: 'Generics', desc: 'Generic classes, methods, wildcards & type safety.' },
+                             { num: '14', name: 'Multithreading', desc: 'Thread class, Runnable, synchronization, deadlock & thread lifecycle.' },
+                             { num: '15', name: 'Lambda Expressions', desc: 'Functional interfaces, arrow syntax & use in collections.' },
+                             { num: '16', name: 'Stream API', desc: 'filter, map, reduce, collect & stream operations on collections.' },
+                             { num: '17', name: 'File Handling (I/O)', desc: 'FileReader, FileWriter, BufferedReader, Scanner & file operations.' },
+                             { num: '18', name: 'NIO', desc: 'Non-blocking I/O, Path, Files, Channels & Buffers.' },
+                             { num: '19', name: 'Date & Time API', desc: 'LocalDate, LocalTime, LocalDateTime, DateTimeFormatter & Period.' },
+                             { num: '20', name: 'Java Memory Management', desc: 'Stack vs Heap, Garbage Collection, GC types & memory leaks.' },
+                             { num: '21', name: 'Inner Classes', desc: 'Static nested, inner, local & anonymous classes with use cases.' },
+                             { num: '22', name: 'Enums', desc: 'Enum declaration, methods, constructors & use in switch.' },
+                             { num: '23', name: 'Annotations', desc: '@Override, @Deprecated, custom annotations & retention policies.' },
+                             { num: '24', name: 'Java 8+ Features', desc: 'Optional, default methods, method references & new API features.' },
+                           ].map((sub) => (
+                             <div key={sub.num} className="subtopic-card">
+                               <span className="subtopic-num">{sub.num}</span>
+                               <div>
+                                 <h4>{sub.name}</h4>
+                                 <p>{sub.desc}</p>
+                               </div>
+                             </div>
+                           ))}
+                         </div>
+                       )}
 
-                      <div className="topic-card">
-                        <span className="topic-icon">🧩</span>
-                        <h3>Microservices</h3>
-                        <p>Service decomposition, Eureka, API Gateway, Feign client & distributed systems patterns.</p>
-                      </div>
+                       {/* Notes List */}
+                       {!loading && notes
+                         .filter(note => note.title?.toLowerCase().includes(searchQuery.toLowerCase()))
+                         .map((note) => (
+                           <div key={note.id || note._id} className="note-card">
+                             <div className="note-header">
+                               <h3>{note.title}</h3>
+                               <div className="note-actions">
+                                 {/* Download - sabke liye */}
+                                 <button
+                                   className="download-btn"
+                                   onClick={() => handleDownloadPDF(note.title, `note-${note.id || note._id}`)}
+                                 >
+                                   ⬇️ Download
+                                 </button>
+                                 {/* Edit/Delete - sirf Admin */}
+                                 {(currentUser?.role === "ADMIN" || currentUser?.email === "pandeymurari571@gmail.com") && (
+                                   <>
+                                     <button className="edit-btn" onClick={() => handleOpenEditModal(note)}>
+                                       ✏️ Edit
+                                     </button>
+                                     <button className="delete-btn" onClick={() => handleDeleteNote(note.id || note._id)}>
+                                       🗑️ Delete
+                                     </button>
+                                   </>
+                                 )}
+                               </div>
+                             </div>
+                             <div id={`note-${note.id || note._id}`} className="note-content">
+                               <ReactMarkdown
+                                 children={note.content}
+                                 components={{
+                                   code({ node, inline, className, children, ...props }) {
+                                     const match = /language-(\w+)/.exec(className || '');
+                                     return !inline && match ? (
+                                       <SyntaxHighlighter
+                                         style={vscDarkPlus}
+                                         language={match[1]}
+                                         PreTag="div"
+                                         {...props}
+                                       >
+                                         {String(children).replace(/\n$/, '')}
+                                       </SyntaxHighlighter>
+                                     ) : (
+                                       <code className={className} {...props}>{children}</code>
+                                     );
+                                   }
+                                 }}
+                               />
+                             </div>
+                           </div>
+                         ))}
+                     </>
+                   )}
 
-                      <div className="topic-card">
-                        <span className="topic-icon">🗃️</span>
-                        <h3>MySQL</h3>
-                        <p>SQL queries, joins, indexes, stored procedures & database design for Java apps.</p>
-                      </div>
-
-                      <div className="topic-card">
-                        <span className="topic-icon">🐙</span>
-                        <h3>Git & GitHub</h3>
-                        <p>Version control, branching, merging, pull requests & collaborative workflow strategies.</p>
-                      </div>
-
-                      <div className="topic-card">
-                        <span className="topic-icon">🐳</span>
-                        <h3>Docker</h3>
-                        <p>Containerization, Dockerfile, images, volumes & deploying Java apps with Docker Compose.</p>
-                      </div>
-
-                      <div className="topic-card">
-                        <span className="topic-icon">☁️</span>
-                        <h3>AWS</h3>
-                        <p>EC2, S3, RDS, IAM, Elastic Beanstalk & deploying Spring Boot apps on the cloud.</p>
-                      </div>
-
-                      <div className="topic-card">
-                        <span className="topic-icon">🎯</span>
-                        <h3>Interview Questions</h3>
-                        <p>Top Java & Spring Boot interview questions, coding problems & HR round preparation.</p>
-                      </div>
-
-                      <div className="topic-card">
-                        <span className="topic-icon">🏗️</span>
-                        <h3>Projects</h3>
-                        <p>End-to-end Java projects — REST APIs, microservices, full-stack apps & resume-worthy builds.</p>
-                      </div>
-                      <div className="topic-card">
-                        <span className="topic-icon">☕</span>
-                        <h3>Advanced Java</h3>
-                        <p>Multithreading, concurrency, JVM internals & memory management.</p>
-                      </div>
-                      <div className="topic-card">
-                        <span className="topic-icon">🌱</span>
-                        <h3>Spring</h3>
-                        <p>IoC, dependency injection, beans & the core of the Spring ecosystem.</p>
-                      </div>
-                      <div className="topic-card">
-                        <span className="topic-icon">🚀</span>
-                        <h3>Spring Boot</h3>
-                        <p>Auto-configuration, REST APIs, starters & building production-ready apps fast.</p>
-                      </div>
-                      <div className="topic-card">
-                        <span className="topic-icon">🔐</span>
-                        <h3>Spring Security</h3>
-                        <p>Authentication, authorization, JWT & securing your endpoints.</p>
-                      </div>
-                      <div className="topic-card">
-                        <span className="topic-icon">🗄</span>
-                        <h3>Hibernate</h3>
-                        <p>ORM mapping, sessions, caching & entity lifecycle.</p>
-                      </div>
-                      <div className="topic-card">
-                        <span className="topic-icon">📦</span>
-                        <h3>JPA</h3>
-                        <p>Repositories, queries, relationships & the Java persistence standard.</p>
-                      </div>
-                    </div>
-                  </>
-                )}
-
-                {!loading && notes.length > 0 && (
-                  notes.map((note) => (
-                    <div key={note.id || note._id} className="note-card">
-                      <div className="note-header">
-                        <h3>{note.title}</h3>
-
-                        <div className="action-buttons" style={{ display: 'flex', gap: '8px' }}>
-                          {/* PDF Download Button */}
-                          <button
-                            className="pdf-btn"
-                            onClick={() => handleDownloadPDF(note.title, `pdf-content-${note.id}`)}
-                          >
-                            📄 Download PDF
-                          </button>
-
-                          {/* Edit/Delete Buttons for Admin */}
-                          {(currentUser?.role === 'ADMIN' || currentUser?.email === 'pandeymurari571@gmail.com') && (
-                            <div style={{ display: 'flex', gap: '10px' }}>
-                              <button className="edit-btn" onClick={() => handleOpenEditModal(note)}>✏️ Edit</button>
-                              <button
-                                className="delete-btn"
-                                onClick={() => handleDeleteNote(note.id || note._id)}
-                              >
-                                🗑️ Delete
-                              </button>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-
-                      <div id={`pdf-content-${note.id}`} className="note-content">
-                        <ReactMarkdown
-                          components={{
-                            code({ node, inline, className, children, ...props }) {
-                              const match = /language-(\w+)/.exec(className || '');
-                              const codeText = String(children).replace(/\n$/, '');
-
-                              return !inline && match ? (
-                                <div style={{ position: 'relative' }}>
-                                  <button
-                                    onClick={() => {
-                                      navigator.clipboard.writeText(codeText);
-                                      alert("Code copied to clipboard! 📋");
-                                    }}
-                                  >
-                                    Copy
-                                  </button>
-                                  <SyntaxHighlighter
-                                    style={vscDarkPlus}
-                                    language={match[1]}
-                                    PreTag="div"
-                                    {...props}
-                                  >
-                                    {codeText}
-                                  </SyntaxHighlighter>
-                                </div>
-                              ) : (
-                                <code className={className} {...props}>
-                                  {children}
-                                </code>
-                              );
-                            }
-                          }}
-                        >
-                          {note.content}
-                        </ReactMarkdown>
-                      </div>
-                    </div>
-                  ))
-                )}
-              </main>
+                 </main>
 
                          {/* Add / Edit Modal */}
                          {showModal && (

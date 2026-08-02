@@ -706,6 +706,159 @@ p.toggle-auth:hover {
     border-radius: 4px;
   }
 
+  /* Topic View Header */
+  .topic-view-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .back-home-btn {
+    background: transparent;
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    color: #38bdf8;
+    padding: 0.4rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    width: fit-content;
+    transition: background 0.15s ease;
+  }
+
+  .back-home-btn:hover {
+    background: rgba(56, 189, 248, 0.1);
+  }
+
+  .topic-view-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0;
+  }
+
+  .topic-view-actions {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .topic-search-input {
+    flex: 1;
+    min-width: 200px;
+    padding: 0.55rem 0.9rem;
+    background: #1e293b;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    color: #e2e8f0;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .topic-search-input:focus {
+    border-color: rgba(56, 189, 248, 0.5);
+  }
+
+  /* Subtopics Grid (Core Java 24 topics) */
+  .subtopics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .subtopic-card {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    background: #1e293b;
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .subtopic-card:hover {
+    border-color: rgba(56, 189, 248, 0.35);
+    transform: translateY(-2px);
+  }
+
+  .subtopic-num {
+    font-family: 'Courier New', monospace;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #38bdf8;
+    min-width: 30px;
+  }
+
+  .subtopic-card h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 0.3rem;
+  }
+
+  .subtopic-card p {
+    font-size: 0.82rem;
+    color: #94a3b8;
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  /* Note Action Buttons */
+  .note-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .download-btn {
+    background: rgba(56, 189, 248, 0.1);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    color: #38bdf8;
+    padding: 0.35rem 0.75rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.82rem;
+    transition: background 0.15s;
+  }
+
+  .download-btn:hover {
+    background: rgba(56, 189, 248, 0.2);
+  }
+
+  .edit-btn {
+    background: rgba(250, 204, 21, 0.1);
+    border: 1px solid rgba(250, 204, 21, 0.3);
+    color: #facc15;
+    padding: 0.35rem 0.75rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.82rem;
+    transition: background 0.15s;
+  }
+
+  .edit-btn:hover {
+    background: rgba(250, 204, 21, 0.2);
+  }
+
+  .delete-btn {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #f87171;
+    padding: 0.35rem 0.75rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.82rem;
+    transition: background 0.15s;
+  }
+
+  .delete-btn:hover {
+    background: rgba(239, 68, 68, 0.2);
+  }
+
 /* ===========================
    MOBILE MENU
 =========================== */
