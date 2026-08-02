@@ -509,50 +509,22 @@ const handleDownloadPDF = (noteTitle, elementId) => {
 
         {/* Content Area */}
         <main className="content-area">
-          {loading && (
-            <div style={{ textAlign: 'center', padding: '30px 0', color: '#60a5fa' }}>
-              <p>⏳ Loading notes from database...</p>
-            </div>
-          )}
+          <h1>Welcome to Java Developer Hub</h1>
+          <hr style={{ margin: '15px 0', borderColor: '#334155' }} />
+
+          {loading && <p>Loading notes from database...</p>}
 
           {!loading && notes.length === 0 && (
-            <div style={{ textAlign: 'center', padding: '40px 20px', color: '#ffffff' }}>
-              {/* Professional Heading */}
-              <h1 style={{ fontSize: '2.2rem', fontWeight: 'bold', color: '#60a5fa', marginBottom: '10px' }}>
-                Welcome to Java Developer Hub 🚀
-              </h1>
-
-              {/* Hero Subtitle */}
-              <p style={{ fontSize: '1.05rem', color: '#cbd5e1', maxWidth: '600px', margin: '0 auto 24px auto', lineHeight: '1.6' }}>
-                Master Core Java, Spring Boot, Microservices & Interview Prep with structured developer notes.
-              </p>
-
-              {/* Styled Card for Empty State */}
-              <div style={{
-                display: 'inline-block',
-                backgroundColor: '#1e293b',
-                border: '1px solid #334155',
-                padding: '16px 24px',
-                borderRadius: '10px',
-                boxShadow: '0 4px 12px rgba(0,0,0,0.3)'
-              }}>
-                <p style={{ color: '#94a3b8', fontSize: '0.95rem', margin: 0 }}>
-                  📌 No notes found for <strong style={{ color: '#38bdf8' }}>"{selectedTopic}"</strong>.
-                  Select another topic or click <strong style={{ color: '#38bdf8' }}>"+ Add Note"</strong> to write one!
-                </p>
-              </div>
-            </div>
+            <p className="no-notes">
+              Explore Core Java & Spring Boot topics from the sidebar menu, or click <strong>+ Add Note</strong> to create new notes!
+            </p>
           )}
 
           {!loading && notes.length > 0 && (
-            <>
-              <h1>{selectedTopic} Notes</h1>
-              <hr style={{ margin: '15px 0', borderColor: '#334155' }} />
-
-              {notes.map((note) => (
-                <div key={note.id || note._id} className="note-card">
-                  <div className="note-header">
-                    <h3>{note.title}</h3>
+            notes.map((note) => (
+              <div key={note.id || note._id} className="note-card">
+                <div className="note-header">
+                  <h3>{note.title}</h3>
 
                         <div className="action-buttons" style={{ display: 'flex', gap: '8px' }}>
                           {/* PDF Download Button */}
