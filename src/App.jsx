@@ -693,7 +693,7 @@ const handleDownloadPDF = (noteTitle, elementId) => {
                        )}
 
                        {/* Core Java subtopics - jab notes nahi hain */}
-                       {!loading && notes.length === 0 && selectedTopic === "Core Java" && (
+                       {!loading && notes.length === 0 && selectedTopic === "Core Java" && !selectedSubtopic && (
                          <div className="subtopics-grid">
                            {[
                              { num: '01', name: 'Introduction to Java', desc: 'History, JDK/JRE/JVM, how Java works, platform independence.' },
@@ -720,7 +720,9 @@ const handleDownloadPDF = (noteTitle, elementId) => {
                              { num: '22', name: 'Enums', desc: 'Enum declaration, methods, constructors & use in switch.' },
                              { num: '23', name: 'Annotations', desc: '@Override, @Deprecated, custom annotations & retention policies.' },
                              { num: '24', name: 'Java 8+ Features', desc: 'Optional, default methods, method references & new API features.' },
-                           ].map((sub) => (
+                           ]
+                       .filter(sub => sub.name.toLowerCase().includes(searchQuery.toLowerCase()))
+                       .map((sub) => (
                              <div key={sub.num} className="subtopic-card">
                                <span className="subtopic-num">{sub.num}</span>
                                <div>
@@ -732,7 +734,7 @@ const handleDownloadPDF = (noteTitle, elementId) => {
                          </div>
                        )}
 
-                      {!loading && notes.length === 0 && selectedTopic === "Advanced Java" && (
+                      {!loading && notes.length === 0 && selectedTopic === "Advanced Java" && !selectedSubtopic && (
                         <div className="subtopics-grid">
                           {[
                             { num: '01', name: 'Synchronization', desc: 'synchronized keyword, locks, race conditions & thread-safe code.' },
@@ -758,7 +760,9 @@ const handleDownloadPDF = (noteTitle, elementId) => {
                             { num: '21', name: 'SOLID Principles', desc: 'SRP, OCP, LSP, ISP, DIP with real Java code examples.' },
                             { num: '22', name: 'Immutable Class', desc: 'final fields, defensive copying, String immutability & benefits.' },
                             { num: '23', name: 'Java 8 Features', desc: 'Optional, default methods, Date/Time API & Stream improvements.' },
-                          ].map((sub) => (
+                          ]
+                      .filter(sub => sub.name.toLowerCase().includes(searchQuery.toLowerCase()))
+                      .map((sub) => (
                             <div key={sub.num} className="subtopic-card">
                               <span className="subtopic-num">{sub.num}</span>
                               <div>
