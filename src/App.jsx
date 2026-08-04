@@ -196,14 +196,14 @@ const handleDownloadPDF = (noteTitle, elementId) => {
    };
 
   // Open Form for Adding New Note
-  const handleOpenAddModal = () => {
-    setEditMode(false);
-    setCurrentNoteId(null);
-    setNewTitle("");
-    setNewCategory(selectedTopic);
-    setNewContent("");
-    setShowModal(true);
-  };
+const handleOpenAddModal = () => {
+  setEditMode(false);
+  setCurrentNoteId(null);
+  setNewTitle("");
+  setNewCategory(selectedSubtopic || selectedTopic);
+  setNewContent("");
+  setShowModal(true);
+};
 
   // Open Form for Editing Existing Note
   const handleOpenEditModal = (note) => {
@@ -694,21 +694,86 @@ const handleDownloadPDF = (noteTitle, elementId) => {
 
                        {loading && <p>Loading notes...</p>}
 
-                       {selectedSubtopic && (
-                         <div className="subtopic-view-header">
-                           <button className="back-home-btn" onClick={() => setSelectedSubtopic(null)}>
-                             ← Back to Topics
-                           </button>
-                           <h3 className="topic-view-title">📘 {selectedSubtopic}</h3>
+                      {selectedSubtopic && (
+                        <>
+                          <div className="subtopic-view-header">
+                            <button className="back-home-btn" onClick={() => {
+                              setSelectedSubtopic(null);
+                              setNotes([]);
+                              setSearchQuery("");
+                            }}>
+                              ← Back to Topics
+                            </button>
+                            <h3 className="topic-view-title">📘 {selectedSubtopic}</h3>
+                            {(currentUser?.role === "ADMIN" ||
+                              currentUser?.email === "pandeymurari571@gmail.com") && (
+                              <button className="add-btn" onClick={handleOpenAddModal}>
+                                + Add Note
+                              </button>
+                            )}
+                          </div>
 
-                           {/* Add Note - Sirf Admin */}
-                           {(currentUser?.role === "ADMIN" || currentUser?.email === "pandeymurari571@gmail.com") && (
-                             <button className="add-btn" onClick={handleOpenAddModal}>
-                               + Add Note
-                             </button>
-                           )}
-                         </div>
-                       )}
+                          <hr style={{ margin: '15px 0', borderColor: '#334155' }} />
+
+                          {loading && <p style={{color:'#94a3b8'}}>Loading notes...</p>}
+
+                          {!loading && notes.length === 0 && (
+                            <div className="empty-state">
+                              <p style={{color:'#64748b', textAlign:'center', marginTop:'2rem'}}>
+                                📭 No notes yet for <strong style={{color:'#38bdf8'}}>{selectedSubtopic}</strong>
+                                {(currentUser?.role === "ADMIN" ||
+                                  currentUser?.email === "pandeymurari571@gmail.com") &&
+                                  " — Click + Add Note to add content!"}
+                              </p>
+                            </div>
+                          )}
+
+                          {!loading && notes
+                            .filter(note => note.title?.toLowerCase().includes(searchQuery.toLowerCase()))
+                            .map((note) => (
+                              <div key={note.id || note._id} className="note-card">
+                                <div className="note-header">
+                                  <h3>{note.title}</h3>
+                                  <div className="note-actions">
+                                    <button className="download-btn"
+                                      onClick={() => handleDownloadPDF(note.title, `note-${note.id || note._id}`)}>
+                                      ⬇️ Download
+                                    </button>
+                                    {(currentUser?.role === "ADMIN" ||
+                                      currentUser?.email === "pandeymurari571@gmail.com") && (
+                                      <>
+                                        <button className="edit-btn" onClick={() => handleOpenEditModal(note)}>
+                                          ✏️ Edit
+                                        </button>
+                                        <button className="delete-btn"
+                                          onClick={() => handleDeleteNote(note.id || note._id)}>
+                                          🗑️ Delete
+                                        </button>
+                                      </>
+                                    )}
+                                  </div>
+                                </div>
+                                <div id={`note-${note.id || note._id}`} className="note-content">
+                                  <ReactMarkdown
+                                    children={note.content}
+                                    components={{
+                                      code({ node, inline, className, children, ...props }) {
+                                        const match = /language-(\w+)/.exec(className || '');
+                                        return !inline && match ? (
+                                          <SyntaxHighlighter style={vscDarkPlus} language={match[1]} PreTag="div" {...props}>
+                                            {String(children).replace(/\n$/, '')}
+                                          </SyntaxHighlighter>
+                                        ) : (
+                                          <code className={className} {...props}>{children}</code>
+                                        );
+                                      }
+                                    }}
+                                  />
+                                </div>
+                              </div>
+                            ))}
+                        </>
+                      )}
 
                        {/* Core Java subtopics - jab notes nahi hain */}
                        {!loading && notes.length === 0 && selectedTopic === "Core Java" && !selectedSubtopic && (
@@ -741,7 +806,8 @@ const handleDownloadPDF = (noteTitle, elementId) => {
                            ]
                        .filter(sub => sub.name.toLowerCase().includes(searchQuery.toLowerCase()))
                        .map((sub) => (
-                             <div key={sub.num} className="subtopic-card">
+                             <div key={sub.num} className="subtopic-card"
+                               onClick={() => setSelectedSubtopic(sub.name)}>
                                <span className="subtopic-num">{sub.num}</span>
                                <div>
                                  <h4>{sub.name}</h4>
