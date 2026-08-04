@@ -220,7 +220,7 @@ const handleOpenAddModal = () => {
     e.preventDefault();
     const noteData = {
       title: newTitle,
-      category: newCategory,
+      category: selectedSubtopic || newCategory,
       content: newContent
     };
 
@@ -229,7 +229,15 @@ const handleOpenAddModal = () => {
         .then(() => {
           alert("Note updated successfully! ✨");
           setShowModal(false);
-          fetchNotes();
+          // Subtopic ke notes refresh karo
+          if (selectedSubtopic) {
+            setLoading(true);
+            axios.get(`https://javanoteshubb-backend.onrender.com/notes/category/${selectedSubtopic}`)
+              .then((res) => { setNotes(res.data); setLoading(false); })
+              .catch(() => { setNotes([]); setLoading(false); });
+          } else {
+            fetchNotes();
+          }
         })
         .catch(() => alert("Error updating note"));
     } else {
@@ -237,10 +245,14 @@ const handleOpenAddModal = () => {
         .then(() => {
           alert("Note added successfully! 🎉");
           setShowModal(false);
-          if (newCategory === selectedTopic) {
-            fetchNotes();
+          // Subtopic ke notes refresh karo
+          if (selectedSubtopic) {
+            setLoading(true);
+            axios.get(`https://javanoteshubb-backend.onrender.com/notes/category/${selectedSubtopic}`)
+              .then((res) => { setNotes(res.data); setLoading(false); })
+              .catch(() => { setNotes([]); setLoading(false); });
           } else {
-            setSelectedTopic(newCategory);
+            fetchNotes();
           }
         })
         .catch(() => alert("Error adding note"));
