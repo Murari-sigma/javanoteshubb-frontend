@@ -849,7 +849,8 @@ const handleOpenAddModal = () => {
                           ]
                       .filter(sub => sub.name.toLowerCase().includes(searchQuery.toLowerCase()))
                       .map((sub) => (
-                            <div key={sub.num} className="subtopic-card">
+                            <div key={sub.num} className="subtopic-card"
+                            onClick={() => setSelectedSubtopic(sub.name)}>
                               <span className="subtopic-num">{sub.num}</span>
                               <div>
                                 <h4>{sub.name}</h4>
