@@ -815,6 +815,13 @@ p.toggle-auth:hover {
   gap: 10px;
 }
 
+.logo-container img {
+  display: block;
+  vertical-align: middle;
+  position: relative;
+  top: 0;
+}
+
 .logo-container h2 {
   font-size: 1.3rem;
   font-weight: 800;
@@ -825,7 +832,10 @@ p.toggle-auth:hover {
   filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.6));
   letter-spacing: -0.5px;
   margin: 0;
+  padding: 0;
   line-height: 1;
+  display: flex;
+  align-items: center;
 }
 
 .auth-card .logo-container {

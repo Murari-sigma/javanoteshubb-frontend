@@ -267,7 +267,9 @@ const handleDownloadPDF = (noteTitle, elementId) => {
             <img
               src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg"
               alt="Java Logo"
-              width="40"
+              width="28"
+              height="28"
+              style={{ display: 'block' }}
             />
             <h2>Java Developer</h2>
           </div>
@@ -377,11 +379,13 @@ const handleDownloadPDF = (noteTitle, elementId) => {
       {/* Navbar */}
       <nav className="navbar">
         <div className="logo-container">
-          <img
-            src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg"
-            alt="Java Logo"
-            width="32"
-          />
+               <img
+                        src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg"
+                        alt="Java Logo"
+                        width="28"
+                        height="28"
+                        style={{ display: 'block' }}
+                      />
           <h2>Java Developer</h2>
         </div>
 
