@@ -676,52 +676,22 @@ const handleOpenAddModal = () => {
                              </div>
 
                              {/* 👇 QUIZ YAHAN HAI */}
-                             {selectedQuizTopic === "Core Java" && (
-                               <div className="quiz-container">
-
-                                 <h2>🎯 Core Java Quiz</h2>
-
-                                 <p>Question 1 of 20</p>
-
-                                 <h3>
-                                   Which keyword is used to create a class in Java?
-                                 </h3>
-
-                                 <div className="quiz-options">
-
-                                   <button className="quiz-option">
-                                     A. class
-                                   </button>
-
-                                   <button className="quiz-option">
-                                     B. new
-                                   </button>
-
-                                   <button className="quiz-option">
-                                     C. object
-                                   </button>
-
-                                   <button className="quiz-option">
-                                     D. create
-                                   </button>
-
-                                 </div>
-
-                                 <button
-                                   className="back-home-btn"
-                                   onClick={() => {
-                                     setSelectedQuizTopic(null);
-                                   }}
-                                   style={{ marginTop: "1rem" }}
-                                 >
-                                   ← Back to Topics
-                                 </button>
+                              {selectedQuizTopic === "Core Java" && (
+                                   <div
+                                     style={{
+                                       backgroundColor: "red",
+                                       color: "white",
+                                       padding: "40px",
+                                       marginTop: "30px",
+                                       fontSize: "25px",
+                                     }}
+                                   >
+                                     CORE JAVA QUIZ OPENED
+                                   </div>
+                                 )}
 
                                </div>
                              )}
-
-                           </div>
-                         )}
 
                          <hr />
 
