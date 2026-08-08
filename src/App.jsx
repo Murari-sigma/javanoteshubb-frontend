@@ -723,7 +723,7 @@ const handleOpenAddModal = () => {
                                  <button
                                    className="back-home-btn"
                                    onClick={() => {
-                                     setSelectedTopic(null);
+                                     setSelectedQuizTopic(null);
                                      setCurrentQuestion(0);
                                      setSelectedAnswer(null);
                                    }}
