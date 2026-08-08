@@ -21,11 +21,124 @@ function App() {
     const [showContact, setShowContact] = useState(false);
     const [showQuizTopics, setShowQuizTopics] = useState(false);
 
+
+
+    const [currentQuestion, setCurrentQuestion] = useState(0);
+    const [selectedAnswer, setSelectedAnswer] = useState(null);
+
     const [currentDateTime, setCurrentDateTime] = useState(new Date());
     const filteredMenuTopics = topicsList.filter(topic =>
       topic.toLowerCase().includes(menuSearch.toLowerCase())
 
     );
+
+    const coreJavaQuestions = [
+      {
+        question: "Which keyword is used to create a class in Java?",
+        options: ["class", "Class", "new", "object"],
+        answer: "class",
+      },
+      {
+        question: "Which method is the entry point of a Java program?",
+        options: ["start()", "main()", "run()", "execute()"],
+        answer: "main()",
+      },
+      {
+        question: "Which of these is not a primitive data type?",
+        options: ["int", "float", "String", "char"],
+        answer: "String",
+      },
+      {
+        question: "Which keyword is used to inherit a class?",
+        options: ["implements", "extends", "inherits", "super"],
+        answer: "extends",
+      },
+      {
+        question: "Which keyword is used to implement an interface?",
+        options: ["extends", "implements", "interface", "inherit"],
+        answer: "implements",
+      },
+      {
+        question: "Which concept allows the same method name with different parameters?",
+        options: ["Inheritance", "Overriding", "Overloading", "Encapsulation"],
+        answer: "Overloading",
+      },
+      {
+        question: "Which keyword is used to prevent inheritance?",
+        options: ["static", "final", "private", "const"],
+        answer: "final",
+      },
+      {
+        question: "Which collection does not allow duplicate elements?",
+        options: ["List", "Set", "Map", "ArrayList"],
+        answer: "Set",
+      },
+      {
+        question: "Which collection stores key-value pairs?",
+        options: ["List", "Set", "Map", "Queue"],
+        answer: "Map",
+      },
+      {
+        question: "Which class is commonly used to create a mutable string?",
+        options: ["String", "StringBuilder", "Character", "StringBufferOnly"],
+        answer: "StringBuilder",
+      },
+      {
+        question: "Which keyword refers to the current object?",
+        options: ["super", "this", "current", "self"],
+        answer: "this",
+      },
+      {
+        question: "Which keyword is used to call the parent class constructor?",
+        options: ["this", "parent", "super", "base"],
+        answer: "super",
+      },
+      {
+        question: "Which exception occurs when dividing an integer by zero?",
+        options: [
+          "NullPointerException",
+          "ArithmeticException",
+          "IOException",
+          "ClassNotFoundException",
+        ],
+        answer: "ArithmeticException",
+      },
+      {
+        question: "Which block is used to handle exceptions?",
+        options: ["if-else", "try-catch", "switch", "for"],
+        answer: "try-catch",
+      },
+      {
+        question: "Which keyword is used to create an object?",
+        options: ["object", "create", "new", "instance"],
+        answer: "new",
+      },
+      {
+        question: "Which access modifier provides the widest access?",
+        options: ["private", "protected", "public", "default"],
+        answer: "public",
+      },
+      {
+        question: "Which keyword is used to define a constant?",
+        options: ["constant", "const", "final", "static"],
+        answer: "final",
+      },
+      {
+        question: "What is the default value of an int instance variable?",
+        options: ["null", "0", "1", "undefined"],
+        answer: "0",
+      },
+      {
+        question: "Which interface is the root of the Java collection hierarchy?",
+        options: ["Collection", "List", "Set", "Map"],
+        answer: "Collection",
+      },
+      {
+        question: "Which feature allows one class to have multiple forms?",
+        options: ["Encapsulation", "Polymorphism", "Abstraction", "Inheritance"],
+        answer: "Polymorphism",
+      },
+    ];
 
 
   // Auth States
@@ -541,13 +654,86 @@ const handleOpenAddModal = () => {
                                  { icon: '🎯', name: 'Interview Questions', desc: 'Top Java & Spring Boot interview questions & HR round preparation.' },
                                  { icon: '🏗️', name: 'Projects', desc: 'End-to-end Java projects — REST APIs, microservices & full-stack apps.' },
                                ].map((topic) => (
-                                 <div key={topic.name} className="topic-card">
+                                 <div
+                                   key={topic.name}
+                                   className="topic-card"
+                                   onClick={() => {
+                                     if (topic.name === "Core Java") {
+                                       setSelectedTopic("Core Java");
+                                       setCurrentQuestion(0);
+                                       setSelectedAnswer(null);
+                                     }
+                                   }}
+                                 >
                                    <span className="topic-icon">{topic.icon}</span>
                                    <h3>{topic.name}</h3>
                                    <p>{topic.desc}</p>
                                  </div>
                                ))}
                              </div>
+
+                             {selectedTopic === "Core Java" && (
+                               <div className="quiz-container">
+
+                                 <h2>Core Java Quiz</h2>
+
+                                 <p>
+                                   Question {currentQuestion + 1} of {coreJavaQuestions.length}
+                                 </p>
+
+                                 <h3>
+                                   {coreJavaQuestions[currentQuestion].question}
+                                 </h3>
+
+                                 <div className="quiz-options">
+                                   {coreJavaQuestions[currentQuestion].options.map((option, index) => (
+                                     <button
+                                       key={option}
+                                       className={`quiz-option ${
+                                         selectedAnswer === option ? "selected" : ""
+                                       }`}
+                                       onClick={() => setSelectedAnswer(option)}
+                                     >
+                                       {String.fromCharCode(65 + index)}. {option}
+                                     </button>
+                                   ))}
+                                 </div>
+
+                                 <button
+                                   className="next-question-btn"
+                                   disabled={!selectedAnswer}
+                                   onClick={() => {
+                                     if (currentQuestion < coreJavaQuestions.length - 1) {
+                                       setCurrentQuestion(currentQuestion + 1);
+                                       setSelectedAnswer(null);
+                                     } else {
+                                       alert("🎉 Quiz Completed!");
+                                       setSelectedTopic(null);
+                                     }
+                                   }}
+                                 >
+                                   {currentQuestion === coreJavaQuestions.length - 1
+                                     ? "Finish Quiz"
+                                     : "Next Question →"}
+                                 </button>
+
+                                 <br />
+
+                                 <button
+                                   className="back-home-btn"
+                                   onClick={() => {
+                                     setSelectedTopic(null);
+                                     setCurrentQuestion(0);
+                                     setSelectedAnswer(null);
+                                   }}
+                                   style={{ marginTop: "1rem" }}
+                                 >
+                                   ← Back to Topics
+                                 </button>
+
+                               </div>
+                             )}
+
                            </div>
                          )}
 
