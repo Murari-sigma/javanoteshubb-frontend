@@ -20,6 +20,8 @@ function App() {
     const [showTopics, setShowTopics] = useState(false);
     const [showContact, setShowContact] = useState(false);
 
+    const [currentDateTime, setCurrentDateTime] = useState(new Date());
+
     const filteredMenuTopics = topicsList.filter(topic =>
       topic.toLowerCase().includes(menuSearch.toLowerCase())
     );
@@ -62,6 +64,14 @@ function App() {
     }
   }, []);
 
+// Live Date & Time
+useEffect(() => {
+  const timer = setInterval(() => {
+    setCurrentDateTime(new Date());
+  }, 1000);
+
+  return () => clearInterval(timer);
+}, []);
 
   // Fetch Notes Function
   const fetchNotes = () => {
@@ -404,25 +414,50 @@ const handleOpenAddModal = () => {
     <div>
       {/* Navbar */}
       <nav className="navbar">
+
         <div className="logo-container">
-               <img
-                        src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg"
-                        alt="Java Logo"
-                        width="28"
-                        height="28"
-                        style={{ display: 'block' }}
-                      />
+          <img
+            src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg"
+            alt="Java Logo"
+            width="28"
+            height="28"
+            style={{ display: 'block' }}
+          />
+
           <h2>Java Developer</h2>
         </div>
 
 
-                               {/* 3 Line Menu Button */}
-                   <div
-                     className="menu-icon"
-                     onClick={() => setShowMenu(!showMenu)}
-                   >
-                     ☰
-                   </div>
+        {/* Current Date & Time */}
+        <div className="current-datetime">
+
+          <div className="current-date">
+            {currentDateTime.toLocaleDateString("en-IN", {
+              weekday: "short",
+              day: "2-digit",
+              month: "short"
+            })}
+          </div>
+
+          <div className="current-time">
+            {currentDateTime.toLocaleTimeString("en-IN", {
+              hour: "2-digit",
+              minute: "2-digit",
+              second: "2-digit",
+              hour12: false
+            })}
+          </div>
+
+        </div>
+
+
+        {/* 3 Line Menu Button */}
+        <div
+          className="menu-icon"
+          onClick={() => setShowMenu(!showMenu)}
+        >
+          ☰
+        </div>
 
                      {showMenu && (
                        <div className="menu-dropdown">
