@@ -448,7 +448,15 @@ const handleOpenAddModal = () => {
                           month: "short"
                         })}
                       </div>
-
+                 <div className="current-time">
+                                         {currentDateTime.toLocaleTimeString("en-IN", {
+                                           hour: "2-digit",
+                                           minute: "2-digit",
+                                           second: "2-digit",
+                                           hour12: false
+                                         })}
+                                       </div>
+                                     </div>
 
 
 
@@ -626,15 +634,7 @@ const handleOpenAddModal = () => {
                           <>
                             <hr style={{ margin: '15px 0', borderColor: '#334155' }} />
                             <h2 className="topics-heading">Explore Topics</h2>
-                            <div className="current-time">
-                                                    {currentDateTime.toLocaleTimeString("en-IN", {
-                                                      hour: "2-digit",
-                                                      minute: "2-digit",
-                                                      second: "2-digit",
-                                                      hour12: false
-                                                    })}
-                                                  </div>
-                                                </div>
+
                             <div className="topics-grid">
                               {[
                                 { icon: '{ }', name: 'Core Java', desc: 'OOPs, collections, streams, exceptions & the fundamentals every backend dev needs.' },
