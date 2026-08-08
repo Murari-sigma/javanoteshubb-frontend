@@ -771,76 +771,75 @@ const handleOpenAddModal = () => {
                            )}
 
                            {selectedQuizTopic === "Core Java" && (
-                             <div className="core-java-quiz">
+                             <div className="full-screen-quiz">
 
-                               <button
-                                 className="back-home-btn"
-                                 onClick={() => {
-                                   setSelectedQuizTopic(null);
-                                   setCurrentQuestion(0);
-                                   setSelectedAnswer(null);
-                                 }}
-                                 style={{ marginBottom: "1rem" }}
-                               >
-                                 ← Back to Quiz Topics
-                               </button>
-
-                               <h2>☕ Core Java Quiz</h2>
-
-                               <p>
-                                 Question {currentQuestion + 1} of {coreJavaQuestions.length}
-                               </p>
-
-                               <h3>
-                                 {coreJavaQuestions[currentQuestion].question}
-                               </h3>
-
-                               <div className="quiz-options">
-                                 {coreJavaQuestions[currentQuestion].options.map(
-                                   (option, index) => (
-                                     <button
-                                       key={option}
-                                       className={`quiz-option ${
-                                         selectedAnswer === option ? "selected" : ""
-                                       }`}
-                                       onClick={() => setSelectedAnswer(option)}
-                                     >
-                                       {String.fromCharCode(65 + index)}. {option}
-                                     </button>
-                                   )
-                                 )}
-                               </div>
-
-                               <button
-                                 className="next-question-btn"
-                                 disabled={!selectedAnswer}
-                                 onClick={() => {
-                                   if (
-                                     currentQuestion <
-                                     coreJavaQuestions.length - 1
-                                   ) {
-                                     setCurrentQuestion(currentQuestion + 1);
-                                     setSelectedAnswer(null);
-                                   } else {
-                                     alert("🎉 Quiz Completed!");
-
+                               <div className="quiz-header">
+                                 <button
+                                   className="back-home-btn"
+                                   onClick={() => {
                                      setSelectedQuizTopic(null);
                                      setCurrentQuestion(0);
                                      setSelectedAnswer(null);
-                                   }
-                                 }}
-                               >
-                                 {currentQuestion === coreJavaQuestions.length - 1
-                                   ? "Finish Quiz"
-                                   : "Next Question →"}
-                               </button>
+                                   }}
+                                 >
+                                   ← Back to Quiz Topics
+                                 </button>
 
+                                 <h1>☕ Core Java Quiz</h1>
+
+                                 <p>
+                                   Question {currentQuestion + 1} of {coreJavaQuestions.length}
+                                 </p>
+                               </div>
+
+                               <div className="quiz-question-card">
+
+                                 <h2>
+                                   {coreJavaQuestions[currentQuestion].question}
+                                 </h2>
+
+                                 <div className="quiz-options">
+                                   {coreJavaQuestions[currentQuestion].options.map(
+                                     (option, index) => (
+                                       <button
+                                         key={option}
+                                         className={`quiz-option ${
+                                           selectedAnswer === option ? "selected" : ""
+                                         }`}
+                                         onClick={() => setSelectedAnswer(option)}
+                                       >
+                                         {String.fromCharCode(65 + index)}. {option}
+                                       </button>
+                                     )
+                                   )}
+                                 </div>
+
+                                 <button
+                                   className="next-question-btn"
+                                   disabled={!selectedAnswer}
+                                   onClick={() => {
+                                     if (currentQuestion < coreJavaQuestions.length - 1) {
+                                       setCurrentQuestion(currentQuestion + 1);
+                                       setSelectedAnswer(null);
+                                     } else {
+                                       alert("🎉 Quiz Completed!");
+
+                                       setSelectedQuizTopic(null);
+                                       setCurrentQuestion(0);
+                                       setSelectedAnswer(null);
+                                     }
+                                   }}
+                                 >
+                                   {currentQuestion === coreJavaQuestions.length - 1
+                                     ? "Finish Quiz 🎉"
+                                     : "Next Question →"}
+                                 </button>
+
+                               </div>
                              </div>
                            )}
-
-                         </div>
+                       </div>
                        )}
-
 
                     {showContact && (
                       <div className="modal-overlay" onClick={() => setShowContact(false)}>
