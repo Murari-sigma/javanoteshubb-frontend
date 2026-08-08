@@ -21,9 +21,9 @@ function App() {
     const [showContact, setShowContact] = useState(false);
 
     const [currentDateTime, setCurrentDateTime] = useState(new Date());
-
     const filteredMenuTopics = topicsList.filter(topic =>
       topic.toLowerCase().includes(menuSearch.toLowerCase())
+
     );
 
 
@@ -72,6 +72,19 @@ useEffect(() => {
 
   return () => clearInterval(timer);
 }, []);
+
+const currentDayDate = currentDateTime.toLocaleDateString("en-IN", {
+  weekday: "short",
+  day: "2-digit",
+  month: "short"
+});
+
+const currentTime = currentDateTime.toLocaleTimeString("en-IN", {
+  hour: "2-digit",
+  minute: "2-digit",
+  second: "2-digit",
+  hour12: false
+});
 
   // Fetch Notes Function
   const fetchNotes = () => {
@@ -1022,6 +1035,26 @@ const handleOpenAddModal = () => {
                              </div>
                            </div>
                          )}
+
+                     {/* Current Date & Time */}
+                     <div className="current-datetime">
+                       <div className="current-date">
+                         {currentDateTime.toLocaleDateString("en-IN", {
+                           weekday: "short",
+                           day: "2-digit",
+                           month: "short"
+                         })}
+                       </div>
+
+                       <div className="current-time">
+                         {currentDateTime.toLocaleTimeString("en-IN", {
+                           hour: "2-digit",
+                           minute: "2-digit",
+                           second: "2-digit",
+                           hour12: false
+                         })}
+                       </div>
+                     </div>
                        </nav>
 
                        </div>

@@ -491,34 +491,34 @@ p.toggle-auth:hover {
 .cancel-btn { flex: 1; padding: 10px; background: rgba(255, 255, 255, 0.1); color: #cbd5e1; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; }
 
 
-/* ==========================================
-   CURRENT DATE & LIVE TIME
-========================================== */
+/* ================================
+   CURRENT DATE & TIME
+================================ */
 
 .current-datetime {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   text-align: center;
   line-height: 1.15;
-  flex-shrink: 0;
+  pointer-events: none;
+  white-space: nowrap;
 }
 
 .current-date {
-  color: #ffffff;
-  font-size: 0.82rem;
+  color: #cbd5e1;
+  font-size: 0.78rem;
   font-weight: 600;
-  white-space: nowrap;
+  letter-spacing: 0.3px;
 }
 
 .current-time {
   color: #38bdf8;
   font-size: 0.95rem;
-  font-weight: 700;
-  letter-spacing: 0.8px;
-  white-space: nowrap;
+  font-weight: 800;
   margin-top: 3px;
+  letter-spacing: 0.5px;
 }
 
 
@@ -529,11 +529,8 @@ p.toggle-auth:hover {
 @media screen and (max-width: 768px) {
 
   .current-datetime {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
     top: 50%;
-    transform: translate(-50%, -50%);
+    left: 50%;
   }
 
   .current-date {
@@ -542,8 +539,6 @@ p.toggle-auth:hover {
 
   .current-time {
     font-size: 0.78rem;
-    letter-spacing: 0.5px;
-    margin-top: 2px;
   }
 
 }
