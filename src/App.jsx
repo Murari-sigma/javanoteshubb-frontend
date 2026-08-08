@@ -441,26 +441,7 @@ const handleOpenAddModal = () => {
         </div>
 
 
-        {/* Current Date & Time */}
 
-                             <div className="current-datetime">
-                               <div className="current-date">
-                                 {currentDateTime.toLocaleDateString("en-IN", {
-                                   weekday: "short",
-                                   day: "2-digit",
-                                   month: "short"
-                                 })}
-                               </div>
-
-                               <div className="current-time">
-                                 {currentDateTime.toLocaleTimeString("en-IN", {
-                                   hour: "2-digit",
-                                   minute: "2-digit",
-                                   second: "2-digit",
-                                   hour12: false
-                                 })}
-                               </div>
-                             </div>
 
 
 
@@ -619,6 +600,25 @@ const handleOpenAddModal = () => {
                       <>
                         {!showTopics && (
                           <section className="hero">
+                              {/* Current Date & Time */}
+                              <div className="current-datetime">
+                                <div className="current-date">
+                                  {currentDateTime.toLocaleDateString("en-IN", {
+                                    weekday: "short",
+                                    day: "2-digit",
+                                    month: "short"
+                                  })}
+                                </div>
+
+                                <div className="current-time">
+                                  {currentDateTime.toLocaleTimeString("en-IN", {
+                                    hour: "2-digit",
+                                    minute: "2-digit",
+                                    second: "2-digit",
+                                    hour12: false
+                                  })}
+                                </div>
+                              </div>
                             <span className="hero-eyebrow">&lt;/&gt; developer.hub</span>
                             <h1 className="hero-title">Welcome to Java Developer Hub ☕</h1>
                             <p className="hero-subtitle">
