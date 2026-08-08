@@ -624,74 +624,6 @@ const handleOpenAddModal = () => {
                           🔔 Quiz
                         </button>
 
-                         {showQuizTopics && (
-                           <div className="quiz-topics">
-
-                             <button
-                               className="back-home-btn"
-                               onClick={() => setShowQuizTopics(false)}
-                               style={{ marginBottom: "1rem" }}
-                             >
-                               ← Back
-                             </button>
-
-                             <div className="topics-grid">
-                               {[
-                                 { icon: "{ }", name: "Core Java", desc: "OOPs, collections, streams, exceptions & the fundamentals every backend dev needs." },
-                                 { icon: "☕", name: "Advanced Java", desc: "Multithreading, concurrency, JVM internals & memory management." },
-                                 { icon: "🔌", name: "JDBC", desc: "Database connectivity, PreparedStatement, ResultSet & transaction management." },
-                                 { icon: "🌐", name: "Servlet", desc: "HTTP request/response lifecycle, filters, session management & web app fundamentals." },
-                                 { icon: "📄", name: "JSP", desc: "Java Server Pages, JSTL, EL expressions & dynamic web content generation." },
-                                 { icon: "📦", name: "Maven", desc: "Build automation, dependency management, POM.xml & project lifecycle." },
-                                 { icon: "🗄", name: "Hibernate", desc: "ORM mapping, sessions, caching & entity lifecycle." },
-                                 { icon: "💎", name: "JPA", desc: "Repositories, queries, relationships & the Java persistence standard." },
-                                 { icon: "🌱", name: "Spring", desc: "IoC, dependency injection, beans & the core of the Spring ecosystem." },
-                                 { icon: "🚀", name: "Spring Boot", desc: "Auto-configuration, REST APIs, starters & building production-ready apps fast." },
-                                 { icon: "🔐", name: "Spring Security", desc: "Authentication, authorization, JWT & securing your endpoints." },
-                                 { icon: "🔗", name: "REST API", desc: "RESTful design, HTTP methods, status codes & API best practices." },
-                                 { icon: "🧩", name: "Microservices", desc: "Service decomposition, Eureka, API Gateway & distributed systems patterns." },
-                                 { icon: "🗃️", name: "MySQL", desc: "SQL queries, joins, indexes, stored procedures & database design." },
-                                 { icon: "🐙", name: "Git & GitHub", desc: "Version control, branching, merging, pull requests & collaboration." },
-                                 { icon: "🐳", name: "Docker", desc: "Containerization, Dockerfile, images & deploying Java apps with Docker Compose." },
-                                 { icon: "☁️", name: "AWS", desc: "EC2, S3, RDS, IAM & deploying Spring Boot apps on the cloud." },
-                                 { icon: "🎯", name: "Interview Questions", desc: "Top Java & Spring Boot interview questions & HR round preparation." },
-                                 { icon: "🏗️", name: "Projects", desc: "End-to-end Java projects — REST APIs, microservices & full-stack apps." },
-                               ].map((topic) => (
-                                 <div
-                                   key={topic.name}
-                                   className="topic-card"
-                                   onClick={() => {
-                                     if (topic.name === "Core Java") {
-                                       setSelectedQuizTopic("Core Java");
-                                       setCurrentQuestion(0);
-                                       setSelectedAnswer(null);
-                                     }
-                                   }}
-                                 >
-                                   <span className="topic-icon">{topic.icon}</span>
-                                   <h3>{topic.name}</h3>
-                                   <p>{topic.desc}</p>
-                                 </div>
-                               ))}
-                             </div>
-
-                             {/* 👇 QUIZ YAHAN HAI */}
-                              {selectedQuizTopic === "Core Java" && (
-                                   <div
-                                     style={{
-                                       backgroundColor: "red",
-                                       color: "white",
-                                       padding: "40px",
-                                       marginTop: "30px",
-                                       fontSize: "25px",
-                                     }}
-                                   >
-                                     CORE JAVA QUIZ OPENED
-                                   </div>
-                                 )}
-
-                               </div>
-                             )}
 
                          <hr />
 
@@ -706,6 +638,209 @@ const handleOpenAddModal = () => {
                          </button>
                        </div>
                      )}
+
+                       {showQuizTopics && (
+                         <div className="quiz-topics">
+
+                           {!selectedQuizTopic && (
+                             <>
+                               <button
+                                 className="back-home-btn"
+                                 onClick={() => setShowQuizTopics(false)}
+                                 style={{ marginBottom: "1rem" }}
+                               >
+                                 ← Back
+                               </button>
+
+                               <div className="topics-grid">
+                                 {[
+                                   {
+                                     icon: "{ }",
+                                     name: "Core Java",
+                                     desc: "OOPs, collections, streams, exceptions & the fundamentals every backend dev needs."
+                                   },
+                                   {
+                                     icon: "☕",
+                                     name: "Advanced Java",
+                                     desc: "Multithreading, concurrency, JVM internals & memory management."
+                                   },
+                                   {
+                                     icon: "🔌",
+                                     name: "JDBC",
+                                     desc: "Database connectivity, PreparedStatement, ResultSet & transaction management."
+                                   },
+                                   {
+                                     icon: "🌐",
+                                     name: "Servlet",
+                                     desc: "HTTP request/response lifecycle, filters, session management & web app fundamentals."
+                                   },
+                                   {
+                                     icon: "📄",
+                                     name: "JSP",
+                                     desc: "Java Server Pages, JSTL, EL expressions & dynamic web content generation."
+                                   },
+                                   {
+                                     icon: "📦",
+                                     name: "Maven",
+                                     desc: "Build automation, dependency management, POM.xml & project lifecycle."
+                                   },
+                                   {
+                                     icon: "🗄",
+                                     name: "Hibernate",
+                                     desc: "ORM mapping, sessions, caching & entity lifecycle."
+                                   },
+                                   {
+                                     icon: "💎",
+                                     name: "JPA",
+                                     desc: "Repositories, queries, relationships & the Java persistence standard."
+                                   },
+                                   {
+                                     icon: "🌱",
+                                     name: "Spring",
+                                     desc: "IoC, dependency injection, beans & the core of the Spring ecosystem."
+                                   },
+                                   {
+                                     icon: "🚀",
+                                     name: "Spring Boot",
+                                     desc: "Auto-configuration, REST APIs, starters & building production-ready apps fast."
+                                   },
+                                   {
+                                     icon: "🔐",
+                                     name: "Spring Security",
+                                     desc: "Authentication, authorization, JWT & securing your endpoints."
+                                   },
+                                   {
+                                     icon: "🔗",
+                                     name: "REST API",
+                                     desc: "RESTful design, HTTP methods, status codes & API best practices."
+                                   },
+                                   {
+                                     icon: "🧩",
+                                     name: "Microservices",
+                                     desc: "Service decomposition, Eureka, API Gateway & distributed systems patterns."
+                                   },
+                                   {
+                                     icon: "🗃️",
+                                     name: "MySQL",
+                                     desc: "SQL queries, joins, indexes, stored procedures & database design."
+                                   },
+                                   {
+                                     icon: "🐙",
+                                     name: "Git & GitHub",
+                                     desc: "Version control, branching, merging, pull requests & collaboration."
+                                   },
+                                   {
+                                     icon: "🐳",
+                                     name: "Docker",
+                                     desc: "Containerization, Dockerfile, images & deploying Java apps with Docker Compose."
+                                   },
+                                   {
+                                     icon: "☁️",
+                                     name: "AWS",
+                                     desc: "EC2, S3, RDS, IAM & deploying Spring Boot apps on the cloud."
+                                   },
+                                   {
+                                     icon: "🎯",
+                                     name: "Interview Questions",
+                                     desc: "Top Java & Spring Boot interview questions & HR round preparation."
+                                   },
+                                   {
+                                     icon: "🏗️",
+                                     name: "Projects",
+                                     desc: "End-to-end Java projects — REST APIs, microservices & full-stack apps."
+                                   }
+                                 ].map((topic) => (
+                                   <div
+                                     key={topic.name}
+                                     className="topic-card"
+                                     onClick={() => {
+                                       if (topic.name === "Core Java") {
+                                         setSelectedQuizTopic("Core Java");
+                                         setCurrentQuestion(0);
+                                         setSelectedAnswer(null);
+                                       }
+                                     }}
+                                   >
+                                     <span className="topic-icon">{topic.icon}</span>
+                                     <h3>{topic.name}</h3>
+                                     <p>{topic.desc}</p>
+                                   </div>
+                                 ))}
+                               </div>
+                             </>
+                           )}
+
+                           {selectedQuizTopic === "Core Java" && (
+                             <div className="core-java-quiz">
+
+                               <button
+                                 className="back-home-btn"
+                                 onClick={() => {
+                                   setSelectedQuizTopic(null);
+                                   setCurrentQuestion(0);
+                                   setSelectedAnswer(null);
+                                 }}
+                                 style={{ marginBottom: "1rem" }}
+                               >
+                                 ← Back to Quiz Topics
+                               </button>
+
+                               <h2>☕ Core Java Quiz</h2>
+
+                               <p>
+                                 Question {currentQuestion + 1} of {coreJavaQuestions.length}
+                               </p>
+
+                               <h3>
+                                 {coreJavaQuestions[currentQuestion].question}
+                               </h3>
+
+                               <div className="quiz-options">
+                                 {coreJavaQuestions[currentQuestion].options.map(
+                                   (option, index) => (
+                                     <button
+                                       key={option}
+                                       className={`quiz-option ${
+                                         selectedAnswer === option ? "selected" : ""
+                                       }`}
+                                       onClick={() => setSelectedAnswer(option)}
+                                     >
+                                       {String.fromCharCode(65 + index)}. {option}
+                                     </button>
+                                   )
+                                 )}
+                               </div>
+
+                               <button
+                                 className="next-question-btn"
+                                 disabled={!selectedAnswer}
+                                 onClick={() => {
+                                   if (
+                                     currentQuestion <
+                                     coreJavaQuestions.length - 1
+                                   ) {
+                                     setCurrentQuestion(currentQuestion + 1);
+                                     setSelectedAnswer(null);
+                                   } else {
+                                     alert("🎉 Quiz Completed!");
+
+                                     setSelectedQuizTopic(null);
+                                     setCurrentQuestion(0);
+                                     setSelectedAnswer(null);
+                                   }
+                                 }}
+                               >
+                                 {currentQuestion === coreJavaQuestions.length - 1
+                                   ? "Finish Quiz"
+                                   : "Next Question →"}
+                               </button>
+
+                             </div>
+                           )}
+
+                         </div>
+                       )}
+
 
                     {showContact && (
                       <div className="modal-overlay" onClick={() => setShowContact(false)}>
