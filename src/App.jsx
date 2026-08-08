@@ -512,6 +512,13 @@ const handleOpenAddModal = () => {
 
                          {showQuizTopics && (
                            <div className="quiz-topics">
+                               <button
+                                 className="back-home-btn"
+                                 onClick={() => setShowQuizTopics(false)}
+                                 style={{ marginBottom: '1rem' }}
+                               >
+                                 ← Back
+                               </button>
                              <div className="topics-grid">
                                {[
                                  { icon: '{ }', name: 'Core Java', desc: 'OOPs, collections, streams, exceptions & the fundamentals every backend dev needs.' },
