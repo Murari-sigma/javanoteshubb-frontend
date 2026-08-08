@@ -494,31 +494,28 @@ p.toggle-auth:hover {
 /* ================================
    CURRENT DATE & TIME
 ================================ */
-
 .current-datetime {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
-  line-height: 1.15;
-  pointer-events: none;
-  white-space: nowrap;
+  line-height: 1.1;
 }
 
 .current-date {
   color: #cbd5e1;
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   font-weight: 600;
-  letter-spacing: 0.3px;
 }
 
 .current-time {
   color: #38bdf8;
-  font-size: 0.95rem;
+  font-size: 0.82rem;
   font-weight: 800;
   margin-top: 3px;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.4px;
 }
 
 
@@ -529,8 +526,8 @@ p.toggle-auth:hover {
 @media screen and (max-width: 768px) {
 
   .current-datetime {
-    top: 50%;
-    left: 50%;
+    flex: 1;
+    min-width: 0;
   }
 
   .current-date {
@@ -538,7 +535,7 @@ p.toggle-auth:hover {
   }
 
   .current-time {
-    font-size: 0.78rem;
+    font-size: 0.76rem;
   }
 
 }
