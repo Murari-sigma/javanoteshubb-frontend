@@ -539,6 +539,310 @@ p.toggle-auth:hover {
   }
 
 }
+
+/* =========================================
+   FULL SCREEN CORE JAVA QUIZ
+   ========================================= */
+
+.fullscreen-quiz {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  min-height: 100vh;
+
+  background:
+    radial-gradient(circle at top left, #172554 0%, transparent 35%),
+    radial-gradient(circle at bottom right, #0f766e 0%, transparent 30%),
+    #020617;
+
+  color: white;
+
+  z-index: 999999;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  box-sizing: border-box;
+}
+
+.quiz-container {
+  width: 100%;
+  max-width: 950px;
+
+  min-height: 100vh;
+
+  padding: 30px 25px 50px;
+
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+}
+
+/* Back button */
+
+.quiz-back-btn {
+  align-self: flex-start;
+
+  background: rgba(255, 255, 255, 0.08);
+  color: #e2e8f0;
+
+  border: 1px solid rgba(255, 255, 255, 0.15);
+
+  padding: 11px 18px;
+
+  border-radius: 10px;
+
+  font-size: 15px;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.quiz-back-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateX(-3px);
+}
+
+/* Header */
+
+.quiz-header {
+  text-align: center;
+
+  margin-top: 45px;
+  margin-bottom: 35px;
+}
+
+.quiz-badge {
+  display: inline-block;
+
+  padding: 7px 15px;
+
+  border-radius: 999px;
+
+  background: rgba(56, 189, 248, 0.12);
+
+  border: 1px solid rgba(56, 189, 248, 0.3);
+
+  color: #38bdf8;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  letter-spacing: 1px;
+}
+
+.quiz-header h1 {
+  margin: 15px 0 8px;
+
+  font-size: 42px;
+
+  color: #f8fafc;
+}
+
+.quiz-header p {
+  margin: 0;
+
+  color: #94a3b8;
+
+  font-size: 17px;
+}
+
+/* Question Card */
+
+.quiz-question-card {
+  width: 100%;
+
+  background: rgba(15, 23, 42, 0.88);
+
+  border: 1px solid rgba(148, 163, 184, 0.18);
+
+  border-radius: 22px;
+
+  padding: 40px;
+
+  box-sizing: border-box;
+
+  box-shadow:
+    0 25px 60px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.quiz-question-card h2 {
+  margin: 0 0 30px;
+
+  color: #f8fafc;
+
+  font-size: 25px;
+
+  line-height: 1.5;
+}
+
+/* Options */
+
+.quiz-options {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 14px;
+}
+
+.quiz-option {
+  width: 100%;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+
+  padding: 17px 20px;
+
+  background: #0f172a;
+
+  color: #e2e8f0;
+
+  border: 1px solid #334155;
+
+  border-radius: 12px;
+
+  font-size: 17px;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.quiz-option:hover {
+  border-color: #38bdf8;
+
+  background: #172033;
+
+  transform: translateX(4px);
+}
+
+.quiz-option.selected {
+  background: rgba(14, 165, 233, 0.15);
+
+  border-color: #38bdf8;
+
+  color: #38bdf8;
+
+  box-shadow:
+    0 0 0 1px rgba(56, 189, 248, 0.15);
+}
+
+.option-letter {
+  width: 34px;
+  height: 34px;
+
+  min-width: 34px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 8px;
+
+  background: #1e293b;
+
+  color: #94a3b8;
+
+  font-weight: 700;
+}
+
+.quiz-option.selected .option-letter {
+  background: #0284c7;
+
+  color: white;
+}
+
+/* Next Button */
+
+.next-question-btn {
+  width: 100%;
+
+  margin-top: 28px;
+
+  padding: 16px;
+
+  border: none;
+
+  border-radius: 12px;
+
+  background: linear-gradient(
+    135deg,
+    #0284c7,
+    #2563eb
+  );
+
+  color: white;
+
+  font-size: 17px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.next-question-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 10px 25px rgba(37, 99, 235, 0.3);
+}
+
+.next-question-btn:disabled {
+  opacity: 0.4;
+
+  cursor: not-allowed;
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+  .quiz-container {
+    padding: 20px 15px 35px;
+  }
+
+  .quiz-header {
+    margin-top: 35px;
+    margin-bottom: 25px;
+  }
+
+  .quiz-header h1 {
+    font-size: 30px;
+  }
+
+  .quiz-question-card {
+    padding: 24px 18px;
+
+    border-radius: 16px;
+  }
+
+  .quiz-question-card h2 {
+    font-size: 20px;
+  }
+
+  .quiz-option {
+    font-size: 15px;
+
+    padding: 14px;
+  }
+}
 /* ----------------------------------------------------
    6. 📱 SIMPLILEARN STYLE ULTRA MOBILE RESPONSIVE
 ---------------------------------------------------- */

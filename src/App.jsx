@@ -422,6 +422,96 @@ const handleOpenAddModal = () => {
     topic.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+// ================= FULL SCREEN CORE JAVA QUIZ =================
+if (currentUser && selectedQuizTopic === "Core Java") {
+  const question = coreJavaQuestions[currentQuestion];
+
+  return (
+    <div className="fullscreen-quiz">
+
+      <div className="quiz-container">
+
+        <button
+          className="quiz-back-btn"
+          onClick={() => {
+            setSelectedQuizTopic(null);
+            setCurrentQuestion(0);
+            setSelectedAnswer(null);
+            setShowQuizTopics(true);
+          }}
+        >
+          ← Back to Quiz Topics
+        </button>
+
+        <div className="quiz-header">
+          <span className="quiz-badge">☕ CORE JAVA</span>
+
+          <h1>Core Java Quiz</h1>
+
+          <p>
+            Question {currentQuestion + 1} of {coreJavaQuestions.length}
+          </p>
+        </div>
+
+        <div className="quiz-question-card">
+
+          <h2>
+            {question.question}
+          </h2>
+
+          <div className="quiz-options">
+
+            {question.options.map((option, index) => (
+              <button
+                key={option}
+                className={`quiz-option ${
+                  selectedAnswer === option ? "selected" : ""
+                }`}
+                onClick={() => setSelectedAnswer(option)}
+              >
+                <span className="option-letter">
+                  {String.fromCharCode(65 + index)}
+                </span>
+
+                <span>{option}</span>
+              </button>
+            ))}
+
+          </div>
+
+          <button
+            className="next-question-btn"
+            disabled={!selectedAnswer}
+            onClick={() => {
+              if (currentQuestion < coreJavaQuestions.length - 1) {
+
+                setCurrentQuestion(currentQuestion + 1);
+                setSelectedAnswer(null);
+
+              } else {
+
+                alert("🎉 Core Java Quiz Completed!");
+
+                setSelectedQuizTopic(null);
+                setCurrentQuestion(0);
+                setSelectedAnswer(null);
+                setShowQuizTopics(true);
+              }
+            }}
+          >
+            {currentQuestion === coreJavaQuestions.length - 1
+              ? "Finish Quiz 🎉"
+              : "Next Question →"}
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+  );
+}
+
   // 🔒 IF NOT LOGGED IN -> SHOW LOGIN / SIGNUP SCREEN
   if (!currentUser) {
     return (
