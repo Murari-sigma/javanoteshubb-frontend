@@ -19,6 +19,7 @@ function App() {
     const [menuSearch, setMenuSearch] = useState("");
     const [showTopics, setShowTopics] = useState(false);
     const [showContact, setShowContact] = useState(false);
+    const [showQuizTopics, setShowQuizTopics] = useState(false);
 
     const [currentDateTime, setCurrentDateTime] = useState(new Date());
     const filteredMenuTopics = topicsList.filter(topic =>
@@ -499,15 +500,47 @@ const handleOpenAddModal = () => {
 
                          <hr />
 
-                         <button
-                           className="menu-item"
-                           onClick={() => {
-                             alert("No new notifications! 🔔");
-                             setShowMenu(false);
-                           }}
-                         >
-                           🔔 Notifications
-                         </button>
+                        <button
+                          className="menu-item"
+                          onClick={() => {
+                            setShowQuizTopics(true);
+                            setShowMenu(false);
+                          }}
+                        >
+                          🔔 Quiz
+                        </button>
+
+                         {showTopics && (
+                           <div className="topics-grid">
+                             {[
+                               { icon: '{ }', name: 'Core Java', desc: 'OOPs, collections, streams, exceptions & the fundamentals every backend dev needs.' },
+                               { icon: '☕', name: 'Advanced Java', desc: 'Multithreading, concurrency, JVM internals & memory management.' },
+                               { icon: '🔌', name: 'JDBC', desc: 'Database connectivity, PreparedStatement, ResultSet & transaction management.' },
+                               { icon: '🌐', name: 'Servlet', desc: 'HTTP request/response lifecycle, filters, session management & web app fundamentals.' },
+                               { icon: '📄', name: 'JSP', desc: 'Java Server Pages, JSTL, EL expressions & dynamic web content generation.' },
+                               { icon: '📦', name: 'Maven', desc: 'Build automation, dependency management, POM.xml & project lifecycle.' },
+                               { icon: '🗄', name: 'Hibernate', desc: 'ORM mapping, sessions, caching & entity lifecycle.' },
+                               { icon: '💎', name: 'JPA', desc: 'Repositories, queries, relationships & the Java persistence standard.' },
+                               { icon: '🌱', name: 'Spring', desc: 'IoC, dependency injection, beans & the core of the Spring ecosystem.' },
+                               { icon: '🚀', name: 'Spring Boot', desc: 'Auto-configuration, REST APIs, starters & building production-ready apps fast.' },
+                               { icon: '🔐', name: 'Spring Security', desc: 'Authentication, authorization, JWT & securing your endpoints.' },
+                               { icon: '🔗', name: 'REST API', desc: 'RESTful design, HTTP methods, status codes & API best practices.' },
+                               { icon: '🧩', name: 'Microservices', desc: 'Service decomposition, Eureka, API Gateway & distributed systems patterns.' },
+                               { icon: '🗃️', name: 'MySQL', desc: 'SQL queries, joins, indexes, stored procedures & database design.' },
+                               { icon: '🐙', name: 'Git & GitHub', desc: 'Version control, branching, merging, pull requests & collaboration.' },
+                               { icon: '🐳', name: 'Docker', desc: 'Containerization, Dockerfile, images & deploying Java apps with Docker Compose.' },
+                               { icon: '☁️', name: 'AWS', desc: 'EC2, S3, RDS, IAM & deploying Spring Boot apps on the cloud.' },
+                               { icon: '🎯', name: 'Interview Questions', desc: 'Top Java & Spring Boot interview questions & HR round preparation.' },
+                               { icon: '🏗️', name: 'Projects', desc: 'End-to-end Java projects — REST APIs, microservices & full-stack apps.' },
+                             ].map((topic) => (
+                               <div key={topic.name} className="topic-card">
+                                 <span className="topic-icon">{topic.icon}</span>
+                                 <h3>{topic.name}</h3>
+                                 <p>{topic.desc}</p>
+                               </div>
+                             ))}
+                           </div>
+                         )}
 
                          <hr />
 
