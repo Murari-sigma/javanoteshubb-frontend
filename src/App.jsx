@@ -438,27 +438,26 @@ const handleOpenAddModal = () => {
           />
 
           <h2>Java Developer</h2>
-          {/* Current Date & Time */}
-          <div className="current-datetime">
-            <div className="current-date">
-              {currentDateTime.toLocaleDateString("en-IN", {
-                weekday: "short",
-                day: "2-digit",
-                month: "short"
-              })}
-            </div>
-
-            <div className="current-time">
-              {currentDateTime.toLocaleTimeString("en-IN", {
-                hour: "2-digit",
-                minute: "2-digit",
-                second: "2-digit",
-                hour12: false
-              })}
-            </div>
-          </div>
         </div>
+          {/* Current Date & Time */}
+                    <div className="current-datetime">
+                      <div className="current-date">
+                        {currentDateTime.toLocaleDateString("en-IN", {
+                          weekday: "short",
+                          day: "2-digit",
+                          month: "short"
+                        })}
+                      </div>
 
+                      <div className="current-time">
+                        {currentDateTime.toLocaleTimeString("en-IN", {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                          second: "2-digit",
+                          hour12: false
+                        })}
+                      </div>
+                    </div>
 
 
 
