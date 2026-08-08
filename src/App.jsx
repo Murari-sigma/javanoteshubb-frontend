@@ -23,6 +23,7 @@ function App() {
 
 
 
+
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [selectedAnswer, setSelectedAnswer] = useState(null);
 
@@ -659,10 +660,7 @@ const handleOpenAddModal = () => {
                                    className="topic-card"
                                    onClick={() => {
                                      alert("Core Java clicked");
-
                                      setSelectedTopic("Core Java");
-                                     setCurrentQuestion(0);
-                                     setSelectedAnswer(null);
                                    }}
                                  >
                                    <span className="topic-icon">{topic.icon}</span>
