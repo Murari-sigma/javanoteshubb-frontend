@@ -658,11 +658,11 @@ const handleOpenAddModal = () => {
                                    key={topic.name}
                                    className="topic-card"
                                    onClick={() => {
-                                     if (topic.name === "Core Java") {
-                                       setSelectedTopic("Core Java");
-                                       setCurrentQuestion(0);
-                                       setSelectedAnswer(null);
-                                     }
+                                     alert("Core Java clicked");
+
+                                     setSelectedTopic("Core Java");
+                                     setCurrentQuestion(0);
+                                     setSelectedAnswer(null);
                                    }}
                                  >
                                    <span className="topic-icon">{topic.icon}</span>
