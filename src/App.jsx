@@ -20,7 +20,7 @@ function App() {
     const [showTopics, setShowTopics] = useState(false);
     const [showContact, setShowContact] = useState(false);
     const [showQuizTopics, setShowQuizTopics] = useState(false);
-
+    const [selectedQuizTopic, setSelectedQuizTopic] = useState(null);
 
 
 
@@ -659,8 +659,11 @@ const handleOpenAddModal = () => {
                                    key={topic.name}
                                    className="topic-card"
                                    onClick={() => {
-                                     alert("Core Java clicked");
-                                     setSelectedTopic("Core Java");
+                                     if (topic.name === "Core Java") {
+                                       setSelectedQuizTopic("Core Java");
+                                       setCurrentQuestion(0);
+                                       setSelectedAnswer(null);
+                                     }
                                    }}
                                  >
                                    <span className="topic-icon">{topic.icon}</span>
@@ -670,7 +673,7 @@ const handleOpenAddModal = () => {
                                ))}
                              </div>
 
-                             {selectedTopic === "Core Java" && (
+                             {selectedQuizTopic === "Core Java" && (
                                <div className="quiz-container">
 
                                  <h2>Core Java Quiz</h2>
