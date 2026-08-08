@@ -442,26 +442,26 @@ const handleOpenAddModal = () => {
 
 
         {/* Current Date & Time */}
-        <div className="current-datetime">
 
-          <div className="current-date">
-            {currentDateTime.toLocaleDateString("en-IN", {
-              weekday: "short",
-              day: "2-digit",
-              month: "short"
-            })}
-          </div>
+                             <div className="current-datetime">
+                               <div className="current-date">
+                                 {currentDateTime.toLocaleDateString("en-IN", {
+                                   weekday: "short",
+                                   day: "2-digit",
+                                   month: "short"
+                                 })}
+                               </div>
 
-          <div className="current-time">
-            {currentDateTime.toLocaleTimeString("en-IN", {
-              hour: "2-digit",
-              minute: "2-digit",
-              second: "2-digit",
-              hour12: false
-            })}
-          </div>
+                               <div className="current-time">
+                                 {currentDateTime.toLocaleTimeString("en-IN", {
+                                   hour: "2-digit",
+                                   minute: "2-digit",
+                                   second: "2-digit",
+                                   hour12: false
+                                 })}
+                               </div>
+                             </div>
 
-        </div>
 
 
         {/* 3 Line Menu Button */}
@@ -1036,25 +1036,7 @@ const handleOpenAddModal = () => {
                            </div>
                          )}
 
-                     {/* Current Date & Time */}
-                     <div className="current-datetime">
-                       <div className="current-date">
-                         {currentDateTime.toLocaleDateString("en-IN", {
-                           weekday: "short",
-                           day: "2-digit",
-                           month: "short"
-                         })}
-                       </div>
 
-                       <div className="current-time">
-                         {currentDateTime.toLocaleTimeString("en-IN", {
-                           hour: "2-digit",
-                           minute: "2-digit",
-                           second: "2-digit",
-                           hour12: false
-                         })}
-                       </div>
-                     </div>
                        </nav>
 
                        </div>
