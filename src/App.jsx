@@ -758,7 +758,7 @@ if (currentUser && selectedQuizTopic === "Core Java") {
                   {showQuizTopics && (
                     <>
 
-                      {!selectedQuizTopic && (
+                      {!selectedQuizTopic && !quizResult && (
                         <>
                           <button
                             className="back-home-btn"
