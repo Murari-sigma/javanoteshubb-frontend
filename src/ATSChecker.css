@@ -26,20 +26,35 @@
   color: var(--scan-text);
   background-color: var(--scan-bg);
   background-image:
+    radial-gradient(ellipse 620px 420px at 12% -8%, rgba(255, 179, 0, 0.22), transparent 60%),
+    radial-gradient(ellipse 560px 420px at 92% 8%, rgba(56, 189, 248, 0.16), transparent 60%),
+    radial-gradient(ellipse 720px 520px at 50% 105%, rgba(139, 92, 246, 0.14), transparent 60%),
     linear-gradient(var(--scan-border) 1px, transparent 1px),
     linear-gradient(90deg, var(--scan-border) 1px, transparent 1px);
-  background-size: 34px 34px;
+  background-size: auto, auto, auto, 34px 34px, 34px 34px;
+  background-repeat: no-repeat, no-repeat, no-repeat, repeat, repeat;
   background-position: center;
+  background-attachment: fixed, fixed, fixed, center, center;
   position: relative;
+  animation: bgDrift 14s ease-in-out infinite alternate;
+}
+
+@keyframes bgDrift {
+  0% { background-position: 12% -8%, 92% 8%, 50% 105%, center, center; }
+  100% { background-position: 18% -4%, 86% 14%, 46% 98%, center, center; }
 }
 
 .scanner-page::before {
   content: "";
   position: fixed;
   inset: 0;
-  background: radial-gradient(circle at 50% 0%, rgba(10, 14, 26, 0) 0%, var(--scan-bg) 75%);
+  background: radial-gradient(circle at 50% 0%, rgba(10, 14, 26, 0) 0%, var(--scan-bg) 78%);
   pointer-events: none;
   z-index: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scanner-page { animation: none; }
 }
 
 .scanner-page > * {
@@ -48,21 +63,26 @@
 }
 
 .scanner-back-btn {
-  background: transparent;
-  border: 1px solid var(--scan-border);
-  color: var(--scan-dim);
+  background: var(--scan-panel);
+  border: 1px solid var(--scan-amber-dim);
+  color: var(--scan-text);
   font-family: var(--scan-mono);
-  font-size: 0.8rem;
-  padding: 0.5rem 1rem;
+  font-weight: 600;
+  font-size: 0.82rem;
+  letter-spacing: 0.03em;
+  padding: 0.55rem 1.2rem;
   border-radius: 4px;
   cursor: pointer;
   margin-bottom: 1.75rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
   transition: all 0.2s ease;
 }
 
 .scanner-back-btn:hover {
   border-color: var(--scan-amber);
   color: var(--scan-amber);
+  box-shadow: 0 0 14px rgba(255, 179, 0, 0.35);
+  transform: translateY(-1px);
 }
 
 /* ================= HEADER ================= */
@@ -102,11 +122,34 @@
   50% { opacity: 0.35; }
 }
 
+.shine-text {
+  background: linear-gradient(
+    100deg,
+    var(--scan-text) 40%,
+    #fff7e0 48%,
+    var(--scan-amber) 52%,
+    var(--scan-text) 60%
+  );
+  background-size: 250% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: shine 4.5s linear infinite;
+}
+
+@keyframes shine {
+  0% { background-position: 200% center; }
+  100% { background-position: -50% center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shine-text { animation: none; color: var(--scan-text); }
+}
+
 .scanner-header h1 {
   font-size: 1.9rem;
   font-weight: 700;
   margin: 0 0 0.75rem;
-  color: #f8fafc;
 }
 
 .scanner-header p {

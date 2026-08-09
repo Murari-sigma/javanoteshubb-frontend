@@ -172,7 +172,7 @@ function ATSChecker({ onBack }) {
         <span className="scanner-eyebrow">
           <span className="scanner-dot" /> ATS SCANNER · READY
         </span>
-        <h1>Resume Compatibility Scan</h1>
+        <h1 className="shine-text">Resume Compatibility Scan</h1>
         <p>
           Upload your resume and paste the job description — the scanner
           checks how well you match before recruiters ever open your file.
@@ -180,7 +180,7 @@ function ATSChecker({ onBack }) {
       </div>
 
       <div className="scanner-panel">
-        <div className="panel-label">TARGET FILE</div>
+        <div className="panel-label shine-text">TARGET FILE</div>
         <label className="scan-dropzone">
           <input
             type="file"
@@ -197,12 +197,12 @@ function ATSChecker({ onBack }) {
 
           {resumeFile ? (
             <>
-              <strong className="dropzone-filename">{resumeFile.name}</strong>
+              <strong className="dropzone-filename shine-text">{resumeFile.name}</strong>
               <span className="dropzone-hint">FILE LOADED — ready to scan</span>
             </>
           ) : (
             <>
-              <strong className="dropzone-filename">Drop resume here</strong>
+              <strong className="dropzone-filename shine-text">Drop resume here</strong>
               <span className="dropzone-hint">PDF or DOCX only</span>
             </>
           )}
@@ -210,7 +210,7 @@ function ATSChecker({ onBack }) {
       </div>
 
       <div className="scanner-panel">
-        <div className="panel-label">JOB DESCRIPTION</div>
+        <div className="panel-label shine-text">JOB DESCRIPTION</div>
         <textarea
           className="scan-textarea"
           placeholder="Paste the complete job description here..."
