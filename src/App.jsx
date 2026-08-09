@@ -538,6 +538,13 @@ if (currentUser && selectedQuizTopic === "Core Java") {
   );
 }
 
+// 👇 yahan add karo
+if (currentUser && showATS) {
+  return (
+    <ATSChecker onBack={() => setShowATS(false)} />
+  );
+}
+
   // 🔒 IF NOT LOGGED IN -> SHOW LOGIN / SIGNUP SCREEN
   if (!currentUser) {
     return (
