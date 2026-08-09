@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
 
 * {
   margin: 0;
@@ -1338,46 +1338,46 @@ p.toggle-auth:hover {
 
 
 /* =========================================
-   MOBILE
+   FULL SCREEN QUIZ RESULT
 ========================================= */
 
-@media (max-width: 700px) {
+.quiz-result-fullscreen {
+  position: fixed;
+  inset: 0;
 
-  .quiz-result-fullscreen {
-    padding: 25px 14px;
-  }
+  width: 100vw;
+  height: 100vh;
+  min-height: 100vh;
 
-  .quiz-result-container {
-    padding: 35px 18px;
-    border-radius: 22px;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-  .result-stats-grid {
-    grid-template-columns: 1fr;
-  }
+  padding: 40px 20px;
 
-  .result-box {
-    padding: 16px;
-  }
+  box-sizing: border-box;
 
-  .result-circle {
-    width: 160px;
-    height: 160px;
-  }
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(99, 102, 241, 0.20),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at bottom right,
+      rgba(14, 165, 233, 0.15),
+      transparent 35%
+    ),
+    #07111f;
 
-  .result-percentage {
-    font-size: 36px;
-  }
+  overflow-y: auto;
+  overflow-x: hidden;
 
-  .result-actions {
-    flex-direction: column;
-  }
+  z-index: 999999;
 
-  .result-actions button {
-    width: 100%;
-  }
-
+  animation: resultFadeIn 0.5s ease;
 }
+
 /* ----------------------------------------------------
    6. 📱 SIMPLILEARN STYLE ULTRA MOBILE RESPONSIVE
 ---------------------------------------------------- */

@@ -931,6 +931,7 @@ if (currentUser && selectedQuizTopic === "Core Java") {
                                   setSelectedQuizTopic(null);
 
                                   setSelectedAnswer(null);
+                                  setShowQuizTopics(false);
                                 }
 
                               }}
