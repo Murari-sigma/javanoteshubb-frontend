@@ -953,80 +953,151 @@ if (currentUser && selectedQuizTopic === "Core Java") {
                       {/* ================= RESULT PAGE ================= */}
 
                       {quizResult && (
-                        <div className="quiz-result-page">
+                        <div className="quiz-result-fullscreen">
 
-                          <div className="quiz-result-card">
+                          <div className="quiz-result-container">
 
-                            <div className="result-icon">
-                              🎉
+                            <div className="result-trophy">
+                              🏆
                             </div>
 
-                            <h1>
-                              Core Java Quiz Result
-                            </h1>
-
-                            <p className="result-message">
-                              Quiz successfully submitted!
+                            <p className="result-completed">
+                              QUIZ COMPLETED
                             </p>
 
-                            <div className="result-score">
+                            <h1>Core Java Quiz</h1>
+
+                            <p className="result-subtitle">
+                              Great job! Here is your final performance.
+                            </p>
+
+                            {/* SCORE */}
+                            <div className="result-circle">
+                              <div className="result-percentage">
+                                {quizResult.percentage}%
+                              </div>
+
+                              <div className="result-score-text">
+                                Score
+                              </div>
+                            </div>
+
+                            <div className="result-main-score">
                               {quizResult.correct}
-                              <span>
-                                {" "} / {quizResult.total}
-                              </span>
+                              <span> / {quizResult.total}</span>
                             </div>
 
-                            <p className="result-percentage">
-                              {quizResult.percentage}% Score
-                            </p>
+                            {/* STATS */}
+                            <div className="result-stats-grid">
 
-                            <div className="result-stats">
+                              <div className="result-box correct-box">
+                                <div className="result-box-icon">
+                                  ✓
+                                </div>
 
-                              <div className="result-stat correct">
-                                <div>✅</div>
-                                <h3>Correct</h3>
-                                <strong>
-                                  {quizResult.correct}
-                                </strong>
+                                <div>
+                                  <p>Correct Answers</p>
+                                  <strong>{quizResult.correct}</strong>
+                                </div>
                               </div>
 
-                              <div className="result-stat wrong">
-                                <div>❌</div>
-                                <h3>Wrong</h3>
-                                <strong>
-                                  {quizResult.wrong}
-                                </strong>
+                              <div className="result-box wrong-box">
+                                <div className="result-box-icon">
+                                  ✕
+                                </div>
+
+                                <div>
+                                  <p>Wrong Answers</p>
+                                  <strong>{quizResult.wrong}</strong>
+                                </div>
                               </div>
 
-                              <div className="result-stat total">
-                                <div>📋</div>
-                                <h3>Total</h3>
-                                <strong>
-                                  {quizResult.total}
-                                </strong>
+                              <div className="result-box total-box">
+                                <div className="result-box-icon">
+                                  📋
+                                </div>
+
+                                <div>
+                                  <p>Total Questions</p>
+                                  <strong>{quizResult.total}</strong>
+                                </div>
                               </div>
 
                             </div>
 
-                            <button
-                              className="back-home-btn"
-                              onClick={() => {
-                                setQuizResult(null);
-                                setSelectedQuizTopic(null);
-                                setCurrentQuestion(0);
-                                setSelectedAnswer(null);
-                                setCorrectAnswers(0);
-                                setShowQuizTopics(true);
-                              }}
-                            >
-                              ← Back to Quiz Topics
-                            </button>
+                            {/* MESSAGE */}
+                            <div className="result-message-box">
+
+                              {quizResult.percentage >= 80 ? (
+                                <>
+                                  <span>🔥</span>
+                                  <div>
+                                    <strong>Excellent Performance!</strong>
+                                    <p>
+                                      You have a strong understanding of Core Java.
+                                    </p>
+                                  </div>
+                                </>
+                              ) : quizResult.percentage >= 60 ? (
+                                <>
+                                  <span>👏</span>
+                                  <div>
+                                    <strong>Good Job!</strong>
+                                    <p>
+                                      You are doing well. Keep practicing to improve further.
+                                    </p>
+                                  </div>
+                                </>
+                              ) : (
+                                <>
+                                  <span>💪</span>
+                                  <div>
+                                    <strong>Keep Practicing!</strong>
+                                    <p>
+                                      Revise Core Java concepts and try the quiz again.
+                                    </p>
+                                  </div>
+                                </>
+                              )}
+
+                            </div>
+
+                            {/* BUTTONS */}
+                            <div className="result-actions">
+
+                              <button
+                                className="result-primary-btn"
+                                onClick={() => {
+                                  setQuizResult(null);
+                                  setSelectedQuizTopic("Core Java");
+                                  setCurrentQuestion(0);
+                                  setSelectedAnswer(null);
+                                  setCorrectAnswers(0);
+                                }}
+                              >
+                                🔄 Try Again
+                              </button>
+
+                              <button
+                                className="result-secondary-btn"
+                                onClick={() => {
+                                  setQuizResult(null);
+                                  setSelectedQuizTopic(null);
+                                  setCurrentQuestion(0);
+                                  setSelectedAnswer(null);
+                                  setCorrectAnswers(0);
+                                  setShowQuizTopics(true);
+                                }}
+                              >
+                                ← Quiz Topics
+                              </button>
+
+                            </div>
 
                           </div>
 
                         </div>
                       )}
-
 
 
 
