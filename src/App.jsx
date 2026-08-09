@@ -22,6 +22,9 @@ function App() {
     const [showQuizTopics, setShowQuizTopics] = useState(false);
     const [selectedQuizTopic, setSelectedQuizTopic] = useState(null);
 
+    const [correctAnswers, setCorrectAnswers] = useState(0);
+    const [quizResult, setQuizResult] = useState(null);
+
 
 
     const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -848,6 +851,9 @@ if (currentUser && selectedQuizTopic === "Core Java") {
                                          setSelectedQuizTopic("Core Java");
                                          setCurrentQuestion(0);
                                          setSelectedAnswer(null);
+                                         setCorrectAnswers(0);
+                                         setQuizResult(null);
+
                                        }
                                      }}
                                    >
@@ -870,6 +876,8 @@ if (currentUser && selectedQuizTopic === "Core Java") {
                                      setSelectedQuizTopic(null);
                                      setCurrentQuestion(0);
                                      setSelectedAnswer(null);
+                                     setCorrectAnswers(0);
+                                     setQuizResult(null);
                                    }}
                                  >
                                    ← Back to Quiz Topics
@@ -904,19 +912,80 @@ if (currentUser && selectedQuizTopic === "Core Java") {
                                    )}
                                  </div>
 
+                                 {showQuizTopics && (
+
+                                   <div>
+
+                                     {!selectedQuizTopic && (
+                                       <>
+                                         {/* Quiz Topics */}
+                                       </>
+                                     )}
+
+                                     {selectedQuizTopic === "Core Java" && (
+                                       <div className="full-screen-quiz">
+
+                                         {/* Quiz Header */}
+
+                                         {/* Question */}
+
+                                         {/* Options */}
+
+                                         {/* Next / Finish Button */}
+
+                                       </div>
+                                     )}
+
+                                     {/* 👇 YE QUIZ KE BAAD RESULT PAGE HAI */}
+                                     {quizResult && (
+                                       <div className="quiz-result-page">
+
+                                         {/* Result */}
+
+                                       </div>
+                                     )}
+
+                                   </div>
+
+                                 )}
+
                                  <button
                                    className="next-question-btn"
                                    disabled={!selectedAnswer}
                                    onClick={() => {
+                                     const currentQuestionData = coreJavaQuestions[currentQuestion];
+
+                                     const isCorrect =
+                                       selectedAnswer === currentQuestionData.answer;
+
+                                     const newCorrectAnswers = isCorrect
+                                       ? correctAnswers + 1
+                                       : correctAnswers;
+
                                      if (currentQuestion < coreJavaQuestions.length - 1) {
+                                       if (isCorrect) {
+                                         setCorrectAnswers(newCorrectAnswers);
+                                       }
+
                                        setCurrentQuestion(currentQuestion + 1);
                                        setSelectedAnswer(null);
                                      } else {
-                                       alert("🎉 Quiz Completed!");
+                                       // Final question ka result
+                                       const totalQuestions = coreJavaQuestions.length;
+                                       const correct = newCorrectAnswers;
+                                       const wrong = totalQuestions - correct;
+                                       const percentage = Math.round((correct / totalQuestions) * 100);
+
+                                       setCorrectAnswers(correct);
+
+                                       setQuizResult({
+                                         total: totalQuestions,
+                                         correct: correct,
+                                         wrong: wrong,
+                                         percentage: percentage,
+                                       });
 
                                        setSelectedQuizTopic(null);
-                                       setCurrentQuestion(0);
-                                       setSelectedAnswer(null);
                                      }
                                    }}
                                  >
