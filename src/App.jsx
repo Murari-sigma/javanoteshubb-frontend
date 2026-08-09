@@ -486,24 +486,46 @@ if (currentUser && selectedQuizTopic === "Core Java") {
             className="next-question-btn"
             disabled={!selectedAnswer}
             onClick={() => {
-              if (currentQuestion < coreJavaQuestions.length - 1) {
+              const currentQuestionData = coreJavaQuestions[currentQuestion];
 
+              const isCorrect =
+                selectedAnswer === currentQuestionData.answer;
+
+              const newCorrectAnswers = isCorrect
+                ? correctAnswers + 1
+                : correctAnswers;
+
+              // Questions 1-19
+              if (currentQuestion < coreJavaQuestions.length - 1) {
+                setCorrectAnswers(newCorrectAnswers);
                 setCurrentQuestion(currentQuestion + 1);
                 setSelectedAnswer(null);
+              }
 
-              } else {
+              // Question 20 - Submit
+              else {
+                const totalQuestions = coreJavaQuestions.length;
+                const correct = newCorrectAnswers;
+                const wrong = totalQuestions - correct;
+                const percentage = Math.round(
+                  (correct / totalQuestions) * 100
+                );
 
-                alert("🎉 Core Java Quiz Completed!");
+                setQuizResult({
+                  total: totalQuestions,
+                  correct: correct,
+                  wrong: wrong,
+                  percentage: percentage,
+                });
 
+                // Quiz ko hide karo
                 setSelectedQuizTopic(null);
-                setCurrentQuestion(0);
                 setSelectedAnswer(null);
-                setShowQuizTopics(true);
               }
             }}
           >
             {currentQuestion === coreJavaQuestions.length - 1
-              ? "Finish Quiz 🎉"
+              ? "Submit Quiz ✅"
               : "Next Question →"}
           </button>
 
