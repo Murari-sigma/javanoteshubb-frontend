@@ -1,6 +1,33 @@
 import React, { useEffect, useState } from "react";
 import "./ATSResult.css";
 
+/* ---------- Big animated ATS score number ---------- */
+function BigScore({ score, tone }) {
+  const [value, setValue] = useState(0);
+
+  useEffect(() => {
+    let current = 0;
+    const step = Math.max(1, Math.round(score / 40));
+    const interval = setInterval(() => {
+      current += step;
+      if (current >= score) {
+        current = score;
+        clearInterval(interval);
+      }
+      setValue(current);
+    }, 16);
+    return () => clearInterval(interval);
+  }, [score]);
+
+  return (
+    <div className={`big-score big-score--${tone}`}>
+      <span className="big-score-number">{value}</span>
+      <span className="big-score-percent">%</span>
+      <p className="big-score-label">ATS SCORE</p>
+    </div>
+  );
+}
+
 /* ---------- Horizontal signal-bar meter ---------- */
 function ScanBar({ label, score, delay = 0 }) {
   const [width, setWidth] = useState(0);
@@ -81,13 +108,15 @@ function ATSResult({ result, onAnalyzeAgain, onBack }) {
           <span className="scan-report-eyebrow">
             <span className="scan-report-check">✓</span> SCAN COMPLETE
           </span>
+
+          <BigScore score={overallScore} tone={verdictTone} />
+
           <div className={`scan-verdict scan-verdict--${verdictTone}`}>
             {verdict}
           </div>
         </div>
 
         <div className="scan-bars-panel">
-          <ScanBar label="OVERALL" score={overallScore} delay={0} />
           <ScanBar label="SKILLS" score={skillsScore} delay={150} />
           <ScanBar label="KEYWORDS" score={keywordScore} delay={300} />
         </div>

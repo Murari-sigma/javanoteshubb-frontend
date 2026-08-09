@@ -40,6 +40,60 @@
 .scan-verdict--mid { color: var(--scan-amber); }
 .scan-verdict--bad { color: var(--scan-bad); }
 
+/* ================= BIG ATS SCORE ================= */
+
+.big-score {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0.15rem;
+  margin: 0.5rem 0 0.75rem;
+  font-family: var(--scan-mono);
+}
+
+.big-score-number {
+  font-size: 5rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.big-score-percent {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-top: 0.5rem;
+}
+
+.big-score-label {
+  position: absolute;
+  margin-top: 5.5rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  color: var(--scan-dim);
+}
+
+.big-score {
+  position: relative;
+  padding-bottom: 2rem;
+}
+
+.big-score--good .big-score-number,
+.big-score--good .big-score-percent {
+  color: var(--scan-good);
+  text-shadow: 0 0 22px rgba(34, 197, 94, 0.55), 0 0 60px rgba(34, 197, 94, 0.25);
+}
+
+.big-score--mid .big-score-number,
+.big-score--mid .big-score-percent {
+  color: var(--scan-amber);
+  text-shadow: 0 0 22px rgba(255, 179, 0, 0.55), 0 0 60px rgba(255, 179, 0, 0.25);
+}
+
+.big-score--bad .big-score-number,
+.big-score--bad .big-score-percent {
+  color: var(--scan-bad);
+  text-shadow: 0 0 22px rgba(239, 68, 68, 0.55), 0 0 60px rgba(239, 68, 68, 0.25);
+}
+
 /* ================= SIGNAL BARS ================= */
 
 .scan-bars-panel {
