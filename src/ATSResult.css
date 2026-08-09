@@ -1,0 +1,197 @@
+/* ================= SCAN REPORT WRAPPER ================= */
+/* Uses the same --scan-* CSS variables defined in ATSChecker.css */
+
+.scan-report {
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+.scan-report-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.scan-report-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--scan-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  color: var(--scan-good);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  background: rgba(34, 197, 94, 0.1);
+  padding: 0.35rem 0.9rem;
+  border-radius: 3px;
+  margin-bottom: 1rem;
+}
+
+.scan-report-check {
+  font-weight: 700;
+}
+
+.scan-verdict {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #f8fafc;
+}
+
+.scan-verdict--good { color: var(--scan-good); }
+.scan-verdict--mid { color: var(--scan-amber); }
+.scan-verdict--bad { color: var(--scan-bad); }
+
+/* ================= SIGNAL BARS ================= */
+
+.scan-bars-panel {
+  background: var(--scan-panel);
+  border: 1px solid var(--scan-border);
+  border-radius: 8px;
+  padding: 1.75rem 1.5rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.scan-bar-row {
+  display: grid;
+  grid-template-columns: 90px 1fr 52px;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.scan-bar-label {
+  font-family: var(--scan-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  color: var(--scan-dim);
+}
+
+.scan-bar-track {
+  height: 10px;
+  background: var(--scan-panel-alt);
+  border: 1px solid var(--scan-border);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.scan-bar-fill {
+  height: 100%;
+  border-radius: 5px;
+  transition: width 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bar-good { background: var(--scan-good); }
+.bar-mid { background: var(--scan-amber); }
+.bar-bad { background: var(--scan-bad); }
+
+.scan-bar-value {
+  font-family: var(--scan-mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-align: right;
+  color: var(--scan-text);
+}
+
+/* ================= RESULT GRID ================= */
+
+.result-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 700px) {
+  .result-grid { grid-template-columns: 1fr; }
+}
+
+.result-panel {
+  background: var(--scan-panel);
+  border: 1px solid var(--scan-border);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+/* ================= CHIPS ================= */
+
+.chip-group {
+  margin-bottom: 1.1rem;
+}
+
+.chip-group:last-child {
+  margin-bottom: 0;
+}
+
+.chip-group-title {
+  font-family: var(--scan-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+  margin: 0 0 0.6rem;
+}
+
+.chip-group-title--matched { color: var(--scan-good); }
+.chip-group-title--missing { color: var(--scan-bad); }
+
+.chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.chip {
+  font-family: var(--scan-mono);
+  font-size: 0.74rem;
+  padding: 0.28rem 0.65rem;
+  border-radius: 3px;
+  border: 1px solid transparent;
+}
+
+.chip--matched {
+  background: rgba(34, 197, 94, 0.1);
+  color: #4ade80;
+  border-color: rgba(34, 197, 94, 0.28);
+}
+
+.chip--missing {
+  background: rgba(239, 68, 68, 0.08);
+  color: #f87171;
+  border-color: rgba(239, 68, 68, 0.25);
+}
+
+/* ================= LOG / SUGGESTIONS ================= */
+
+.log-panel {
+  margin-bottom: 2rem;
+}
+
+.log-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.log-list li {
+  font-size: 0.88rem;
+  color: #cbd5e1;
+  line-height: 1.55;
+}
+
+.log-marker {
+  color: var(--scan-amber);
+  font-family: var(--scan-mono);
+  margin-right: 0.4rem;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 480px) {
+  .scan-bar-row {
+    grid-template-columns: 70px 1fr 42px;
+    gap: 0.6rem;
+  }
+}

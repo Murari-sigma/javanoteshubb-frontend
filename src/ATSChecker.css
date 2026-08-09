@@ -1,204 +1,319 @@
-/* ================= ATS CHECKER PAGE ================= */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');
 
-.ats-page {
-  min-height: 100vh;
-  width: 100%;
-  background: #0f172a;
-  padding: 2rem 1.5rem 4rem;
-  box-sizing: border-box;
-  color: #e2e8f0;
+/* ================= SHARED SCANNER TOKENS ================= */
+/* In use by ATSChecker.css AND ATSResult.css */
+:root {
+  --scan-bg: #0a0e1a;
+  --scan-panel: #10162a;
+  --scan-panel-alt: #141b34;
+  --scan-border: #2a3358;
+  --scan-text: #e7ecf5;
+  --scan-dim: #7c88ab;
+  --scan-amber: #ffb300;
+  --scan-amber-dim: rgba(255, 179, 0, 0.14);
+  --scan-good: #22c55e;
+  --scan-bad: #ef4444;
+  --scan-mono: "JetBrains Mono", ui-monospace, "Courier New", monospace;
 }
 
-/* ================= BACK BUTTON ================= */
+/* ================= PAGE SHELL ================= */
 
-.ats-page .back-home-btn {
+.scanner-page {
+  min-height: 100vh;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 2rem 1.5rem 4rem;
+  color: var(--scan-text);
+  background-color: var(--scan-bg);
+  background-image:
+    linear-gradient(var(--scan-border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--scan-border) 1px, transparent 1px);
+  background-size: 34px 34px;
+  background-position: center;
+  position: relative;
+}
+
+.scanner-page::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at 50% 0%, rgba(10, 14, 26, 0) 0%, var(--scan-bg) 75%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.scanner-page > * {
+  position: relative;
+  z-index: 1;
+}
+
+.scanner-back-btn {
   background: transparent;
-  border: 1px solid #334155;
-  color: #94a3b8;
+  border: 1px solid var(--scan-border);
+  color: var(--scan-dim);
+  font-family: var(--scan-mono);
+  font-size: 0.8rem;
   padding: 0.5rem 1rem;
-  border-radius: 8px;
-  font-size: 0.9rem;
+  border-radius: 4px;
   cursor: pointer;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.75rem;
   transition: all 0.2s ease;
 }
 
-.ats-page .back-home-btn:hover {
-  border-color: #38bdf8;
-  color: #38bdf8;
-  background: rgba(56, 189, 248, 0.08);
+.scanner-back-btn:hover {
+  border-color: var(--scan-amber);
+  color: var(--scan-amber);
 }
 
 /* ================= HEADER ================= */
 
-.ats-header {
-  max-width: 700px;
+.scanner-header {
+  max-width: 620px;
   margin: 0 auto 2.5rem;
   text-align: center;
 }
 
-.ats-badge {
-  display: inline-block;
-  background: rgba(56, 189, 248, 0.12);
-  color: #38bdf8;
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  padding: 0.35rem 0.9rem;
-  border-radius: 999px;
-  margin-bottom: 1rem;
+.scanner-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--scan-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  color: var(--scan-amber);
+  border: 1px solid var(--scan-amber-dim);
+  background: var(--scan-amber-dim);
+  padding: 0.35rem 0.8rem;
+  border-radius: 3px;
+  margin-bottom: 1.1rem;
 }
 
-.ats-header h1 {
-  font-size: 2rem;
+.scanner-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--scan-amber);
+  box-shadow: 0 0 6px var(--scan-amber);
+  animation: pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+.scanner-header h1 {
+  font-size: 1.9rem;
   font-weight: 700;
-  color: #f1f5f9;
   margin: 0 0 0.75rem;
+  color: #f8fafc;
 }
 
-.ats-header p {
-  color: #94a3b8;
-  font-size: 1rem;
+.scanner-header p {
+  color: var(--scan-dim);
+  font-size: 0.95rem;
   line-height: 1.6;
   margin: 0;
 }
 
-/* ================= CARD ================= */
+/* ================= PANELS ================= */
 
-.ats-card {
-  max-width: 700px;
+.scanner-panel {
+  max-width: 620px;
   margin: 0 auto 1.5rem;
-  background: #1e293b;
-  border: 1px solid #334155;
-  border-radius: 14px;
-  padding: 1.75rem;
+  background: var(--scan-panel);
+  border: 1px solid var(--scan-border);
+  border-radius: 8px;
+  padding: 1.5rem;
   box-sizing: border-box;
 }
 
-.ats-card h2 {
-  font-size: 1.15rem;
-  color: #f1f5f9;
-  margin: 0 0 0.4rem;
+.panel-label {
+  font-family: var(--scan-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  color: var(--scan-dim);
+  margin-bottom: 1rem;
 }
 
-.ats-help-text {
-  color: #94a3b8;
-  font-size: 0.9rem;
-  margin: 0 0 1.25rem;
-}
+/* ================= DROPZONE (with corner brackets) ================= */
 
-/* ================= RESUME UPLOAD BOX ================= */
-
-.resume-upload-box {
+.scan-dropzone {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 0.4rem;
-  border: 2px dashed #334155;
-  border-radius: 12px;
-  padding: 2.5rem 1rem;
+  padding: 2.25rem 1rem;
+  border: 1px dashed var(--scan-border);
+  border-radius: 4px;
   cursor: pointer;
   text-align: center;
-  transition: all 0.2s ease;
+  background: var(--scan-panel-alt);
+  transition: border-color 0.2s ease, background 0.2s ease;
 }
 
-.resume-upload-box:hover {
-  border-color: #38bdf8;
-  background: rgba(56, 189, 248, 0.05);
+.scan-dropzone:hover {
+  border-color: var(--scan-amber);
+  background: var(--scan-amber-dim);
 }
 
-.resume-upload-box .upload-icon {
-  font-size: 2.2rem;
+.bracket {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-color: var(--scan-amber);
+  opacity: 0.8;
+}
+
+.bracket-tl { top: 6px; left: 6px; border-top: 2px solid; border-left: 2px solid; }
+.bracket-tr { top: 6px; right: 6px; border-top: 2px solid; border-right: 2px solid; }
+.bracket-bl { bottom: 6px; left: 6px; border-bottom: 2px solid; border-left: 2px solid; }
+.bracket-br { bottom: 6px; right: 6px; border-bottom: 2px solid; border-right: 2px solid; }
+
+.dropzone-icon {
+  font-size: 1.8rem;
+  color: var(--scan-amber);
   margin-bottom: 0.3rem;
 }
 
-.resume-upload-box strong {
-  color: #e2e8f0;
+.dropzone-filename {
   font-size: 0.95rem;
+  color: var(--scan-text);
+  word-break: break-all;
 }
 
-.resume-upload-box span {
-  color: #64748b;
-  font-size: 0.8rem;
+.dropzone-hint {
+  font-family: var(--scan-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: var(--scan-dim);
 }
 
-/* ================= JOB DESCRIPTION ================= */
+/* ================= TEXTAREA ================= */
 
-.job-description-input {
+.scan-textarea {
   width: 100%;
   min-height: 160px;
   resize: vertical;
-  background: #0f172a;
-  border: 1px solid #334155;
-  border-radius: 10px;
-  color: #e2e8f0;
+  background: var(--scan-panel-alt);
+  border: 1px solid var(--scan-border);
+  border-radius: 4px;
+  color: var(--scan-text);
   font-size: 0.9rem;
-  line-height: 1.5;
+  line-height: 1.55;
   padding: 0.9rem;
   box-sizing: border-box;
   font-family: inherit;
   transition: border-color 0.2s ease;
 }
 
-.job-description-input:focus {
+.scan-textarea:focus {
   outline: none;
-  border-color: #38bdf8;
+  border-color: var(--scan-amber);
 }
 
-.job-description-input::placeholder {
-  color: #64748b;
+.scan-textarea::placeholder {
+  color: var(--scan-dim);
 }
 
-.character-count {
+.scan-char-count {
   text-align: right;
-  color: #64748b;
-  font-size: 0.78rem;
-  margin-top: 0.4rem;
+  font-family: var(--scan-mono);
+  color: var(--scan-dim);
+  font-size: 0.72rem;
+  margin-top: 0.5rem;
 }
 
-/* ================= ANALYZE BUTTON ================= */
+/* ================= RUN SCAN BUTTON ================= */
 
-.ats-action {
-  max-width: 700px;
-  margin: 1rem auto 0;
+.scanner-action {
+  max-width: 620px;
+  margin: 1.25rem auto 0;
   display: flex;
   justify-content: center;
 }
 
-.analyze-ats-btn {
-  background: linear-gradient(135deg, #38bdf8, #0ea5e9);
-  color: #0f172a;
-  font-weight: 600;
-  font-size: 1rem;
+.run-scan-btn {
+  font-family: var(--scan-mono);
+  letter-spacing: 0.08em;
+  background: var(--scan-amber);
+  color: #1a1300;
+  font-weight: 700;
+  font-size: 0.9rem;
   border: none;
-  border-radius: 10px;
+  border-radius: 4px;
   padding: 0.85rem 2.5rem;
   cursor: pointer;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-.analyze-ats-btn:hover {
+.run-scan-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(56, 189, 248, 0.25);
+  box-shadow: 0 8px 22px rgba(255, 179, 0, 0.25);
 }
 
-.analyze-ats-btn:active {
+.run-scan-btn:active {
   transform: translateY(0);
+}
+
+/* ================= SCANNING / LOADING STATE ================= */
+
+.scanner-page--loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scan-loader {
+  text-align: center;
+}
+
+.scan-loader-ring {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 1.5rem;
+  border-radius: 50%;
+  border: 3px solid var(--scan-border);
+  border-top-color: var(--scan-amber);
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.scan-loader-text {
+  font-family: var(--scan-mono);
+  color: var(--scan-amber);
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  margin: 0 0 0.5rem;
+}
+
+.scan-dots {
+  animation: blink 1s steps(1) infinite;
+}
+
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+.scan-loader-sub {
+  font-family: var(--scan-mono);
+  color: var(--scan-dim);
+  font-size: 0.75rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scanner-dot, .scan-loader-ring, .scan-dots { animation: none; }
 }
 
 /* ================= RESPONSIVE ================= */
 
 @media (max-width: 600px) {
-  .ats-header h1 {
-    font-size: 1.5rem;
-  }
-
-  .ats-card {
-    padding: 1.25rem;
-  }
-
-  .resume-upload-box {
-    padding: 1.75rem 1rem;
-  }
+  .scanner-header h1 { font-size: 1.5rem; }
+  .scanner-panel { padding: 1.1rem; }
 }
