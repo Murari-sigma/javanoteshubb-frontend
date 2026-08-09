@@ -1,4 +1,4 @@
-
+import "./ATSChecker.css";
 import React, { useState } from "react";
 
 function ATSChecker({ onBack }) {
