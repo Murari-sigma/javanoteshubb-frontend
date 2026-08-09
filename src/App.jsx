@@ -752,275 +752,284 @@ if (currentUser && selectedQuizTopic === "Core Java") {
                            🚪 Logout
                          </button>
                        </div>
-                     )}
 
-                       {showQuizTopics && (
-                         <div className="quiz-topics">
+                        )}
 
-                           {!selectedQuizTopic && (
-                             <>
-                               <button
-                                 className="back-home-btn"
-                                 onClick={() => setShowQuizTopics(false)}
-                                 style={{ marginBottom: "1rem" }}
-                               >
-                                 ← Back
-                               </button>
+                  {showQuizTopics && (
+                    <>
 
-                               <div className="topics-grid">
-                                 {[
-                                   {
-                                     icon: "{ }",
-                                     name: "Core Java",
-                                     desc: "OOPs, collections, streams, exceptions & the fundamentals every backend dev needs."
-                                   },
-                                   {
-                                     icon: "☕",
-                                     name: "Advanced Java",
-                                     desc: "Multithreading, concurrency, JVM internals & memory management."
-                                   },
-                                   {
-                                     icon: "🔌",
-                                     name: "JDBC",
-                                     desc: "Database connectivity, PreparedStatement, ResultSet & transaction management."
-                                   },
-                                   {
-                                     icon: "🌐",
-                                     name: "Servlet",
-                                     desc: "HTTP request/response lifecycle, filters, session management & web app fundamentals."
-                                   },
-                                   {
-                                     icon: "📄",
-                                     name: "JSP",
-                                     desc: "Java Server Pages, JSTL, EL expressions & dynamic web content generation."
-                                   },
-                                   {
-                                     icon: "📦",
-                                     name: "Maven",
-                                     desc: "Build automation, dependency management, POM.xml & project lifecycle."
-                                   },
-                                   {
-                                     icon: "🗄",
-                                     name: "Hibernate",
-                                     desc: "ORM mapping, sessions, caching & entity lifecycle."
-                                   },
-                                   {
-                                     icon: "💎",
-                                     name: "JPA",
-                                     desc: "Repositories, queries, relationships & the Java persistence standard."
-                                   },
-                                   {
-                                     icon: "🌱",
-                                     name: "Spring",
-                                     desc: "IoC, dependency injection, beans & the core of the Spring ecosystem."
-                                   },
-                                   {
-                                     icon: "🚀",
-                                     name: "Spring Boot",
-                                     desc: "Auto-configuration, REST APIs, starters & building production-ready apps fast."
-                                   },
-                                   {
-                                     icon: "🔐",
-                                     name: "Spring Security",
-                                     desc: "Authentication, authorization, JWT & securing your endpoints."
-                                   },
-                                   {
-                                     icon: "🔗",
-                                     name: "REST API",
-                                     desc: "RESTful design, HTTP methods, status codes & API best practices."
-                                   },
-                                   {
-                                     icon: "🧩",
-                                     name: "Microservices",
-                                     desc: "Service decomposition, Eureka, API Gateway & distributed systems patterns."
-                                   },
-                                   {
-                                     icon: "🗃️",
-                                     name: "MySQL",
-                                     desc: "SQL queries, joins, indexes, stored procedures & database design."
-                                   },
-                                   {
-                                     icon: "🐙",
-                                     name: "Git & GitHub",
-                                     desc: "Version control, branching, merging, pull requests & collaboration."
-                                   },
-                                   {
-                                     icon: "🐳",
-                                     name: "Docker",
-                                     desc: "Containerization, Dockerfile, images & deploying Java apps with Docker Compose."
-                                   },
-                                   {
-                                     icon: "☁️",
-                                     name: "AWS",
-                                     desc: "EC2, S3, RDS, IAM & deploying Spring Boot apps on the cloud."
-                                   },
-                                   {
-                                     icon: "🎯",
-                                     name: "Interview Questions",
-                                     desc: "Top Java & Spring Boot interview questions & HR round preparation."
-                                   },
-                                   {
-                                     icon: "🏗️",
-                                     name: "Projects",
-                                     desc: "End-to-end Java projects — REST APIs, microservices & full-stack apps."
-                                   }
-                                 ].map((topic) => (
-                                   <div
-                                     key={topic.name}
-                                     className="topic-card"
-                                     onClick={() => {
-                                       if (topic.name === "Core Java") {
-                                         setSelectedQuizTopic("Core Java");
-                                         setCurrentQuestion(0);
-                                         setSelectedAnswer(null);
-                                         setCorrectAnswers(0);
-                                         setQuizResult(null);
+                      {!selectedQuizTopic && (
+                        <>
+                          <button
+                            className="back-home-btn"
+                            onClick={() => setShowQuizTopics(false)}
+                            style={{ marginBottom: "1rem" }}
+                          >
+                            ← Back
+                          </button>
 
-                                       }
-                                     }}
-                                   >
-                                     <span className="topic-icon">{topic.icon}</span>
-                                     <h3>{topic.name}</h3>
-                                     <p>{topic.desc}</p>
-                                   </div>
-                                 ))}
-                               </div>
-                             </>
-                           )}
+                          <div className="topics-grid">
+                            {[
+                              {
+                                icon: "{ }",
+                                name: "Core Java",
+                                desc: "OOPs, collections, streams, exceptions & the fundamentals every backend dev needs."
+                              },
+                              {
+                                icon: "☕",
+                                name: "Advanced Java",
+                                desc: "Multithreading, concurrency, JVM internals & memory management."
+                              },
+                              {
+                                icon: "🔌",
+                                name: "JDBC",
+                                desc: "Database connectivity, PreparedStatement, ResultSet & transaction management."
+                              },
 
-                           {selectedQuizTopic === "Core Java" && (
-                             <div className="full-screen-quiz">
+                              // ... baaki aapke topics same rahenge
 
-                               <div className="quiz-header">
-                                 <button
-                                   className="back-home-btn"
-                                   onClick={() => {
-                                     setSelectedQuizTopic(null);
-                                     setCurrentQuestion(0);
-                                     setSelectedAnswer(null);
-                                     setCorrectAnswers(0);
-                                     setQuizResult(null);
-                                   }}
-                                 >
-                                   ← Back to Quiz Topics
-                                 </button>
+                            ].map((topic) => (
+                              <div
+                                key={topic.name}
+                                className="topic-card"
+                                onClick={() => {
+                                  if (topic.name === "Core Java") {
+                                    setSelectedQuizTopic("Core Java");
+                                    setCurrentQuestion(0);
+                                    setSelectedAnswer(null);
+                                    setCorrectAnswers(0);
+                                    setQuizResult(null);
+                                  }
+                                }}
+                              >
+                                <span className="topic-icon">{topic.icon}</span>
+                                <h3>{topic.name}</h3>
+                                <p>{topic.desc}</p>
+                              </div>
+                            ))}
+                          </div>
+                        </>
+                      )}
 
-                                 <h1>☕ Core Java Quiz</h1>
+                      {/* ================= CORE JAVA QUIZ ================= */}
 
-                                 <p>
-                                   Question {currentQuestion + 1} of {coreJavaQuestions.length}
-                                 </p>
-                               </div>
+                      {selectedQuizTopic === "Core Java" && (
+                        <div className="full-screen-quiz">
 
-                               <div className="quiz-question-card">
+                          <div className="quiz-header">
 
-                                 <h2>
-                                   {coreJavaQuestions[currentQuestion].question}
-                                 </h2>
+                            <button
+                              className="back-home-btn"
+                              onClick={() => {
+                                setSelectedQuizTopic(null);
+                                setCurrentQuestion(0);
+                                setSelectedAnswer(null);
+                                setCorrectAnswers(0);
+                                setQuizResult(null);
+                              }}
+                            >
+                              ← Back to Quiz Topics
+                            </button>
 
-                                 <div className="quiz-options">
-                                   {coreJavaQuestions[currentQuestion].options.map(
-                                     (option, index) => (
-                                       <button
-                                         key={option}
-                                         className={`quiz-option ${
-                                           selectedAnswer === option ? "selected" : ""
-                                         }`}
-                                         onClick={() => setSelectedAnswer(option)}
-                                       >
-                                         {String.fromCharCode(65 + index)}. {option}
-                                       </button>
-                                     )
-                                   )}
-                                 </div>
+                            <h1>☕ Core Java Quiz</h1>
 
-                                 {showQuizTopics && (
+                            <p>
+                              Question {currentQuestion + 1} of{" "}
+                              {coreJavaQuestions.length}
+                            </p>
 
-                                   <div>
+                          </div>
 
-                                     {!selectedQuizTopic && (
-                                       <>
-                                         {/* Quiz Topics */}
-                                       </>
-                                     )}
+                          <div className="quiz-question-card">
 
-                                     {selectedQuizTopic === "Core Java" && (
-                                       <div className="full-screen-quiz">
+                            <h2>
+                              {coreJavaQuestions[currentQuestion].question}
+                            </h2>
 
-                                         {/* Quiz Header */}
+                            <div className="quiz-options">
 
-                                         {/* Question */}
+                              {coreJavaQuestions[currentQuestion].options.map(
+                                (option, index) => (
+                                  <button
+                                    key={option}
+                                    className={`quiz-option ${
+                                      selectedAnswer === option
+                                        ? "selected"
+                                        : ""
+                                    }`}
+                                    onClick={() => setSelectedAnswer(option)}
+                                  >
+                                    {String.fromCharCode(65 + index)}. {option}
+                                  </button>
+                                )
+                              )}
 
-                                         {/* Options */}
+                            </div>
 
-                                         {/* Next / Finish Button */}
+                            {/* ================= NEXT / SUBMIT BUTTON ================= */}
 
-                                       </div>
-                                     )}
+                            <button
+                              className="next-question-btn"
+                              disabled={!selectedAnswer}
+                              onClick={() => {
 
-                                     {/* 👇 YE QUIZ KE BAAD RESULT PAGE HAI */}
-                                     {quizResult && (
-                                       <div className="quiz-result-page">
+                                const currentQuestionData =
+                                  coreJavaQuestions[currentQuestion];
 
-                                         {/* Result */}
+                                const isCorrect =
+                                  selectedAnswer === currentQuestionData.answer;
 
-                                       </div>
-                                     )}
+                                const newCorrectAnswers = isCorrect
+                                  ? correctAnswers + 1
+                                  : correctAnswers;
 
-                                   </div>
+                                // ================= QUESTIONS 1 - 19 =================
 
-                                 )}
+                                if (
+                                  currentQuestion <
+                                  coreJavaQuestions.length - 1
+                                ) {
 
-                                 <button
-                                   className="next-question-btn"
-                                   disabled={!selectedAnswer}
-                                   onClick={() => {
-                                     const currentQuestionData = coreJavaQuestions[currentQuestion];
+                                  setCorrectAnswers(newCorrectAnswers);
 
-                                     const isCorrect =
-                                       selectedAnswer === currentQuestionData.answer;
+                                  setCurrentQuestion(
+                                    currentQuestion + 1
+                                  );
 
-                                     const newCorrectAnswers = isCorrect
-                                       ? correctAnswers + 1
-                                       : correctAnswers;
+                                  setSelectedAnswer(null);
 
-                                     if (currentQuestion < coreJavaQuestions.length - 1) {
-                                       if (isCorrect) {
-                                         setCorrectAnswers(newCorrectAnswers);
-                                       }
+                                }
 
-                                       setCurrentQuestion(currentQuestion + 1);
-                                       setSelectedAnswer(null);
-                                     } else {
-                                       // Final question ka result
-                                       const totalQuestions = coreJavaQuestions.length;
-                                       const correct = newCorrectAnswers;
-                                       const wrong = totalQuestions - correct;
-                                       const percentage = Math.round((correct / totalQuestions) * 100);
+                                // ================= QUESTION 20 =================
 
-                                       setCorrectAnswers(correct);
+                                else {
 
-                                       setQuizResult({
-                                         total: totalQuestions,
-                                         correct: correct,
-                                         wrong: wrong,
-                                         percentage: percentage,
-                                       });
+                                  const totalQuestions =
+                                    coreJavaQuestions.length;
 
-                                       setSelectedQuizTopic(null);
-                                     }
-                                   }}
-                                 >
-                                   {currentQuestion === coreJavaQuestions.length - 1
-                                     ? "Finish Quiz 🎉"
-                                     : "Next Question →"}
-                                 </button>
+                                  const correct =
+                                    newCorrectAnswers;
 
-                               </div>
-                             </div>
-                           )}
-                       </div>
-                       )}
+                                  const wrong =
+                                    totalQuestions - correct;
+
+                                  const percentage =
+                                    Math.round(
+                                      (correct / totalQuestions) * 100
+                                    );
+
+                                  setCorrectAnswers(correct);
+
+                                  setQuizResult({
+                                    total: totalQuestions,
+                                    correct: correct,
+                                    wrong: wrong,
+                                    percentage: percentage,
+                                  });
+
+                                  // Quiz hide karo
+                                  setSelectedQuizTopic(null);
+
+                                  setSelectedAnswer(null);
+                                }
+
+                              }}
+                            >
+                              {currentQuestion ===
+                              coreJavaQuestions.length - 1
+                                ? "Submit Quiz ✅"
+                                : "Next Question →"}
+                            </button>
+
+                          </div>
+
+                        </div>
+                            )}
+
+                            </>
+                          )}
+
+
+                      {/* ================= RESULT PAGE ================= */}
+
+                      {quizResult && (
+                        <div className="quiz-result-page">
+
+                          <div className="quiz-result-card">
+
+                            <div className="result-icon">
+                              🎉
+                            </div>
+
+                            <h1>
+                              Core Java Quiz Result
+                            </h1>
+
+                            <p className="result-message">
+                              Quiz successfully submitted!
+                            </p>
+
+                            <div className="result-score">
+                              {quizResult.correct}
+                              <span>
+                                {" "} / {quizResult.total}
+                              </span>
+                            </div>
+
+                            <p className="result-percentage">
+                              {quizResult.percentage}% Score
+                            </p>
+
+                            <div className="result-stats">
+
+                              <div className="result-stat correct">
+                                <div>✅</div>
+                                <h3>Correct</h3>
+                                <strong>
+                                  {quizResult.correct}
+                                </strong>
+                              </div>
+
+                              <div className="result-stat wrong">
+                                <div>❌</div>
+                                <h3>Wrong</h3>
+                                <strong>
+                                  {quizResult.wrong}
+                                </strong>
+                              </div>
+
+                              <div className="result-stat total">
+                                <div>📋</div>
+                                <h3>Total</h3>
+                                <strong>
+                                  {quizResult.total}
+                                </strong>
+                              </div>
+
+                            </div>
+
+                            <button
+                              className="back-home-btn"
+                              onClick={() => {
+                                setQuizResult(null);
+                                setSelectedQuizTopic(null);
+                                setCurrentQuestion(0);
+                                setSelectedAnswer(null);
+                                setCorrectAnswers(0);
+                                setShowQuizTopics(true);
+                              }}
+                            >
+                              ← Back to Quiz Topics
+                            </button>
+
+                          </div>
+
+                        </div>
+                      )}
+
+
+
+
 
                     {showContact && (
                       <div className="modal-overlay" onClick={() => setShowContact(false)}>
