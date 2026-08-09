@@ -13,7 +13,7 @@ const topicsList = [
   "Git & GitHub", "Docker", "AWS", "Interview Questions", "Projects"
 ];
 
-function App() {
+    function App() {
 
     const [showMenu, setShowMenu] = useState(false);
     const [menuSearch, setMenuSearch] = useState("");
@@ -1564,61 +1564,6 @@ if (currentUser && selectedQuizTopic === "Core Java") {
                         </div>
                       )}
 
-                       {/* Notes List */}
-                       {!loading && notes
-                         .filter(note => note.title?.toLowerCase().includes(searchQuery.toLowerCase()))
-                         .map((note) => (
-                           <div key={note.id || note._id} className="note-card">
-                             <div className="note-header">
-                               <h3>{note.title}</h3>
-                               <div className="note-actions">
-
-                                 {/* Download - sabke liye */}
-                                 <button
-                                   className="download-btn"
-                                   onClick={() => handleDownloadPDF(note.title, `note-${note.id || note._id}`)}
-                                 >
-                                   ⬇️ Download
-                                 </button>
-
-                                 {/* Edit + Delete - Sirf Admin */}
-                                 {(currentUser?.role === "ADMIN" || currentUser?.email === "pandeymurari571@gmail.com") && (
-                                   <>
-                                     <button className="edit-btn" onClick={() => handleOpenEditModal(note)}>
-                                       ✏️ Edit
-                                     </button>
-                                     <button className="delete-btn" onClick={() => handleDeleteNote(note.id || note._id)}>
-                                       🗑️ Delete
-                                     </button>
-                                   </>
-                                 )}
-
-                               </div>
-                             </div>
-                             <div id={`note-${note.id || note._id}`} className="note-content">
-                               <ReactMarkdown
-                                 children={note.content}
-                                 components={{
-                                   code({ node, inline, className, children, ...props }) {
-                                     const match = /language-(\w+)/.exec(className || '');
-                                     return !inline && match ? (
-                                       <SyntaxHighlighter
-                                         style={vscDarkPlus}
-                                         language={match[1]}
-                                         PreTag="div"
-                                         {...props}
-                                       >
-                                         {String(children).replace(/\n$/, '')}
-                                       </SyntaxHighlighter>
-                                     ) : (
-                                       <code className={className} {...props}>{children}</code>
-                                     );
-                                   }
-                                 }}
-                               />
-                             </div>
-                           </div>
-                         ))}
                      </>
                    )}
 
