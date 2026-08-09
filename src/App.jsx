@@ -4,6 +4,7 @@ import html2pdf from 'html2pdf.js';
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import ATSChecker from "./ATSChecker";
 import './App.css';
 
 const topicsList = [
@@ -21,7 +22,7 @@ const topicsList = [
     const [showContact, setShowContact] = useState(false);
     const [showQuizTopics, setShowQuizTopics] = useState(false);
     const [selectedQuizTopic, setSelectedQuizTopic] = useState(null);
-
+    const [showATS, setShowATS] = useState(false);
     const [correctAnswers, setCorrectAnswers] = useState(0);
     const [quizResult, setQuizResult] = useState(null);
 
@@ -716,6 +717,19 @@ if (currentUser && selectedQuizTopic === "Core Java") {
                          </button>
 
                          <hr />
+                         <button
+                           className="menu-item"
+                           onClick={() => {
+                             setShowATS(true);
+                             setShowMenu(false);
+                             setShowTopics(false);
+                             setSelectedTopic(null);
+                           }}
+                         >
+                           📄 ATS Resume Checker
+                         </button>
+
+                         <hr />
 
                          <button
                            className="menu-item"
@@ -1192,6 +1206,10 @@ if (currentUser && selectedQuizTopic === "Core Java") {
 
                  {/* Content Area */}
                  <main className="content-area">
+
+                  {showATS && (
+                      <ATSChecker onBack={() => setShowATS(false)} />
+                    )}
 
                     {/* HOME VIEW */}
                     {!selectedTopic && (
