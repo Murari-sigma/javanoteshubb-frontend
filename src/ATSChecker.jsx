@@ -2,80 +2,6 @@ import React, { useState } from "react";
 import ATSResult from "./ATSResult";
 import "./ATSChecker.css";
 
-/* ---------------------------------------------------------
-   TEMPORARY MOCK ANALYSIS
-   Jab tak Spring Boot backend (PDFBox/POI se resume text
-   extract + keyword matching) ready nahi hota, ye function
-   fake result generate karta hai taaki UI test ho sake.
-   Baad me isko ek fetch("/api/ats/analyze") call se replace
-   karna hai — response shape same rakhna:
-   { overallScore, skillsScore, keywordScore,
-     matchedSkills, missingSkills,
-     matchedKeywords, missingKeywords, suggestions }
---------------------------------------------------------- */
-const KNOWN_SKILLS = [
-  "java", "spring boot", "spring", "hibernate", "jpa", "mysql",
-  "rest api", "microservices", "docker", "aws", "git", "maven",
-  "junit", "kafka", "redis", "jenkins", "kubernetes", "sql",
-];
-
-const STOPWORDS = new Set([
-  "the","and","a","to","of","in","for","with","is","on","as",
-  "are","we","you","will","your","this","that","be","or","an",
-]);
-
-function extractKeywords(text) {
-  return Array.from(
-    new Set(
-      text
-        .toLowerCase()
-        .split(/[^a-zA-Z+#]+/)
-        .filter((w) => w.length > 2 && !STOPWORDS.has(w))
-    )
-  ).slice(0, 24);
-}
-
-function mockAnalyze(jobDescription) {
-  const jdLower = jobDescription.toLowerCase();
-  const keywords = extractKeywords(jobDescription);
-
-  const matchedKeywords = keywords.filter((_, i) => i % 3 !== 0);
-  const missingKeywords = keywords.filter((_, i) => i % 3 === 0);
-
-  const skillsInJD = KNOWN_SKILLS.filter((s) => jdLower.includes(s));
-  const matchedSkills = skillsInJD.filter((_, i) => i % 2 === 0);
-  const missingSkills = skillsInJD.filter((_, i) => i % 2 !== 0);
-
-  const keywordScore = keywords.length
-    ? Math.round((matchedKeywords.length / keywords.length) * 100)
-    : 50;
-  const skillsScore = skillsInJD.length
-    ? Math.round((matchedSkills.length / skillsInJD.length) * 100)
-    : 50;
-  const overallScore = Math.round(keywordScore * 0.5 + skillsScore * 0.5);
-
-  const suggestions = [
-    missingSkills.length > 0 &&
-      `Add these skills to your resume: ${missingSkills.join(", ")}`,
-    missingKeywords.length > 0 &&
-      `Mention these keywords from the job description: ${missingKeywords
-        .slice(0, 5)
-        .join(", ")}`,
-    "Quantify your achievements with numbers (e.g. 'Reduced API latency by 30%').",
-    "Keep formatting simple — avoid tables/columns so ATS software can parse it correctly.",
-  ].filter(Boolean);
-
-  return {
-    overallScore,
-    skillsScore,
-    keywordScore,
-    matchedSkills,
-    missingSkills,
-    matchedKeywords,
-    missingKeywords,
-    suggestions,
-  };
-}
 
 function ATSChecker({ onBack }) {
   const [resumeFile, setResumeFile] = useState(null);
@@ -101,30 +27,29 @@ function ATSChecker({ onBack }) {
     setResumeFile(file);
   };
 
-  const handleAnalyze = () => {
-    if (!resumeFile) {
-      alert("Please upload your resume first.");
-      return;
-    }
-    if (!jobDescription.trim()) {
-      alert("Please paste the job description.");
-      return;
-    }
+ const handleAnalyze = async () => {
+   if (!resumeFile) { alert("Please upload your resume first."); return; }
+   if (!jobDescription.trim()) { alert("Please paste the job description."); return; }
 
-    setView("scanning");
+   setView("scanning");
 
-    // TODO: replace this timeout + mockAnalyze with a real API call:
-    // const formData = new FormData();
-    // formData.append("resume", resumeFile);
-    // formData.append("jobDescription", jobDescription);
-    // const res = await fetch("http://localhost:8080/api/ats/analyze", { method: "POST", body: formData });
-    // const data = await res.json();
-    setTimeout(() => {
-      const data = mockAnalyze(jobDescription);
-      setResult(data);
-      setView("result");
-    }, 1400);
-  };
+   const formData = new FormData();
+   formData.append("resume", resumeFile);
+   formData.append("jobDescription", jobDescription);
+
+   try {
+     const res = await fetch("https://javanoteshubb-backend.onrender.com/api/ats/analyze", {
+       method: "POST",
+       body: formData,
+     });
+     const data = await res.json();
+     setResult(data);
+     setView("result");
+   } catch (err) {
+     alert("Something went wrong while analyzing.");
+     setView("form");
+   }
+ };
 
   const handleReset = () => {
     setResumeFile(null);
