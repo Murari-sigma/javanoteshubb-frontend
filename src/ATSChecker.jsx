@@ -28,8 +28,15 @@ function ATSChecker({ onBack }) {
   };
 
  const handleAnalyze = async () => {
-   if (!resumeFile) { alert("Please upload your resume first."); return; }
-   if (!jobDescription.trim()) { alert("Please paste the job description."); return; }
+   if (!resumeFile) {
+     alert("Please upload your resume first.");
+     return;
+   }
+
+   if (!jobDescription.trim()) {
+     alert("Please paste the job description.");
+     return;
+   }
 
    setView("scanning");
 
@@ -38,25 +45,40 @@ function ATSChecker({ onBack }) {
    formData.append("jobDescription", jobDescription);
 
    try {
-     const res = await fetch("https://javanoteshubb-backend.onrender.com/api/ats/analyze", {
-       method: "POST",
-       body: formData,
-     });
+     const res = await fetch(
+       "https://javanoteshubb-backend.onrender.com/api/ats/analyze",
+       {
+         method: "POST",
+         body: formData,
+       }
+     );
+
+     // First check HTTP status
+     if (!res.ok) {
+       const errorText = await res.text();
+       console.error("API Error:", res.status, errorText);
+       throw new Error(`API failed: ${res.status}`);
+     }
+
      const data = await res.json();
+
+     console.log("API Response:", data);
+
      setResult(data);
      setView("result");
    } catch (err) {
+     console.error("Analyze Error:", err);
      alert("Something went wrong while analyzing.");
      setView("form");
    }
  };
 
-  const handleReset = () => {
-    setResumeFile(null);
-    setJobDescription("");
-    setResult(null);
-    setView("form");
-  };
+ const handleReset = () => {
+   setResumeFile(null);
+   setJobDescription("");
+   setResult(null);
+   setView("form");
+ };
 
   /* ---------- SCANNING STATE ---------- */
   if (view === "scanning") {
