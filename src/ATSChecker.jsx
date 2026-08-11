@@ -40,6 +40,7 @@ function ATSChecker({ onBack }) {
   // ================================
   // ANALYZE
   // ================================
+
   const handleAnalyze = async () => {
     if (!resumeFile) {
       alert("Please upload your resume first.");
@@ -60,7 +61,7 @@ function ATSChecker({ onBack }) {
 
     try {
       console.log("==============================");
-      console.log("ATS REQUEST STARTED");
+      console.log("UPLOAD TEST STARTED");
       console.log("==============================");
 
       console.log("File:", resumeFile.name);
@@ -91,40 +92,30 @@ function ATSChecker({ onBack }) {
         );
       }
 
-      let data;
+      // upload-test plain text response deta hai
+      alert(text);
 
-      try {
-        data = JSON.parse(text);
-      } catch (error) {
-        console.error("JSON PARSE ERROR:", error);
-        throw new Error("Server returned invalid JSON.");
-      }
+      console.log("UPLOAD TEST SUCCESS");
 
-      console.log("FINAL ATS DATA:", data);
-
-      setResult(data);
-      setView("result");
+      setView("form");
 
     } catch (error) {
       console.error("==============================");
-      console.error("ATS ANALYZE ERROR");
+      console.error("UPLOAD TEST ERROR");
       console.error("==============================");
-      console.error(error);
+      console.error("Error:", error);
+      console.error("Name:", error?.name);
+      console.error("Message:", error?.message);
 
-      let message = "Something went wrong while analyzing.";
-
-      if (error instanceof TypeError && error.message === "Failed to fetch") {
-        message =
-          "Unable to connect to the ATS server. Please check your internet connection or try again.";
-      } else if (error?.message) {
-        message = error.message;
-      }
-
-      alert(`Analyze failed: ${message}`);
+      alert(
+        `Upload test failed:\n\n${error?.name}\n${error?.message}`
+      );
 
       setView("form");
     }
   };
+
+
 
   // ================================
   // RESET
