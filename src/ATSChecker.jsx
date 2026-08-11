@@ -1,7 +1,7 @@
+
 import React, { useState } from "react";
 import ATSResult from "./ATSResult";
 import "./ATSChecker.css";
-
 
 function ATSChecker({ onBack }) {
   const [resumeFile, setResumeFile] = useState(null);
@@ -9,8 +9,11 @@ function ATSChecker({ onBack }) {
   const [view, setView] = useState("form"); // form | scanning | result
   const [result, setResult] = useState(null);
 
+  // ================================
+  // FILE SELECT
+  // ================================
   const handleFileChange = (e) => {
-    const file = e.target.files[0];
+    const file = e.target.files?.[0];
 
     if (!file) return;
 
@@ -25,7 +28,7 @@ function ATSChecker({ onBack }) {
       return;
     }
 
-    console.log("FILE:", {
+    console.log("Selected file:", {
       name: file.name,
       type: file.type,
       size: file.size,
@@ -34,85 +37,119 @@ function ATSChecker({ onBack }) {
     setResumeFile(file);
   };
 
- const handleAnalyze = async () => {
-   if (!resumeFile) {
-     alert("Please upload your resume first.");
-     return;
-   }
+  // ================================
+  // ANALYZE
+  // ================================
+  const handleAnalyze = async () => {
+    if (!resumeFile) {
+      alert("Please upload your resume first.");
+      return;
+    }
 
-   if (!jobDescription.trim()) {
-     alert("Please paste the job description.");
-     return;
-   }
+    if (!jobDescription.trim()) {
+      alert("Please paste the job description.");
+      return;
+    }
 
-   setView("scanning");
+    setView("scanning");
 
-   const formData = new FormData();
+    const formData = new FormData();
 
-   formData.append("resume", resumeFile);
-   formData.append("jobDescription", jobDescription);
+    formData.append("resume", resumeFile);
+    formData.append("jobDescription", jobDescription.trim());
 
-   try {
-     console.log("Sending request...");
-     console.log("File:", resumeFile.name);
-     console.log("File type:", resumeFile.type);
-     console.log("File size:", resumeFile.size);
+    try {
+      console.log("==============================");
+      console.log("ATS REQUEST STARTED");
+      console.log("==============================");
 
-     const res = await fetch(
-       "https://javanoteshubb-backend.onrender.com/api/ats/analyze",
-       {
-         method: "POST",
-         body: formData,
-       }
-     );
+      console.log("File:", resumeFile.name);
+      console.log("File type:", resumeFile.type);
+      console.log("File size:", resumeFile.size);
+      console.log("JD length:", jobDescription.length);
 
-     console.log("HTTP STATUS:", res.status);
+      const API_URL =
+        "https://javanoteshubb-backend.onrender.com/api/ats/analyze";
 
-     const text = await res.text();
+      console.log("API URL:", API_URL);
 
-     console.log("SERVER RESPONSE:", text);
+      const res = await fetch(API_URL, {
+        method: "POST",
+        body: formData,
+      });
 
-     if (!res.ok) {
-       throw new Error(`Server error ${res.status}: ${text}`);
-     }
+      console.log("HTTP STATUS:", res.status);
+      console.log("HTTP OK:", res.ok);
 
-     let data;
+      const text = await res.text();
 
-     try {
-       data = JSON.parse(text);
-     } catch (jsonError) {
-       throw new Error("Server did not return valid JSON.");
-     }
+      console.log("SERVER RESPONSE:", text);
 
-     console.log("FINAL DATA:", data);
+      if (!res.ok) {
+        throw new Error(
+          `Server error ${res.status}: ${text || "Unknown server error"}`
+        );
+      }
 
-     setResult(data);
-     setView("result");
+      let data;
 
-   } catch (err) {
-     console.error("FULL ANALYZE ERROR:", err);
+      try {
+        data = JSON.parse(text);
+      } catch (error) {
+        console.error("JSON PARSE ERROR:", error);
+        throw new Error("Server returned invalid JSON.");
+      }
 
-     alert(`Analyze failed: ${err.message}`);
+      console.log("FINAL ATS DATA:", data);
 
-     setView("form");
-   }
- };
- const handleReset = () => {
-   setResumeFile(null);
-   setJobDescription("");
-   setResult(null);
-   setView("form");
- };
+      setResult(data);
+      setView("result");
 
-  /* ---------- SCANNING STATE ---------- */
+    } catch (error) {
+      console.error("==============================");
+      console.error("ATS ANALYZE ERROR");
+      console.error("==============================");
+      console.error(error);
+
+      let message = "Something went wrong while analyzing.";
+
+      if (error instanceof TypeError && error.message === "Failed to fetch") {
+        message =
+          "Unable to connect to the ATS server. Please check your internet connection or try again.";
+      } else if (error?.message) {
+        message = error.message;
+      }
+
+      alert(`Analyze failed: ${message}`);
+
+      setView("form");
+    }
+  };
+
+  // ================================
+  // RESET
+  // ================================
+  const handleReset = () => {
+    setResumeFile(null);
+    setJobDescription("");
+    setResult(null);
+    setView("form");
+  };
+
+  // ================================
+  // SCANNING SCREEN
+  // ================================
   if (view === "scanning") {
     return (
       <div className="scanner-page scanner-page--loading">
         <div className="scan-loader">
           <div className="scan-loader-ring" />
+
           <p className="scan-loader-text">
-            ANALYZING RESUME<span className="scan-dots">...</span>
+            ANALYZING RESUME
+            <span className="scan-dots">...</span>
           </p>
+
           <p className="scan-loader-sub">
             parsing content · matching keywords · scoring skills
           </p>
@@ -121,7 +158,9 @@ function ATSChecker({ onBack }) {
     );
   }
 
-  /* ---------- RESULT STATE ---------- */
+  // ================================
+  // RESULT SCREEN
+  // ================================
   if (view === "result") {
     return (
       <ATSResult
@@ -132,74 +171,122 @@ function ATSChecker({ onBack }) {
     );
   }
 
-  /* ---------- FORM STATE ---------- */
+  // ================================
+  // FORM SCREEN
+  // ================================
   return (
     <div className="scanner-page">
-      <button className="scanner-back-btn" onClick={onBack}>
+
+      {/* BACK BUTTON */}
+      <button
+        className="scanner-back-btn"
+        onClick={onBack}
+        type="button"
+      >
         ← Back
       </button>
 
+      {/* HEADER */}
       <div className="scanner-header">
         <span className="scanner-eyebrow">
           <span className="scanner-dot" /> ATS SCANNER · READY
         </span>
-        <h1 className="shine-text">Resume Compatibility Scan</h1>
+
+        <h1 className="shine-text">
+          Resume Compatibility Scan
+        </h1>
+
         <p>
           Upload your resume and paste the job description — the scanner
           checks how well you match before recruiters ever open your file.
         </p>
       </div>
 
+      {/* RESUME UPLOAD */}
       <div className="scanner-panel">
-        <div className="panel-label shine-text">TARGET FILE</div>
+        <div className="panel-label shine-text">
+          TARGET FILE
+        </div>
+
         <label className="scan-dropzone">
+
           <input
             type="file"
-            accept=".pdf,.docx"
+            accept=".pdf,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
             onChange={handleFileChange}
             hidden
           />
+
           <span className="bracket bracket-tl" />
           <span className="bracket bracket-tr" />
           <span className="bracket bracket-bl" />
           <span className="bracket bracket-br" />
 
-          <div className="dropzone-icon">{resumeFile ? "◈" : "▢"}</div>
+          <div className="dropzone-icon">
+            {resumeFile ? "◈" : "▢"}
+          </div>
 
           {resumeFile ? (
             <>
-              <strong className="dropzone-filename shine-text">{resumeFile.name}</strong>
-              <span className="dropzone-hint">FILE LOADED — ready to scan</span>
+              <strong className="dropzone-filename shine-text">
+                {resumeFile.name}
+              </strong>
+
+              <span className="dropzone-hint">
+                FILE LOADED — ready to scan
+              </span>
             </>
           ) : (
             <>
-              <strong className="dropzone-filename shine-text">Drop resume here</strong>
-              <span className="dropzone-hint">PDF or DOCX only</span>
+              <strong className="dropzone-filename shine-text">
+                Tap to upload resume
+              </strong>
+
+              <span className="dropzone-hint">
+                PDF or DOCX only
+              </span>
             </>
           )}
         </label>
       </div>
 
+      {/* JOB DESCRIPTION */}
       <div className="scanner-panel">
-        <div className="panel-label shine-text">JOB DESCRIPTION</div>
+
+        <div className="panel-label shine-text">
+          JOB DESCRIPTION
+        </div>
+
         <textarea
           className="scan-textarea"
           placeholder="Paste the complete job description here..."
           value={jobDescription}
           onChange={(e) => setJobDescription(e.target.value)}
         />
+
         <div className="scan-char-count">
           {jobDescription.length} characters
         </div>
+
       </div>
 
+      {/* SCAN BUTTON */}
       <div className="scanner-action">
-        <button className="run-scan-btn" onClick={handleAnalyze}>
+
+        <button
+          className="run-scan-btn"
+          onClick={handleAnalyze}
+          type="button"
+          disabled={!resumeFile || !jobDescription.trim()}
+        >
           ▶ RUN SCAN
         </button>
+
       </div>
+
     </div>
   );
 }
 
 export default ATSChecker;
+
