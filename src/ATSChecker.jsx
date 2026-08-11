@@ -6,7 +6,7 @@ import "./ATSChecker.css";
 function ATSChecker({ onBack }) {
   const [resumeFile, setResumeFile] = useState(null);
   const [jobDescription, setJobDescription] = useState("");
-  const [view, setView] = useState("form"); // form | scanning | result
+  const [view, setView] = useState("form");
   const [result, setResult] = useState(null);
 
   // ================================
@@ -40,7 +40,6 @@ function ATSChecker({ onBack }) {
   // ================================
   // ANALYZE
   // ================================
-
   const handleAnalyze = async () => {
     if (!resumeFile) {
       alert("Please upload your resume first.");
@@ -56,66 +55,92 @@ function ATSChecker({ onBack }) {
 
     const formData = new FormData();
 
-    formData.append("resume", resumeFile);
-    formData.append("jobDescription", jobDescription.trim());
+    formData.append(
+      "resume",
+      resumeFile,
+      resumeFile.name
+    );
+
+    formData.append(
+      "jobDescription",
+      jobDescription.trim()
+    );
 
     try {
-      console.log("==============================");
-      console.log("UPLOAD TEST STARTED");
-      console.log("==============================");
+      const API_URL =
+        "https://javanoteshubb-backend.onrender.com/api/ats/analyze";
 
+      console.log("==============================");
+      console.log("ATS REQUEST STARTED");
+      console.log("==============================");
+      console.log("API:", API_URL);
       console.log("File:", resumeFile.name);
-      console.log("File type:", resumeFile.type);
-      console.log("File size:", resumeFile.size);
+      console.log("Type:", resumeFile.type);
+      console.log("Size:", resumeFile.size);
       console.log("JD length:", jobDescription.length);
 
-      const API_URL =
-        "https://javanoteshubb-backend.onrender.com/api/ats/upload-test";
-
-      console.log("API URL:", API_URL);
-
-      const res = await fetch(API_URL, {
+      const response = await fetch(API_URL, {
         method: "POST",
         body: formData,
       });
 
-      console.log("HTTP STATUS:", res.status);
-      console.log("HTTP OK:", res.ok);
+      console.log("HTTP STATUS:", response.status);
+      console.log("HTTP OK:", response.ok);
 
-      const text = await res.text();
+      const text = await response.text();
 
       console.log("SERVER RESPONSE:", text);
 
-      if (!res.ok) {
+      if (!response.ok) {
         throw new Error(
-          `Server error ${res.status}: ${text || "Unknown server error"}`
+          `Server error ${response.status}: ${
+            text || "Unknown server error"
+          }`
         );
       }
 
-      // upload-test plain text response deta hai
-      alert(text);
+      let data;
 
-      console.log("UPLOAD TEST SUCCESS");
+      try {
+        data = JSON.parse(text);
+      } catch (jsonError) {
+        console.error("JSON PARSE ERROR:", jsonError);
+        throw new Error(
+          "Server returned invalid JSON."
+        );
+      }
 
-      setView("form");
+      console.log("FINAL ATS DATA:", data);
+
+      setResult(data);
+      setView("result");
 
     } catch (error) {
       console.error("==============================");
-      console.error("UPLOAD TEST ERROR");
+      console.error("ATS ERROR");
       console.error("==============================");
-      console.error("Error:", error);
       console.error("Name:", error?.name);
       console.error("Message:", error?.message);
+      console.error("Stack:", error?.stack);
 
-      alert(
-        `Upload test failed:\n\n${error?.name}\n${error?.message}`
-      );
+      let message =
+        "Something went wrong while analyzing.";
+
+      if (
+        error instanceof TypeError &&
+        error.message === "Failed to fetch"
+      ) {
+        message =
+          "Unable to connect to the ATS server. Please check your internet connection or try again.";
+      } else if (error?.message) {
+        message = error.message;
+      }
+
+      alert(`Analyze failed: ${message}`);
 
       setView("form");
     }
   };
-
-
 
   // ================================
   // RESET
@@ -134,16 +159,20 @@ function ATSChecker({ onBack }) {
     return (
       <div className="scanner-page scanner-page--loading">
         <div className="scan-loader">
+
           <div className="scan-loader-ring" />
 
           <p className="scan-loader-text">
             ANALYZING RESUME
-            <span className="scan-dots">...</span>
+            <span className="scan-dots">
+              ...
+            </span>
           </p>
 
           <p className="scan-loader-sub">
             parsing content · matching keywords · scoring skills
           </p>
+
         </div>
       </div>
     );
@@ -179,8 +208,10 @@ function ATSChecker({ onBack }) {
 
       {/* HEADER */}
       <div className="scanner-header">
+
         <span className="scanner-eyebrow">
-          <span className="scanner-dot" /> ATS SCANNER · READY
+          <span className="scanner-dot" />
+          ATS SCANNER · READY
         </span>
 
         <h1 className="shine-text">
@@ -188,13 +219,16 @@ function ATSChecker({ onBack }) {
         </h1>
 
         <p>
-          Upload your resume and paste the job description — the scanner
-          checks how well you match before recruiters ever open your file.
+          Upload your resume and paste the job description —
+          the scanner checks how well you match before
+          recruiters ever open your file.
         </p>
+
       </div>
 
       {/* RESUME UPLOAD */}
       <div className="scanner-panel">
+
         <div className="panel-label shine-text">
           TARGET FILE
         </div>
@@ -238,7 +272,9 @@ function ATSChecker({ onBack }) {
               </span>
             </>
           )}
+
         </label>
+
       </div>
 
       {/* JOB DESCRIPTION */}
@@ -252,7 +288,9 @@ function ATSChecker({ onBack }) {
           className="scan-textarea"
           placeholder="Paste the complete job description here..."
           value={jobDescription}
-          onChange={(e) => setJobDescription(e.target.value)}
+          onChange={(e) =>
+            setJobDescription(e.target.value)
+          }
         />
 
         <div className="scan-char-count">
@@ -268,7 +306,10 @@ function ATSChecker({ onBack }) {
           className="run-scan-btn"
           onClick={handleAnalyze}
           type="button"
-          disabled={!resumeFile || !jobDescription.trim()}
+          disabled={
+            !resumeFile ||
+            !jobDescription.trim()
+          }
         >
           ▶ RUN SCAN
         </button>
