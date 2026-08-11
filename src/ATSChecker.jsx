@@ -69,7 +69,7 @@ function ATSChecker({ onBack }) {
       console.log("JD length:", jobDescription.length);
 
       const API_URL =
-        "https://javanoteshubb-backend.onrender.com/api/ats/analyze";
+        "https://javanoteshubb-backend.onrender.com/api/ats/upload-test";
 
       console.log("API URL:", API_URL);
 
