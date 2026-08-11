@@ -11,18 +11,25 @@ function ATSChecker({ onBack }) {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
+
     if (!file) return;
 
-    const allowedTypes = [
-      "application/pdf",
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-    ];
+    const fileName = file.name.toLowerCase();
 
-    if (!allowedTypes.includes(file.type)) {
+    const isPDF = fileName.endsWith(".pdf");
+    const isDOCX = fileName.endsWith(".docx");
+
+    if (!isPDF && !isDOCX) {
       alert("Please upload only PDF or DOCX file.");
       e.target.value = "";
       return;
     }
+
+    console.log("FILE:", {
+      name: file.name,
+      type: file.type,
+      size: file.size,
+    });
 
     setResumeFile(file);
   };
@@ -41,10 +48,16 @@ function ATSChecker({ onBack }) {
    setView("scanning");
 
    const formData = new FormData();
+
    formData.append("resume", resumeFile);
    formData.append("jobDescription", jobDescription);
 
    try {
+     console.log("Sending request...");
+     console.log("File:", resumeFile.name);
+     console.log("File type:", resumeFile.type);
+     console.log("File size:", resumeFile.size);
+
      const res = await fetch(
        "https://javanoteshubb-backend.onrender.com/api/ats/analyze",
        {
@@ -53,26 +66,37 @@ function ATSChecker({ onBack }) {
        }
      );
 
-     // First check HTTP status
+     console.log("HTTP STATUS:", res.status);
+
+     const text = await res.text();
+
+     console.log("SERVER RESPONSE:", text);
+
      if (!res.ok) {
-       const errorText = await res.text();
-       console.error("API Error:", res.status, errorText);
-       throw new Error(`API failed: ${res.status}`);
+       throw new Error(`Server error ${res.status}: ${text}`);
      }
 
-     const data = await res.json();
+     let data;
 
-     console.log("API Response:", data);
+     try {
+       data = JSON.parse(text);
+     } catch (jsonError) {
+       throw new Error("Server did not return valid JSON.");
+     }
+
+     console.log("FINAL DATA:", data);
 
      setResult(data);
      setView("result");
+
    } catch (err) {
-     console.error("Analyze Error:", err);
-     alert("Something went wrong while analyzing.");
+     console.error("FULL ANALYZE ERROR:", err);
+
+     alert(`Analyze failed: ${err.message}`);
+
      setView("form");
    }
  };
-
  const handleReset = () => {
    setResumeFile(null);
    setJobDescription("");
