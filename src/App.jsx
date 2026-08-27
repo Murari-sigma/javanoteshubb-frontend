@@ -1382,37 +1382,39 @@ if (currentUser && showATS) {
 
                       {selectedSubtopic && (
                         <>
-                          {/* Subtopic View Header */}
                           <div className="subtopic-view-header">
-                            <button className="back-home-btn" onClick={() => {
-                              setSelectedSubtopic(null);
-                              setNotes([]);
-                              setSearchQuery("");
-                            }}>
+                            <button
+                              className="back-home-btn"
+                              onClick={() => {
+                                setSelectedSubtopic(null);
+                                setNotes([]);
+                                setSearchQuery("");
+                              }}
+                            >
                               ← Back to Topics
                             </button>
 
                             <h3 className="topic-view-title">📘 {selectedSubtopic}</h3>
 
                             <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                              {(currentUser?.role === "ADMIN" || currentUser?.email === "pandeymurari571@gmail.com") && (
+                              {/* Admin ke liye Add Note Button */}
+                              {(currentUser?.role === "ADMIN" ||
+                                currentUser?.email === "pandeymurari571@gmail.com") && (
                                 <button className="add-btn" onClick={handleOpenAddModal}>
                                   + Add Note
                                 </button>
                               )}
 
-                              {/* 📄 Notes PDF Button */}
+                              {/* 📄 NEW: Notes PDF Button (Add Note ke Bagal me) */}
                               <button
                                 className="download-pdf-btn"
                                 onClick={() => {
-                                  const rawUrl = notesPdfLinks[selectedSubtopic];
-                                  if (rawUrl) {
-                                    // Function raw link ko direct download link me convert karega
-                                    const downloadUrl = getDirectDriveLink(rawUrl);
-                                    window.open(downloadUrl, "_blank");
-                                  } else {
-                                    alert(`Abhi ${selectedSubtopic} ke paper notes PDF available nahi hain!`);
+                                  if (notes.length === 0) {
+                                    alert("Abhi is subtopic mein koi notes available nahi hain!");
+                                    return;
                                   }
+                                  // Subtopic ke poore content (full-notes-area) ko PDF download karega
+                                  handleDownloadPDF(selectedSubtopic, "full-notes-area");
                                 }}
                               >
                                 📄 Notes PDF
@@ -1421,6 +1423,7 @@ if (currentUser && showATS) {
                           </div>
 
                           <hr style={{ margin: '15px 0', borderColor: '#334155' }} />
+
 
                           {loading && <p style={{color:'#94a3b8'}}>Loading notes...</p>}
 
@@ -1445,104 +1448,92 @@ if (currentUser && showATS) {
                             </div>
                           )}
 
+                          {/* Full Notes Area for PDF Generation */}
+                              <div id="full-notes-area">
+                                {!loading &&
+                                  notes
+                                    .filter(note =>
+                                      note.title?.toLowerCase().includes(searchQuery.toLowerCase())
+                                    )
+                                    .map((note) => (
+                                      <div
+                                        key={note.id || note._id}
+                                        className="note-card"
+                                      >
+                                        <div className="note-header">
+                                          <h3>{note.title}</h3>
+
+                                          <div className="note-actions">
+                                            {/* Purana Download Button Hata Diya Hai */}
+
+                                            {/* Edit + Delete Buttons for Admin */}
+                                            {(currentUser?.role === "ADMIN" ||
+                                              currentUser?.email === "pandeymurari571@gmail.com") && (
+                                              <>
+                                                <button
+                                                  className="edit-btn"
+                                                  onClick={() => handleOpenEditModal(note)}
+                                                >
+                                                  ✏️ Edit
+                                                </button>
+
+                                                <button
+                                                  className="delete-btn"
+                                                  onClick={() =>
+                                                    handleDeleteNote(note.id || note._id)
+                                                  }
+                                                >
+                                                  🗑️ Delete
+                                                </button>
+                                              </>
+                                            )}
+                                          </div>
+                                        </div>
+
+                                        <div
+                                          id={`note-${note.id || note._id}`}
+                                          className="note-content"
+                                        >
+                                          <ReactMarkdown
+                                            children={note.content}
+                                            components={{
+                                              code({
+                                                node,
+                                                inline,
+                                                className,
+                                                children,
+                                                ...props
+                                              }) {
+                                                const match =
+                                                  /language-(\w+)/.exec(className || "");
+
+                                                return !inline && match ? (
+                                                  <SyntaxHighlighter
+                                                    style={vscDarkPlus}
+                                                    language={match[1]}
+                                                    PreTag="div"
+                                                    {...props}
+                                                  >
+                                                    {String(children).replace(/\n$/, "")}
+                                                  </SyntaxHighlighter>
+                                                ) : (
+                                                  <code
+                                                    className={className}
+                                                    {...props}
+                                                  >
+                                                    {children}
+                                                  </code>
+                                                );
+                                              }
+                                            }}
+                                          />
+                                        </div>
+                                      </div>
+                                    ))}
+                              </div>
 
 
 
-                   {!loading &&
-                     notes
-                       .filter(note =>
-                         note.title?.toLowerCase().includes(searchQuery.toLowerCase())
-                       )
-                       .map((note) => (
-                         <div
-                           key={note.id || note._id}
-                           className="note-card"
-                         >
-                           <div className="note-header">
-                             <h3>{note.title}</h3>
-
-                             <div className="note-actions">
-
-                               {/* Download */}
-                               <button
-                                 className="download-btn"
-                                 onClick={() =>
-                                   handleDownloadPDF(
-                                     note.title,
-                                     `note-${note.id || note._id}`
-                                   )
-                                 }
-                               >
-                                 ⬇️ Download
-                               </button>
-
-                               {/* Edit + Delete */}
-                               {(currentUser?.role === "ADMIN" ||
-                                 currentUser?.email === "pandeymurari571@gmail.com") && (
-                                 <>
-                                   <button
-                                     className="edit-btn"
-                                     onClick={() => handleOpenEditModal(note)}
-                                   >
-                                     ✏️ Edit
-                                   </button>
-
-                                   <button
-                                     className="delete-btn"
-                                     onClick={() =>
-                                       handleDeleteNote(note.id || note._id)
-                                     }
-                                   >
-                                     🗑️ Delete
-                                   </button>
-                                 </>
-                               )}
-
-                             </div>
-                           </div>
-
-                           <div
-                             id={`note-${note.id || note._id}`}
-                             className="note-content"
-                           >
-                             <ReactMarkdown
-                               children={note.content}
-                               components={{
-                                 code({
-                                   node,
-                                   inline,
-                                   className,
-                                   children,
-                                   ...props
-                                 }) {
-                                   const match =
-                                     /language-(\w+)/.exec(className || "");
-
-                                   return !inline && match ? (
-                                     <SyntaxHighlighter
-                                       style={vscDarkPlus}
-                                       language={match[1]}
-                                       PreTag="div"
-                                       {...props}
-                                     >
-                                       {String(children).replace(/\n$/, "")}
-                                     </SyntaxHighlighter>
-                                   ) : (
-                                     <code
-                                       className={className}
-                                       {...props}
-                                     >
-                                       {children}
-                                     </code>
-                                   );
-                                 }
-                               }}
-                             />
-                           </div>
-                         </div>
-                       ))}
-                       </>
-                        )}
 
                        {/* Core Java subtopics - jab notes nahi hain */}
                        {!loading && notes.length === 0 && selectedTopic === "Core Java" && !selectedSubtopic && (
