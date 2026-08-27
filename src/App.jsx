@@ -13,22 +13,19 @@ const topicsList = [
   "Git & GitHub", "Docker", "AWS", "Interview Questions", "Projects"
 ];
 
- // 1. Helper function jo normal Drive link ko Direct Download Link me badal dega
- const getDirectDriveLink = (shareUrl) => {
-   if (!shareUrl) return "";
-   const match = shareUrl.match(/\/d\/([a-zA-Z0-9_-]+)/);
-   if (match && match[1]) {
-     return `https://drive.google.com/uc?export=download&id=${match[1]}`;
-   }
-   return shareUrl;
- };
+// 1. Helper function jo normal Drive link ko Direct Download Link me badal dega
+const getDirectDriveLink = (shareUrl) => {
+  if (!shareUrl) return "";
+  const match = shareUrl.match(/\/d\/([a-zA-Z0-9_-]+)/);
+  if (match && match[1]) {
+    return `https://drive.google.com/uc?export=download&id=${match[1]}`;
+  }
+  return shareUrl;
+};
 
+// 2. Drive Links Map
 const notesPdfLinks = {
-  // Jiska Drive link hai wo Drive kholega
   "Control Statements": "https://drive.google.com/file/d/12G1qSBEugxso5yW_ibHJy9aHQj36QTvu/view?usp=drivesdk",
-
-  // Baaki subtopics ke liye agar link nahi daala hai,
-  // toh "📄 Notes PDF" button apne aap page wale notes ko PDF bana kar download kar dega!
 };
 
     function App() {
@@ -259,20 +256,6 @@ useEffect(() => {
   }
 }, [selectedTopic, selectedSubtopic, currentUser]);
 
-
-
-
-  const opt = {
-    margin: [0.4, 0.4, 0.4, 0.4],
-    filename: `${noteTitle.replace(/[^a-zA-Z0-9]/g, '_')}_Notes.pdf`,
-    image: { type: 'jpeg', quality: 0.98 },
-    html2canvas: { scale: 2 },
-    jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
-  };
-
-  html2pdf().set(opt).from(element).save();
-};
-
   // Auth Submit (Login / Signup)
   const handleAuthSubmit = (e) => {
       e.preventDefault();
@@ -436,130 +419,112 @@ const handleOpenAddModal = () => {
       }
     };
 
-  const filteredTopics = topicsList.filter(topic =>
-    topic.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // 1. Topic Filtering Logic
+  const filteredTopics = topicsList ? topicsList.filter(topic =>
+    topic.toLowerCase().includes(searchQuery?.toLowerCase() || "")
+  ) : [];
 
-// ================= FULL SCREEN CORE JAVA QUIZ =================
-if (currentUser && selectedQuizTopic === "Core Java") {
-  const question = coreJavaQuestions[currentQuestion];
+  // 2. FULL SCREEN CORE JAVA QUIZ
+  if (currentUser && selectedQuizTopic === "Core Java") {
+    const question = coreJavaQuestions[currentQuestion];
 
-  return (
-    <div className="fullscreen-quiz">
-
-      <div className="quiz-container">
-
-        <button
-          className="quiz-back-btn"
-          onClick={() => {
-            setSelectedQuizTopic(null);
-            setCurrentQuestion(0);
-            setSelectedAnswer(null);
-            setShowQuizTopics(true);
-          }}
-        >
-          ← Back to Quiz Topics
-        </button>
-
-        <div className="quiz-header">
-          <span className="quiz-badge">☕ CORE JAVA</span>
-
-          <h1>Core Java Quiz</h1>
-
-          <p>
-            Question {currentQuestion + 1} of {coreJavaQuestions.length}
-          </p>
-        </div>
-
-        <div className="quiz-question-card">
-
-          <h2>
-            {question.question}
-          </h2>
-
-          <div className="quiz-options">
-
-            {question.options.map((option, index) => (
-              <button
-                key={option}
-                className={`quiz-option ${
-                  selectedAnswer === option ? "selected" : ""
-                }`}
-                onClick={() => setSelectedAnswer(option)}
-              >
-                <span className="option-letter">
-                  {String.fromCharCode(65 + index)}
-                </span>
-
-                <span>{option}</span>
-              </button>
-            ))}
-
-          </div>
-
+    return (
+      <div className="fullscreen-quiz">
+        <div className="quiz-container">
           <button
-            className="next-question-btn"
-            disabled={!selectedAnswer}
+            className="quiz-back-btn"
             onClick={() => {
-              const currentQuestionData = coreJavaQuestions[currentQuestion];
-
-              const isCorrect =
-                selectedAnswer === currentQuestionData.answer;
-
-              const newCorrectAnswers = isCorrect
-                ? correctAnswers + 1
-                : correctAnswers;
-
-              // Questions 1-19
-              if (currentQuestion < coreJavaQuestions.length - 1) {
-                setCorrectAnswers(newCorrectAnswers);
-                setCurrentQuestion(currentQuestion + 1);
-                setSelectedAnswer(null);
-              }
-
-              // Question 20 - Submit
-              else {
-                const totalQuestions = coreJavaQuestions.length;
-                const correct = newCorrectAnswers;
-                const wrong = totalQuestions - correct;
-                const percentage = Math.round(
-                  (correct / totalQuestions) * 100
-                );
-
-                setQuizResult({
-                  total: totalQuestions,
-                  correct: correct,
-                  wrong: wrong,
-                  percentage: percentage,
-                });
-
-                // Quiz ko hide karo
-                setSelectedQuizTopic(null);
-                setSelectedAnswer(null);
-              }
+              setSelectedQuizTopic(null);
+              setCurrentQuestion(0);
+              setSelectedAnswer(null);
+              setShowQuizTopics(true);
             }}
           >
-            {currentQuestion === coreJavaQuestions.length - 1
-              ? "Submit Quiz ✅"
-              : "Next Question →"}
+            ← Back to Quiz Topics
           </button>
 
+          <div className="quiz-header">
+            <span className="quiz-badge">☕ CORE JAVA</span>
+            <h1>Core Java Quiz</h1>
+            <p>
+              Question {currentQuestion + 1} of {coreJavaQuestions.length}
+            </p>
+          </div>
+
+          <div className="quiz-question-card">
+            <h2>{question.question}</h2>
+
+            <div className="quiz-options">
+              {question.options.map((option, index) => (
+                <button
+                  key={option}
+                  className={`quiz-option ${
+                    selectedAnswer === option ? "selected" : ""
+                  }`}
+                  onClick={() => setSelectedAnswer(option)}
+                >
+                  <span className="option-letter">
+                    {String.fromCharCode(65 + index)}
+                  </span>
+                  <span>{option}</span>
+                </button>
+              ))}
+            </div>
+
+            <button
+              className="next-question-btn"
+              disabled={!selectedAnswer}
+              onClick={() => {
+                const currentQuestionData = coreJavaQuestions[currentQuestion];
+                const isCorrect = selectedAnswer === currentQuestionData.answer;
+                const newCorrectAnswers = isCorrect
+                  ? correctAnswers + 1
+                  : correctAnswers;
+
+                // Questions 1-19
+                if (currentQuestion < coreJavaQuestions.length - 1) {
+                  setCorrectAnswers(newCorrectAnswers);
+                  setCurrentQuestion(currentQuestion + 1);
+                  setSelectedAnswer(null);
+                }
+                // Question 20 - Submit
+                else {
+                  const totalQuestions = coreJavaQuestions.length;
+                  const correct = newCorrectAnswers;
+                  const wrong = totalQuestions - correct;
+                  const percentage = Math.round((correct / totalQuestions) * 100);
+
+                  setQuizResult({
+                    total: totalQuestions,
+                    correct: correct,
+                    wrong: wrong,
+                    percentage: percentage,
+                  });
+
+                  // Quiz ko hide karo
+                  setSelectedQuizTopic(null);
+                  setSelectedAnswer(null);
+                }
+              }}
+            >
+              {currentQuestion === coreJavaQuestions.length - 1
+                ? "Submit Quiz ✅"
+                : "Next Question →"}
+            </button>
+          </div>
         </div>
-
       </div>
+    );
+  }
 
-    </div>
-  );
-}
+  // 3. ATS CHECKER VIEW
+  if (currentUser && showATS) {
+    return (
+      <ATSChecker onBack={() => setShowATS(false)} />
+    );
+  }
 
-// 👇 yahan add karo
-if (currentUser && showATS) {
-  return (
-    <ATSChecker onBack={() => setShowATS(false)} />
-  );
-}
-
-  // 🔒 IF NOT LOGGED IN -> SHOW LOGIN / SIGNUP SCREEN
+  // 4. IF NOT LOGGED IN -> SHOW LOGIN / SIGNUP SCREEN
   if (!currentUser) {
     return (
       <div className="auth-container">
@@ -634,6 +599,7 @@ if (currentUser && showATS) {
               : "Don't have an account? Sign Up here"}
           </p>
         </div>
+
         {showForgot && (
           <div className="modal-overlay">
             <div className="modal-box">
@@ -641,7 +607,6 @@ if (currentUser && showATS) {
 
               <div className="form-group">
                 <label>Email Address:</label>
-
                 <input
                   type="email"
                   placeholder="Enter your registered email"
@@ -659,13 +624,13 @@ if (currentUser && showATS) {
                   Send Reset Link
                 </button>
 
-              <button
-                type="button"
-                className="cancel-btn"
-                onClick={() => setShowForgot(false)}
-              >
-                Cancel
-              </button>
+                <button
+                  type="button"
+                  className="cancel-btn"
+                  onClick={() => setShowForgot(false)}
+                >
+                  Cancel
+                </button>
               </div>
             </div>
           </div>
@@ -673,13 +638,11 @@ if (currentUser && showATS) {
       </div>
     );
   }
-
   // 🔓 IF LOGGED IN -> MAIN APPLICATION VIEW
   return (
     <div>
       {/* Navbar */}
       <nav className="navbar">
-
         <div className="logo-container">
           <img
             src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg"
@@ -688,32 +651,27 @@ if (currentUser && showATS) {
             height="28"
             style={{ display: 'block' }}
           />
-
           <h2>Java Developer</h2>
         </div>
-          {/* Current Date & Time */}
-                    <div className="current-datetime">
-                      <div className="current-date">
-                        {currentDateTime.toLocaleDateString("en-IN", {
-                          weekday: "short",
-                          day: "2-digit",
-                          month: "short"
-                        })}
-                      </div>
-                 <div className="current-time">
-                                         {currentDateTime.toLocaleTimeString("en-IN", {
-                                           hour: "2-digit",
-                                           minute: "2-digit",
-                                           second: "2-digit",
-                                           hour12: false
-                                         })}
-                                       </div>
-                                     </div>
 
-
-
-
-
+        {/* Current Date & Time */}
+        <div className="current-datetime">
+          <div className="current-date">
+            {currentDateTime.toLocaleDateString("en-IN", {
+              weekday: "short",
+              day: "2-digit",
+              month: "short"
+            })}
+          </div>
+          <div className="current-time">
+            {currentDateTime.toLocaleTimeString("en-IN", {
+              hour: "2-digit",
+              minute: "2-digit",
+              second: "2-digit",
+              hour12: false
+            })}
+          </div>
+        </div>
 
         {/* 3 Line Menu Button */}
         <div
@@ -723,136 +681,126 @@ if (currentUser && showATS) {
           ☰
         </div>
 
-                     {showMenu && (
-                       <div className="menu-dropdown">
-                         <button
-                           className="menu-item home-item"
-                           onClick={() => {
-                             setSelectedTopic(null);
-                             setShowTopics(false);
-                             setShowMenu(false);
-                             window.scrollTo({ top: 0, behavior: "smooth" });
-                           }}
-                         >
-                           🏠 Home
-                         </button>
+        {showMenu && (
+          <div className="menu-dropdown">
+            <button
+              className="menu-item home-item"
+              onClick={() => {
+                setSelectedTopic(null);
+                setShowTopics(false);
+                setShowMenu(false);
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+            >
+              🏠 Home
+            </button>
 
-                         <hr />
-                         <button
-                           className="menu-item"
-                           onClick={() => {
-                             setShowATS(true);
-                             setShowMenu(false);
-                             setShowTopics(false);
-                             setSelectedTopic(null);
-                           }}
-                         >
-                           📄 ATS Resume Checker
-                         </button>
+            <hr />
+            <button
+              className="menu-item"
+              onClick={() => {
+                setShowATS(true);
+                setShowMenu(false);
+                setShowTopics(false);
+                setSelectedTopic(null);
+              }}
+            >
+              📄 ATS Resume Checker
+            </button>
 
-                         <hr />
+            <hr />
 
-                         <button
-                           className="menu-item"
-                           onClick={() => {
-                             setShowContact(true);
-                             setShowMenu(false);
-                           }}
-                         >
-                           📞 Contact Us
-                         </button>
+            <button
+              className="menu-item"
+              onClick={() => {
+                setShowContact(true);
+                setShowMenu(false);
+              }}
+            >
+              📞 Contact Us
+            </button>
 
-                         <hr />
+            <hr />
 
-                        <button
-                          className="menu-item"
-                          onClick={() => {
-                            setShowQuizTopics(true);
-                            setShowMenu(false);
-                          }}
-                        >
-                          🔔 Quiz
-                        </button>
+            <button
+              className="menu-item"
+              onClick={() => {
+                setShowQuizTopics(true);
+                setShowMenu(false);
+              }}
+            >
+              🔔 Quiz
+            </button>
 
+            <hr />
 
-                         <hr />
+            <button
+              className="menu-item logout-item"
+              onClick={() => {
+                handleLogout();
+                setShowMenu(false);
+              }}
+            >
+              🚪 Logout
+            </button>
+          </div>
+        )}
+      </nav>
 
-                         <button
-                           className="menu-item logout-item"
-                           onClick={() => {
-                             handleLogout();
-                             setShowMenu(false);
-                           }}
-                         >
-                           🚪 Logout
-                         </button>
-                       </div>
+      {/* Main Content Area */}
+      {showQuizTopics && !selectedQuizTopic && !quizResult && (
+        <div className="quiz-topics-container" style={{ padding: '2rem' }}>
+          <button
+            className="back-home-btn"
+            onClick={() => setShowQuizTopics(false)}
+            style={{ marginBottom: "1rem" }}
+          >
+            ← Back
+          </button>
 
-                        )}
-
-                  {showQuizTopics && (
-                    <>
-
-                      {!selectedQuizTopic && !quizResult && (
-                        <>
-                          <button
-                            className="back-home-btn"
-                            onClick={() => setShowQuizTopics(false)}
-                            style={{ marginBottom: "1rem" }}
-                          >
-                            ← Back
-                          </button>
-
-                          <div className="topics-grid">
-                            {[
-                              {
-                                icon: "{ }",
-                                name: "Core Java",
-                                desc: "OOPs, collections, streams, exceptions & the fundamentals every backend dev needs."
-                              },
-                              {
-                                icon: "☕",
-                                name: "Advanced Java",
-                                desc: "Multithreading, concurrency, JVM internals & memory management."
-                              },
-                              {
-                                icon: "🔌",
-                                name: "JDBC",
-                                desc: "Database connectivity, PreparedStatement, ResultSet & transaction management."
-                              },
-
-                              // ... baaki aapke topics same rahenge
-
-                            ].map((topic) => (
-                              <div
-                                key={topic.name}
-                                className="topic-card"
-                                onClick={() => {
-                                  if (topic.name === "Core Java") {
-                                    setSelectedQuizTopic("Core Java");
-                                    setCurrentQuestion(0);
-                                    setSelectedAnswer(null);
-                                    setCorrectAnswers(0);
-                                    setQuizResult(null);
-                                  }
-                                }}
-                              >
-                                <span className="topic-icon">{topic.icon}</span>
-                                <h3>{topic.name}</h3>
-                                <p>{topic.desc}</p>
-                              </div>
-                            ))}
-                          </div>
-                        </>
-                      )}
-
+          <div className="topics-grid">
+            {[
+              {
+                icon: "{ }",
+                name: "Core Java",
+                desc: "OOPs, collections, streams, exceptions & the fundamentals every backend dev needs."
+              },
+              {
+                icon: "☕",
+                name: "Advanced Java",
+                desc: "Multithreading, concurrency, JVM internals & memory management."
+              },
+              {
+                icon: "🔌",
+                name: "JDBC",
+                desc: "Database connectivity, PreparedStatement, ResultSet & transaction management."
+              }
+            ].map((topic) => (
+              <div
+                key={topic.name}
+                className="topic-card"
+                onClick={() => {
+                  if (topic.name === "Core Java") {
+                    setSelectedQuizTopic("Core Java");
+                    setCurrentQuestion(0);
+                    setSelectedAnswer(null);
+                    setCorrectAnswers(0);
+                    setQuizResult(null);
+                  }
+                }}
+              >
+                <span className="topic-icon">{topic.icon}</span>
+                <h3>{topic.name}</h3>
+                <p>{topic.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
                       {/* ================= CORE JAVA QUIZ ================= */}
-
                       {selectedQuizTopic === "Core Java" && (
                         <div className="full-screen-quiz">
-
                           <div className="quiz-header">
-
                             <button
                               className="back-home-btn"
                               onClick={() => {
@@ -869,92 +817,52 @@ if (currentUser && showATS) {
                             <h1>☕ Core Java Quiz</h1>
 
                             <p>
-                              Question {currentQuestion + 1} of{" "}
-                              {coreJavaQuestions.length}
+                              Question {currentQuestion + 1} of {coreJavaQuestions.length}
                             </p>
-
                           </div>
 
                           <div className="quiz-question-card">
-
-                            <h2>
-                              {coreJavaQuestions[currentQuestion].question}
-                            </h2>
+                            <h2>{coreJavaQuestions[currentQuestion].question}</h2>
 
                             <div className="quiz-options">
-
-                              {coreJavaQuestions[currentQuestion].options.map(
-                                (option, index) => (
-                                  <button
-                                    key={option}
-                                    className={`quiz-option ${
-                                      selectedAnswer === option
-                                        ? "selected"
-                                        : ""
-                                    }`}
-                                    onClick={() => setSelectedAnswer(option)}
-                                  >
-                                    {String.fromCharCode(65 + index)}. {option}
-                                  </button>
-                                )
-                              )}
-
+                              {coreJavaQuestions[currentQuestion].options.map((option, index) => (
+                                <button
+                                  key={option}
+                                  className={`quiz-option ${
+                                    selectedAnswer === option ? "selected" : ""
+                                  }`}
+                                  onClick={() => setSelectedAnswer(option)}
+                                >
+                                  {String.fromCharCode(65 + index)}. {option}
+                                </button>
+                              ))}
                             </div>
 
-                            {/* ================= NEXT / SUBMIT BUTTON ================= */}
-
+                            {/* NEXT / SUBMIT BUTTON */}
                             <button
                               className="next-question-btn"
                               disabled={!selectedAnswer}
                               onClick={() => {
-
-                                const currentQuestionData =
-                                  coreJavaQuestions[currentQuestion];
-
-                                const isCorrect =
-                                  selectedAnswer === currentQuestionData.answer;
-
+                                const currentQuestionData = coreJavaQuestions[currentQuestion];
+                                const isCorrect = selectedAnswer === currentQuestionData.answer;
                                 const newCorrectAnswers = isCorrect
                                   ? correctAnswers + 1
                                   : correctAnswers;
 
-                                // ================= QUESTIONS 1 - 19 =================
-
-                                if (
-                                  currentQuestion <
-                                  coreJavaQuestions.length - 1
-                                ) {
-
+                                // QUESTIONS 1 - 19
+                                if (currentQuestion < coreJavaQuestions.length - 1) {
                                   setCorrectAnswers(newCorrectAnswers);
-
-                                  setCurrentQuestion(
-                                    currentQuestion + 1
-                                  );
-
+                                  setCurrentQuestion(currentQuestion + 1);
                                   setSelectedAnswer(null);
-
                                 }
-
-                                // ================= QUESTION 20 =================
-
+                                // QUESTION 20 (SUBMIT)
                                 else {
-
-                                  const totalQuestions =
-                                    coreJavaQuestions.length;
-
-                                  const correct =
-                                    newCorrectAnswers;
-
-                                  const wrong =
-                                    totalQuestions - correct;
-
-                                  const percentage =
-                                    Math.round(
-                                      (correct / totalQuestions) * 100
-                                    );
+                                  const totalQuestions = coreJavaQuestions.length;
+                                  const correct = newCorrectAnswers;
+                                  const wrong = totalQuestions - correct;
+                                  const percentage = Math.round((correct / totalQuestions) * 100);
 
                                   setCorrectAnswers(correct);
-
                                   setQuizResult({
                                     total: totalQuestions,
                                     correct: correct,
@@ -962,44 +870,27 @@ if (currentUser && showATS) {
                                     percentage: percentage,
                                   });
 
-                                  // Quiz hide karo
                                   setSelectedQuizTopic(null);
-
                                   setSelectedAnswer(null);
                                   setShowQuizTopics(false);
                                 }
-
                               }}
                             >
-                              {currentQuestion ===
-                              coreJavaQuestions.length - 1
+                              {currentQuestion === coreJavaQuestions.length - 1
                                 ? "Submit Quiz ✅"
                                 : "Next Question →"}
                             </button>
-
                           </div>
-
                         </div>
-                            )}
-
-                            </>
-                          )}
-
+                      )}
 
                       {/* ================= RESULT PAGE ================= */}
-
                       {quizResult && (
                         <div className="quiz-result-fullscreen">
-
                           <div className="quiz-result-container">
+                            <div className="result-trophy">🏆</div>
 
-                            <div className="result-trophy">
-                              🏆
-                            </div>
-
-                            <p className="result-completed">
-                              QUIZ COMPLETED
-                            </p>
+                            <p className="result-completed">QUIZ COMPLETED</p>
 
                             <h1>Core Java Quiz</h1>
 
@@ -1009,13 +900,8 @@ if (currentUser && showATS) {
 
                             {/* SCORE */}
                             <div className="result-circle">
-                              <div className="result-percentage">
-                                {quizResult.percentage}%
-                              </div>
-
-                              <div className="result-score-text">
-                                Score
-                              </div>
+                              <div className="result-percentage">{quizResult.percentage}%</div>
+                              <div className="result-score-text">Score</div>
                             </div>
 
                             <div className="result-main-score">
@@ -1025,12 +911,8 @@ if (currentUser && showATS) {
 
                             {/* STATS */}
                             <div className="result-stats-grid">
-
                               <div className="result-box correct-box">
-                                <div className="result-box-icon">
-                                  ✓
-                                </div>
-
+                                <div className="result-box-icon">✓</div>
                                 <div>
                                   <p>Correct Answers</p>
                                   <strong>{quizResult.correct}</strong>
@@ -1038,10 +920,7 @@ if (currentUser && showATS) {
                               </div>
 
                               <div className="result-box wrong-box">
-                                <div className="result-box-icon">
-                                  ✕
-                                </div>
-
+                                <div className="result-box-icon">✕</div>
                                 <div>
                                   <p>Wrong Answers</p>
                                   <strong>{quizResult.wrong}</strong>
@@ -1049,29 +928,22 @@ if (currentUser && showATS) {
                               </div>
 
                               <div className="result-box total-box">
-                                <div className="result-box-icon">
-                                  📋
-                                </div>
-
+                                <div className="result-box-icon">📋</div>
                                 <div>
                                   <p>Total Questions</p>
                                   <strong>{quizResult.total}</strong>
                                 </div>
                               </div>
-
                             </div>
 
                             {/* MESSAGE */}
                             <div className="result-message-box">
-
                               {quizResult.percentage >= 80 ? (
                                 <>
                                   <span>🔥</span>
                                   <div>
                                     <strong>Excellent Performance!</strong>
-                                    <p>
-                                      You have a strong understanding of Core Java.
-                                    </p>
+                                    <p>You have a strong understanding of Core Java.</p>
                                   </div>
                                 </>
                               ) : quizResult.percentage >= 60 ? (
@@ -1079,9 +951,7 @@ if (currentUser && showATS) {
                                   <span>👏</span>
                                   <div>
                                     <strong>Good Job!</strong>
-                                    <p>
-                                      You are doing well. Keep practicing to improve further.
-                                    </p>
+                                    <p>You are doing well. Keep practicing to improve further.</p>
                                   </div>
                                 </>
                               ) : (
@@ -1089,18 +959,14 @@ if (currentUser && showATS) {
                                   <span>💪</span>
                                   <div>
                                     <strong>Keep Practicing!</strong>
-                                    <p>
-                                      Revise Core Java concepts and try the quiz again.
-                                    </p>
+                                    <p>Revise Core Java concepts and try the quiz again.</p>
                                   </div>
                                 </>
                               )}
-
                             </div>
 
                             {/* BUTTONS */}
                             <div className="result-actions">
-
                               <button
                                 className="result-primary-btn"
                                 onClick={() => {
@@ -1127,15 +993,10 @@ if (currentUser && showATS) {
                               >
                                 ← Quiz Topics
                               </button>
-
                             </div>
-
                           </div>
-
                         </div>
                       )}
-
-
 
 
                     {showContact && (
@@ -1754,9 +1615,6 @@ if (currentUser && showATS) {
                              </div>
                            </div>
                          )}
-
-
-                       </nav>
 
                        </div>
                    );
