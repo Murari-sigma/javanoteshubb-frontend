@@ -14,6 +14,24 @@ const topicsList = [
   "Git & GitHub", "Docker", "AWS", "Interview Questions", "Projects"
 ];
 
+ // 1. Helper function jo normal Drive link ko Direct Download Link me badal dega
+ const getDirectDriveLink = (shareUrl) => {
+   if (!shareUrl) return "";
+   const match = shareUrl.match(/\/d\/([a-zA-Z0-9_-]+)/);
+   if (match && match[1]) {
+     return `https://drive.google.com/uc?export=download&id=${match[1]}`;
+   }
+   return shareUrl;
+ };
+
+ // 2. Apne Subtopics ke Normal Google Drive Links yahan daal do
+ const notesPdfLinks = {
+   "Introduction to Java": "https://drive.google.com/file/d/YOUR_FILE_ID_1/view?usp=sharing",
+   "Control Statements": "https://drive.google.com/file/d/12G1qSBEugxso5yW_ibHJy9aHQj36QTvu/view?usp=drivesdk",
+   "Java Basics": "https://drive.google.com/file/d/YOUR_FILE_ID_3/view?usp=sharing",
+   // Baaki subtopics ke normal links yahan add karte jao
+ };
+
     function App() {
 
     const [showMenu, setShowMenu] = useState(false);
@@ -174,6 +192,8 @@ const topicsList = [
   const [newTitle, setNewTitle] = useState("");
   const [newCategory, setNewCategory] = useState("Core Java");
   const [newContent, setNewContent] = useState("");
+
+
 
   // Check Local Storage on Initial Load
   useEffect(() => {
@@ -1362,6 +1382,7 @@ if (currentUser && showATS) {
 
                       {selectedSubtopic && (
                         <>
+                          {/* Subtopic View Header */}
                           <div className="subtopic-view-header">
                             <button className="back-home-btn" onClick={() => {
                               setSelectedSubtopic(null);
@@ -1370,13 +1391,33 @@ if (currentUser && showATS) {
                             }}>
                               ← Back to Topics
                             </button>
+
                             <h3 className="topic-view-title">📘 {selectedSubtopic}</h3>
-                            {(currentUser?.role === "ADMIN" ||
-                              currentUser?.email === "pandeymurari571@gmail.com") && (
-                              <button className="add-btn" onClick={handleOpenAddModal}>
-                                + Add Note
+
+                            <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                              {(currentUser?.role === "ADMIN" || currentUser?.email === "pandeymurari571@gmail.com") && (
+                                <button className="add-btn" onClick={handleOpenAddModal}>
+                                  + Add Note
+                                </button>
+                              )}
+
+                              {/* 📄 Notes PDF Button */}
+                              <button
+                                className="download-pdf-btn"
+                                onClick={() => {
+                                  const rawUrl = notesPdfLinks[selectedSubtopic];
+                                  if (rawUrl) {
+                                    // Function raw link ko direct download link me convert karega
+                                    const downloadUrl = getDirectDriveLink(rawUrl);
+                                    window.open(downloadUrl, "_blank");
+                                  } else {
+                                    alert(`Abhi ${selectedSubtopic} ke paper notes PDF available nahi hain!`);
+                                  }
+                                }}
+                              >
+                                📄 Notes PDF
                               </button>
-                            )}
+                            </div>
                           </div>
 
                           <hr style={{ margin: '15px 0', borderColor: '#334155' }} />
