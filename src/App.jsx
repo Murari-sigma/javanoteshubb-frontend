@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import html2pdf from 'html2pdf.js';
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
@@ -24,13 +23,13 @@ const topicsList = [
    return shareUrl;
  };
 
- // 2. Apne Subtopics ke Normal Google Drive Links yahan daal do
- const notesPdfLinks = {
-   "Introduction to Java": "https://drive.google.com/file/d/YOUR_FILE_ID_1/view?usp=sharing",
-   "Control Statements": "https://drive.google.com/file/d/12G1qSBEugxso5yW_ibHJy9aHQj36QTvu/view?usp=drivesdk",
-   "Java Basics": "https://drive.google.com/file/d/YOUR_FILE_ID_3/view?usp=sharing",
-   // Baaki subtopics ke normal links yahan add karte jao
- };
+const notesPdfLinks = {
+  // Jiska Drive link hai wo Drive kholega
+  "Control Statements": "https://drive.google.com/file/d/12G1qSBEugxso5yW_ibHJy9aHQj36QTvu/view?usp=drivesdk",
+
+  // Baaki subtopics ke liye agar link nahi daala hai,
+  // toh "📄 Notes PDF" button apne aap page wale notes ko PDF bana kar download kar dega!
+};
 
     function App() {
 
@@ -261,12 +260,7 @@ useEffect(() => {
 }, [selectedTopic, selectedSubtopic, currentUser]);
 
 
-const handleDownloadPDF = (noteTitle, elementId) => {
-  const element = document.getElementById(elementId);
-  if (!element) {
-    alert("Note content not found!");
-    return;
-  }
+
 
   const opt = {
     margin: [0.4, 0.4, 0.4, 0.4],
@@ -1382,6 +1376,7 @@ if (currentUser && showATS) {
 
                       {selectedSubtopic && (
                         <>
+                          {/* Subtopic Header Bar */}
                           <div className="subtopic-view-header">
                             <button
                               className="back-home-btn"
@@ -1405,16 +1400,18 @@ if (currentUser && showATS) {
                                 </button>
                               )}
 
-                              {/* 📄 NEW: Notes PDF Button (Add Note ke Bagal me) */}
+                              {/* 📄 NOTES PDF BUTTON (Sirf Drive Link Open Karega) */}
                               <button
                                 className="download-pdf-btn"
                                 onClick={() => {
-                                  if (notes.length === 0) {
-                                    alert("Abhi is subtopic mein koi notes available nahi hain!");
-                                    return;
+                                  const rawUrl = notesPdfLinks[selectedSubtopic];
+
+                                  if (rawUrl && rawUrl.trim() !== "") {
+                                    const downloadUrl = getDirectDriveLink(rawUrl);
+                                    window.open(downloadUrl, "_blank");
+                                  } else {
+                                    alert(`Abhi ${selectedSubtopic} ke paper notes PDF available nahi hain!`);
                                   }
-                                  // Subtopic ke poore content (full-notes-area) ko PDF download karega
-                                  handleDownloadPDF(selectedSubtopic, "full-notes-area");
                                 }}
                               >
                                 📄 Notes PDF
@@ -1423,6 +1420,83 @@ if (currentUser && showATS) {
                           </div>
 
                           <hr style={{ margin: '15px 0', borderColor: '#334155' }} />
+
+                          {loading && <p style={{ color: '#94a3b8' }}>Loading notes...</p>}
+
+                          {/* Notes Display Area */}
+                          <div>
+                            {!loading &&
+                              notes
+                                .filter(note =>
+                                  note.title?.toLowerCase().includes(searchQuery.toLowerCase())
+                                )
+                                .map((note) => (
+                                  <div
+                                    key={note.id || note._id}
+                                    className="note-card"
+                                  >
+                                    <div className="note-header">
+                                      <h3>{note.title}</h3>
+
+                                      <div className="note-actions">
+                                        {/* Purana download button yahan bilkul nahi hai */}
+
+                                        {/* Admin Edit/Delete Buttons */}
+                                        {(currentUser?.role === "ADMIN" ||
+                                          currentUser?.email === "pandeymurari571@gmail.com") && (
+                                          <>
+                                            <button
+                                              className="edit-btn"
+                                              onClick={() => handleOpenEditModal(note)}
+                                            >
+                                              ✏️ Edit
+                                            </button>
+
+                                            <button
+                                              className="delete-btn"
+                                              onClick={() =>
+                                                handleDeleteNote(note.id || note._id)
+                                              }
+                                            >
+                                              🗑️ Delete
+                                            </button>
+                                          </>
+                                        )}
+                                      </div>
+                                    </div>
+
+                                    <div className="note-content">
+                                      <ReactMarkdown
+                                        children={note.content}
+                                        components={{
+                                          code({ node, inline, className, children, ...props }) {
+                                            const match = /language-(\w+)/.exec(className || "");
+                                            return !inline && match ? (
+                                              <SyntaxHighlighter
+                                                style={vscDarkPlus}
+                                                language={match[1]}
+                                                PreTag="div"
+                                                {...props}
+                                              >
+                                                {String(children).replace(/\n$/, "")}
+                                              </SyntaxHighlighter>
+                                            ) : (
+                                              <code className={className} {...props}>
+                                                {children}
+                                              </code>
+                                            );
+                                          }
+                                        }}
+                                      />
+                                    </div>
+                                  </div>
+                                ))}
+                          </div>
+                        </>
+                      )}
+
+                          <hr style={{ margin: '15px 0', borderColor: '#334155' }} />
+
 
 
                           {loading && <p style={{color:'#94a3b8'}}>Loading notes...</p>}
@@ -1448,7 +1522,7 @@ if (currentUser && showATS) {
                             </div>
                           )}
 
-                          {/* Full Notes Area for PDF Generation */}
+                          {/* Full Notes Container for PDF Generation */}
                               <div id="full-notes-area">
                                 {!loading &&
                                   notes
@@ -1464,9 +1538,9 @@ if (currentUser && showATS) {
                                           <h3>{note.title}</h3>
 
                                           <div className="note-actions">
-                                            {/* Purana Download Button Hata Diya Hai */}
+                                            {/* PURANA DOWNLOAD BUTTON HATA DIYA GAYA HAI */}
 
-                                            {/* Edit + Delete Buttons for Admin */}
+                                            {/* Sirf Admin ke liye Edit aur Delete Buttons */}
                                             {(currentUser?.role === "ADMIN" ||
                                               currentUser?.email === "pandeymurari571@gmail.com") && (
                                               <>
