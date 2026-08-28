@@ -1129,7 +1129,7 @@ const handleOpenAddModal = () => {
                            <div className="mentor-vertical-container">
                              {/* 1. TOP PHOTO */}
                              <img
-                               src="/murari.jpg"
+                               src={mentorPic}
                                alt="Murari Pandey"
                                className="mentor-avatar-glow"
                              />
