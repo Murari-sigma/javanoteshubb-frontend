@@ -166,6 +166,63 @@ const javaSubtopicPdfs = {
       },
     ];
 
+    // 2. ADVANCED JAVA QUESTIONS (20)
+    const advancedJavaQuestions = [
+      { question: "Which state is NOT a valid lifecycle state of a Thread?", options: ["New", "Running", "Suspended", "Terminated"], answer: "Suspended" },
+      { question: "Which method is used to start the execution of a thread?", options: ["run()", "start()", "execute()", "init()"], answer: "start()" },
+      { question: "Which keyword is used to achieve thread synchronization?", options: ["lock", "volatile", "synchronized", "static"], answer: "synchronized" },
+      { question: "Which interface is functional and represents an operation that accepts a single input argument?", options: ["Supplier", "Consumer", "Predicate", "Function"], answer: "Function" },
+      { question: "Which JVM component converts bytecode into machine code at runtime?", options: ["ClassLoader", "JIT Compiler", "Garbage Collector", "Interpreter"], answer: "JIT Compiler" },
+      { question: "Where are local variables stored in Java memory?", options: ["Heap Memory", "Stack Memory", "Method Area", "Metaspace"], answer: "Stack Memory" },
+      { question: "Which class loader is the parent of all built-in class loaders?", options: ["Extension ClassLoader", "Bootstrap ClassLoader", "Application ClassLoader", "System ClassLoader"], answer: "Bootstrap ClassLoader" },
+      { question: "Which Java 8 feature allows adding method implementations inside interfaces?", options: ["Abstract Methods", "Static Blocks", "Default Methods", "Lambda Expressions"], answer: "Default Methods" },
+      { question: "Which stream operation is a terminal operation?", options: ["map()", "filter()", "collect()", "sorted()"], answer: "collect()" },
+      { question: "Which class in java.util.concurrent is used to prevent thread safety issues in HashMaps?", options: ["Hashtable", "SynchronizedMap", "ConcurrentHashMap", "TreeMap"], answer: "ConcurrentHashMap" },
+      { question: "Which functional interface returns a boolean value?", options: ["Function", "Consumer", "Supplier", "Predicate"], answer: "Predicate" },
+      { question: "Which garbage collector is default in Java 17?", options: ["Serial GC", "Parallel GC", "G1 GC", "ZGC"], answer: "G1 GC" },
+      { question: "Which keyword prevents a variable from being serialized?", options: ["volatile", "transient", "static", "final"], answer: "transient" },
+      { question: "Which class is used for dynamically examining classes and methods at runtime?", options: ["ClassIntrospector", "Reflection API (java.lang.reflect)", "JVM Inspector", "RuntimeLoader"], answer: "Reflection API (java.lang.reflect)" },
+      { question: "Which annotation specifies the retention strategy of an annotation?", options: ["@Target", "@Retention", "@Inherited", "@Documented"], answer: "@Retention" },
+      { question: "Which interface allows Callable tasks to return results?", options: ["Runnable", "Callable", "Future", "Executor"], answer: "Callable" },
+      { question: "What does NIO stand for in Java?", options: ["Network I/O", "New I/O (Non-blocking I/O)", "Next-gen I/O", "Native I/O"], answer: "New I/O (Non-blocking I/O)" },
+      { question: "Which Design Pattern limits class instantiation to a single instance?", options: ["Factory", "Builder", "Singleton", "Prototype"], answer: "Singleton" },
+      { question: "Which SOLID principle states that classes should be open for extension, closed for modification?", options: ["Single Responsibility", "Open-Closed Principle", "Liskov Substitution", "Dependency Inversion"], answer: "Open-Closed Principle" },
+      { question: "Which class is container object used to contain non-null values to avoid NullPointerException?", options: ["Wrapper", "Optional", "Box", "Holder"], answer: "Optional" }
+    ];
+
+    // 3. JDBC QUESTIONS (20)
+    const jdbcQuestions = [
+      { question: "Which package contains JDBC classes and interfaces?", options: ["java.io", "java.sql", "java.net", "java.db"], answer: "java.sql" },
+      { question: "Which interface is used to execute parameterized SQL queries?", options: ["Statement", "PreparedStatement", "CallableStatement", "ResultSet"], answer: "PreparedStatement" },
+      { question: "Which method is used to execute SELECT queries in JDBC?", options: ["executeUpdate()", "execute()", "executeQuery()", "runQuery()"], answer: "executeQuery()" },
+      { question: "Which method is used to execute INSERT, UPDATE, or DELETE statements?", options: ["executeQuery()", "executeUpdate()", "executeBatch()", "runUpdate()"], answer: "executeUpdate()" },
+      { question: "What does `executeQuery()` return?", options: ["int", "boolean", "ResultSet", "Statement"], answer: "ResultSet" },
+      { question: "Which interface is used to call stored procedures in JDBC?", options: ["PreparedStatement", "Statement", "CallableStatement", "StoredStatement"], answer: "CallableStatement" },
+      { question: "How do you disable auto-commit mode in JDBC?", options: ["connection.setAutoCommit(false)", "connection.commit(false)", "connection.stopAutoCommit()", "connection.disableCommit()"], answer: "connection.setAutoCommit(false)" },
+      { question: "Which method is used to save changes manually in JDBC?", options: ["connection.save()", "connection.commit()", "connection.flush()", "connection.persist()"], answer: "connection.commit()" },
+      { question: "Which method rolls back transactions in case of failure?", options: ["connection.undo()", "connection.rollback()", "connection.revert()", "connection.cancel()"], answer: "connection.rollback()" },
+      { question: "Which interface provides methods to get database metadata?", options: ["ResultSetMetaData", "DatabaseMetaData", "ConnectionMetaData", "DriverMetaData"], answer: "DatabaseMetaData" },
+      { question: "Which interface provides information about table columns in a ResultSet?", options: ["DatabaseMetaData", "ResultSetMetaData", "QueryMetaData", "TableMetaData"], answer: "ResultSetMetaData" },
+      { question: "Which type of JDBC driver is also known as Thin Driver?", options: ["Type-1", "Type-2", "Type-3", "Type-4"], answer: "Type-4" },
+      { question: "Which method loads a JDBC driver class dynamically?", options: ["Class.forName()", "DriverManager.load()", "Driver.create()", "ClassLoader.loadDriver()"], answer: "Class.forName()" },
+      { question: "Which method closes a database Connection?", options: ["connection.stop()", "connection.close()", "connection.exit()", "connection.disconnect()"], answer: "connection.close()" },
+      { question: "What is the return type of `executeUpdate()`?", options: ["ResultSet", "boolean", "int (row count)", "void"], answer: "int (row count)" },
+      { question: "Which method is used to move the cursor to the next row in ResultSet?", options: ["next()", "move()", "forward()", "getRow()"], answer: "next()" },
+      { question: "Which interface manages a set of JDBC drivers?", options: ["ConnectionManager", "DriverManager", "DriverService", "DatabaseManager"], answer: "DriverManager" },
+      { question: "Which statement type prevents SQL Injection attacks?", options: ["Statement", "PreparedStatement", "SimpleStatement", "DirectStatement"], answer: "PreparedStatement" },
+      { question: "Which exception is thrown when a database access error occurs?", options: ["DatabaseException", "SQLException", "IOException", "DataAccessException"], answer: "SQLException" },
+      { question: "What is the default auto-commit mode in JDBC?", options: ["true", "false", "null", "depends on database"], answer: "true" }
+    ];
+
+ // Topic ke according questions select karne ke liye:
+ const getQuestionsForTopic = () => {
+   if (selectedQuizTopic === "Core Java") return coreJavaQuestions;
+   if (selectedQuizTopic === "Advanced Java") return advancedJavaQuestions;
+   if (selectedQuizTopic === "JDBC") return jdbcQuestions;
+   return [];
+ };
+
+ const currentQuestionsList = getQuestionsForTopic();
 
 
   // Auth States
@@ -844,8 +901,9 @@ const handleOpenAddModal = () => {
         </div>
       )}
                       {/* ================= CORE JAVA QUIZ ================= */}
-                      {selectedQuizTopic === "Core Java" && (
-                        <div className="full-screen-quiz">
+                      {/* DYNAMIC QUIZ PLAY SCREEN FOR ALL 3 TOPICS */}
+                      {selectedQuizTopic && currentQuestionsList.length > 0 && !quizResult && (
+                        <div className="full-screen-quiz" style={{ padding: '2rem' }}>
                           <div className="quiz-header">
                             <button
                               className="back-home-btn"
@@ -859,24 +917,18 @@ const handleOpenAddModal = () => {
                             >
                               ← Back to Quiz Topics
                             </button>
-
-                            <h1>☕ Core Java Quiz</h1>
-
-                            <p>
-                              Question {currentQuestion + 1} of {coreJavaQuestions.length}
-                            </p>
+                            <h1>☕ {selectedQuizTopic} Quiz</h1>
+                            <p>Question {currentQuestion + 1} of {currentQuestionsList.length}</p>
                           </div>
 
                           <div className="quiz-question-card">
-                            <h2>{coreJavaQuestions[currentQuestion].question}</h2>
+                            <h2>{currentQuestionsList[currentQuestion].question}</h2>
 
                             <div className="quiz-options">
-                              {coreJavaQuestions[currentQuestion].options.map((option, index) => (
+                              {currentQuestionsList[currentQuestion].options.map((option, index) => (
                                 <button
                                   key={option}
-                                  className={`quiz-option ${
-                                    selectedAnswer === option ? "selected" : ""
-                                  }`}
+                                  className={`quiz-option ${selectedAnswer === option ? "selected" : ""}`}
                                   onClick={() => setSelectedAnswer(option)}
                                 >
                                   {String.fromCharCode(65 + index)}. {option}
@@ -884,34 +936,26 @@ const handleOpenAddModal = () => {
                               ))}
                             </div>
 
-                            {/* NEXT / SUBMIT BUTTON */}
                             <button
                               className="next-question-btn"
                               disabled={!selectedAnswer}
                               onClick={() => {
-                                const currentQuestionData = coreJavaQuestions[currentQuestion];
-                                const isCorrect = selectedAnswer === currentQuestionData.answer;
-                                const newCorrectAnswers = isCorrect
-                                  ? correctAnswers + 1
-                                  : correctAnswers;
+                                const isCorrect = selectedAnswer === currentQuestionsList[currentQuestion].answer;
+                                const updatedCorrect = isCorrect ? correctAnswers + 1 : correctAnswers;
 
-                                // QUESTIONS 1 - 19
-                                if (currentQuestion < coreJavaQuestions.length - 1) {
-                                  setCorrectAnswers(newCorrectAnswers);
+                                if (currentQuestion < currentQuestionsList.length - 1) {
+                                  setCorrectAnswers(updatedCorrect);
                                   setCurrentQuestion(currentQuestion + 1);
                                   setSelectedAnswer(null);
-                                }
-                                // QUESTION 20 (SUBMIT)
-                                else {
-                                  const totalQuestions = coreJavaQuestions.length;
-                                  const correct = newCorrectAnswers;
-                                  const wrong = totalQuestions - correct;
-                                  const percentage = Math.round((correct / totalQuestions) * 100);
+                                } else {
+                                  const total = currentQuestionsList.length;
+                                  const wrong = total - updatedCorrect;
+                                  const percentage = Math.round((updatedCorrect / total) * 100);
 
-                                  setCorrectAnswers(correct);
                                   setQuizResult({
-                                    total: totalQuestions,
-                                    correct: correct,
+                                    topic: selectedQuizTopic,
+                                    total: total,
+                                    correct: updatedCorrect,
                                     wrong: wrong,
                                     percentage: percentage,
                                   });
@@ -922,13 +966,57 @@ const handleOpenAddModal = () => {
                                 }
                               }}
                             >
-                              {currentQuestion === coreJavaQuestions.length - 1
-                                ? "Submit Quiz ✅"
-                                : "Next Question →"}
+                              {currentQuestion === currentQuestionsList.length - 1 ? "Submit Quiz ✅" : "Next Question →"}
                             </button>
                           </div>
                         </div>
                       )}
+                            {/* NEXT / SUBMIT BUTTON */}
+                                  <button
+                                    className="next-question-btn"
+                                    disabled={!selectedAnswer}
+                                    onClick={() => {
+                                      const currentQuestionData = currentQuestionsList[currentQuestion];
+                                      const isCorrect = selectedAnswer === currentQuestionData.answer;
+                                      const newCorrectAnswers = isCorrect
+                                        ? correctAnswers + 1
+                                        : correctAnswers;
+
+                                      // QUESTIONS 1 - 19
+                                      if (currentQuestion < currentQuestionsList.length - 1) {
+                                        setCorrectAnswers(newCorrectAnswers);
+                                        setCurrentQuestion(currentQuestion + 1);
+                                        setSelectedAnswer(null);
+                                      }
+                                      // QUESTION 20 (SUBMIT)
+                                      else {
+                                        const totalQuestions = currentQuestionsList.length;
+                                        const correct = newCorrectAnswers;
+                                        const wrong = totalQuestions - correct;
+                                        const percentage = Math.round((correct / totalQuestions) * 100);
+
+                                        setCorrectAnswers(correct);
+                                        setQuizResult({
+                                          topic: selectedQuizTopic,
+                                          total: totalQuestions,
+                                          correct: correct,
+                                          wrong: wrong,
+                                          percentage: percentage,
+                                        });
+
+                                        setSelectedQuizTopic(null);
+                                        setSelectedAnswer(null);
+                                        setShowQuizTopics(false);
+                                      }
+                                    }}
+                                  >
+                                    {currentQuestion === currentQuestionsList.length - 1
+                                      ? "Submit Quiz ✅"
+                                      : "Next Question →"}
+                                  </button>
+                                </div>
+                              </div>
+                            )}
 
                       {/* ================= RESULT PAGE ================= */}
                       {quizResult && (
