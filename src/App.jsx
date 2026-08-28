@@ -861,45 +861,45 @@ const handleOpenAddModal = () => {
             ← Back
           </button>
 
-          <div className="topics-grid">
-            {[
-              {
-                icon: "{ }",
-                name: "Core Java",
-                desc: "OOPs, collections, streams, exceptions & the fundamentals every backend dev needs."
-              },
-              {
-                icon: "☕",
-                name: "Advanced Java",
-                desc: "Multithreading, concurrency, JVM internals & memory management."
-              },
-              {
-                icon: "🔌",
-                name: "JDBC",
-                desc: "Database connectivity, PreparedStatement, ResultSet & transaction management."
-              }
-            ].map((topic) => (
-              <div
-                key={topic.name}
-                className="topic-card"
-                onClick={() => {
-                  if (topic.name === "Core Java") {
-                    setSelectedQuizTopic("Core Java");
-                    setCurrentQuestion(0);
-                    setSelectedAnswer(null);
-                    setCorrectAnswers(0);
-                    setQuizResult(null);
-                  }
-                }}
-              >
-                <span className="topic-icon">{topic.icon}</span>
-                <h3>{topic.name}</h3>
-                <p>{topic.desc}</p>
-              </div>
-            ))}
-          </div>
+               <div className="topics-grid">
+                     {[
+                       {
+                         icon: "{ }",
+                         name: "Core Java",
+                         desc: "OOPs, collections, streams, exceptions & the fundamentals every backend dev needs."
+                       },
+                       {
+                         icon: "☕",
+                         name: "Advanced Java",
+                         desc: "Multithreading, concurrency, JVM internals & memory management."
+                       },
+                       {
+                         icon: "🔌",
+                         name: "JDBC",
+                         desc: "Database connectivity, PreparedStatement, ResultSet & transaction management."
+                       }
+                     ].map((topic) => (
+                       <div
+                         key={topic.name}
+                         className="topic-card"
+                         onClick={() => {
+                           // ✅ FIX: 'if' condition hata kar dynamic 'topic.name' pass kar diya
+                           setSelectedQuizTopic(topic.name);
+                           setCurrentQuestion(0);
+                           setSelectedAnswer(null);
+                           setCorrectAnswers(0);
+                           setQuizResult(null);
+                         }}
+                       >
+                         <span className="topic-icon">{topic.icon}</span>
+                         <h3>{topic.name}</h3>
+                         <p>{topic.desc}</p>
+                       </div>
+                     ))}
+                   </div>
         </div>
       )}
+
                       {/* DYNAMIC QUIZ PLAY SCREEN FOR ALL 3 TOPICS */}
                       {selectedQuizTopic && currentQuestionsList.length > 0 && !quizResult && (
                         <div className="full-screen-quiz" style={{ padding: '2rem' }}>
@@ -1687,25 +1687,25 @@ const handleOpenAddModal = () => {
                                  </div>
 
                                  <div className="modal-actions">
-                                   <button type="submit" className="save-btn">
-                                     Save Note
-                                   </button>
+                                                     <button type="submit" className="save-btn">
+                                                       Save Note
+                                                     </button>
 
-                                   <button
-                                     type="button"
-                                     className="cancel-btn"
-                                     onClick={() => setShowModal(false)}
-                                   >
-                                     Cancel
-                                   </button>
-                                 </div>
-                               </form>
-                             </div>
-                           </div>
-                         )}
+                                                     <button
+                                                       type="button"
+                                                       className="cancel-btn"
+                                                       onClick={() => setShowModal(false)}
+                                                     >
+                                                       Cancel
+                                                     </button>
+                                                   </div>
+                                                 </form>
+                                               </div>
+                                             </div>
+                                           )}
 
-                       </div>
-                   );
-               }
+                                       </div>
+                                   );
+                                 };
 
-                 export default App;
+                                 export default App;
