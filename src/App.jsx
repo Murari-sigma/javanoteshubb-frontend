@@ -13,15 +13,24 @@ const topicsList = [
   "Git & GitHub", "Docker", "AWS", "Interview Questions", "Projects"
 ];
 
-// 1. Dynamic PDF Generator Function for all Java Subtopics
-const getTopicPdfUrl = (topicName) => {
-  if (!topicName) return "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf";
+// Dynamic PDF Streamer (Har subtopic ke liye alag direct PDF load karega)
+const getSubtopicPdfUrl = (subtopicName) => {
+  if (!subtopicName) return "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf";
 
-  // Topic ke name ko URL-encoded format mein convert karke direct PDF stream generate karna
-  const query = encodeURIComponent(`${topicName} Java Programming Complete Guide`);
+  // Topic name ke according clean PDF document URL
+  const cleanTopic = encodeURIComponent(subtopicName.trim());
 
-  // Har topic ke liye unique aur detailed PDF open karne ke liye PDF API/Reader URL:
-  return `https://en.wikipedia.org/api/rest_v1/page/pdf/${encodeURIComponent(topicName.replace(/ /g, "_"))}`;
+  // Direct PDF Stream API Link (Bina about:blank ke 100% Direct Open hoga)
+  return `https://raw.githubusercontent.com/yadav-sourabh/Java-Notes/main/${cleanTopic}.pdf`;
+};
+
+// Open-Source Standard Java PDFs Map (Backup Engine)
+const javaStandardPdfs = {
+  "Introduction to Java": "https://www.tutorialspoint.com/java/java_tutorial.pdf",
+  "Java Basics": "https://www.oracle.com/technetwork/java/javase/tech/index-jsp-138252.html",
+  "Control Statements": "https://introcs.cs.princeton.edu/java/11cheatsheet/cs-cheatsheet.pdf",
+  "Arrays": "https://introcs.cs.princeton.edu/java/11cheatsheet/cs-cheatsheet.pdf",
+  "Methods (Functions)": "https://introcs.cs.princeton.edu/java/11cheatsheet/cs-cheatsheet.pdf",
 };
 
     function App() {
@@ -187,16 +196,17 @@ const getTopicPdfUrl = (topicName) => {
   const [newContent, setNewContent] = useState("");
 
 
- // 2. Direct PDF Handler Function (App() ke andar rakhein)
- const handlePdfDownload = (subtopicName) => {
-   if (!subtopicName) return;
+ // PDF Download Handler
+   const handlePdfDownload = (subtopicName) => {
+     // 1. Check karega ki specific Java Standard PDF available hai ya nahi
+     const pdfUrl = javaStandardPdfs[subtopicName] || `https://introcs.cs.princeton.edu/java/11cheatsheet/cs-cheatsheet.pdf`;
 
-   // Har subtopic ke liye alag direct PDF link generate hoga
-   const targetPdfUrl = getTopicPdfUrl(subtopicName);
-
-   // New Tab mein PDF open karne ke liye
-   window.open(targetPdfUrl, "_blank");
- };
+     // 2. Direct Window Open (Bina about:blank issue ke)
+     const newWindow = window.open(pdfUrl, '_blank', 'noopener,noreferrer');
+     if (newWindow) {
+       newWindow.opener = null;
+     }
+   };
 
   // Check Local Storage on Initial Load
   useEffect(() => {
