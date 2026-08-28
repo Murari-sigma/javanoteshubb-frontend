@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import mentorPic from './murari.jpg';
 import axios from 'axios';
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
@@ -1128,7 +1129,7 @@ const handleOpenAddModal = () => {
                            <div className="mentor-vertical-container">
                              {/* 1. TOP PHOTO */}
                              <img
-                               src="murari.jpg"
+                               src="/murari.jpg"
                                alt="Murari Pandey"
                                className="mentor-avatar-glow"
                              />
