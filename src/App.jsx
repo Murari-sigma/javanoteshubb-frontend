@@ -205,6 +205,38 @@ const javaSubtopicPdfs = {
      window.open(targetPdf, '_blank');
    };
 
+   // App.jsx ke andar Subtopic Fetching Function Update Karein:
+   const handleTopicClick = async (topicName) => {
+     setSelectedTopic(topicName);
+
+     // Check if data already exists in LocalStorage Cache
+     const cachedData = localStorage.getItem(`subtopics_${topicName}`);
+     if (cachedData) {
+       setSubtopics(JSON.parse(cachedData));
+       return; // Instant Load!
+     }
+
+     // Otherwise Fetch from Server
+     setLoading(true);
+     try {
+       const res = await fetch(`/api/subtopics?topic=${topicName}`);
+       const data = await res.json();
+
+       // Save to Cache & State
+       localStorage.setItem(`subtopics_${topicName}`, JSON.stringify(data));
+       setSubtopics(data);
+     } catch (err) {
+       console.error(err);
+     } finally {
+       setLoading(false);
+     }
+   };
+
+  useEffect(() => {
+    // App open hote hi server ko wakeup ping bhej do
+    fetch('/api/subtopics?topic=Core Java').catch(() => {});
+  }, []);
+
   // Check Local Storage on Initial Load
   useEffect(() => {
     const savedUser = localStorage.getItem("java_notes_user");
