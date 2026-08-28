@@ -1843,125 +1843,103 @@ p.toggle-auth:hover {
   transform: translateY(-1px);
 }
 
-/* Mentor Section Heavy Layout */
+/* Vertical Layout Container */
 .mentor-card-wrapper {
   margin: 2rem 0;
-  padding: 2.5rem;
-  background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.9));
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(10px);
+  padding: 2.5rem 1.5rem;
+  background: rgba(15, 23, 42, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 24px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+  text-align: center;
 }
 
-.mentor-container {
+.mentor-vertical-container {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  gap: 2.5rem;
-  flex-wrap: wrap;
+  max-width: 750px;
+  margin: 0 auto;
 }
 
-.mentor-info {
-  flex: 1;
-  min-width: 300px;
+/* 1. TOP PHOTO STYLING WITH MULTI-COLOR SHINE */
+.mentor-avatar-glow {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  background: linear-gradient(#0f172a, #0f172a) padding-box,
+              linear-gradient(45deg, #ff007f, #7928ca, #00dfd8, #ff4500) border-box;
+  box-shadow: 0 0 25px rgba(121, 40, 202, 0.6), 0 0 45px rgba(0, 223, 216, 0.4);
+  margin-bottom: 1.5rem;
+  animation: pulseGlow 3s infinite alternate;
 }
 
-/* Glowing Dynamic Header */
-.mentor-badge {
-  font-size: 1.8rem;
+/* 2. MEET YOUR MENTOR (SINGLE LINE MULTI-COLOR GRADIENT) */
+.mentor-badge-single {
+  font-size: 1.4rem;
   font-weight: 800;
-  text-transform: uppercase;
   letter-spacing: 2px;
-  background: linear-gradient(90deg, #ff7e5f, #feb47b, #6a11cb, #2575fc);
+  text-transform: uppercase;
+  white-space: nowrap;
+  background: linear-gradient(90deg, #ff007f, #00dfd8, #7928ca, #ff007f);
   background-size: 300% 300%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: glowShimmer 4s ease infinite;
+  animation: multiColorShine 4s ease infinite;
   margin-bottom: 0.5rem;
 }
 
-/* Chamakne Wala Naam Effect */
-.mentor-name {
-  font-size: 2.4rem;
+/* 3. MENTOR NAME (HEAVY RGB SHINING EFFECT) */
+.mentor-name-shining {
+  font-size: 2.6rem;
   font-weight: 900;
-  color: #fff;
-  text-shadow: 0 0 10px rgba(99, 102, 241, 0.6), 0 0 20px rgba(99, 102, 241, 0.4);
   margin-bottom: 1.2rem;
-  background: linear-gradient(90deg, #ffffff, #60a5fa, #ffffff);
+  background: linear-gradient(90deg, #ffffff, #60a5fa, #f43f5e, #a855f7, #ffffff);
   background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: shineName 3s linear infinite;
+  animation: textShimmer 2.5s linear infinite;
+  filter: drop-shadow(0 0 15px rgba(168, 85, 247, 0.6));
 }
 
-.mentor-text {
-  font-size: 0.95rem;
-  line-height: 1.7;
-  color: #cbd5e1;
+/* 4. LIGHT & HIGH CONTRAST TEXT */
+.mentor-text-light {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #f1f5f9;
   font-weight: 400;
   margin-bottom: 1rem;
 }
 
-.mentor-mission {
-  font-size: 0.95rem;
-  line-height: 1.7;
+.mentor-mission-light {
+  font-size: 1rem;
+  line-height: 1.8;
   color: #38bdf8;
   font-weight: 600;
-  padding-left: 12px;
-  border-left: 3px solid #38bdf8;
+  background: rgba(56, 189, 248, 0.1);
+  padding: 12px 18px;
+  border-radius: 12px;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  margin-top: 0.5rem;
 }
 
-/* High-End Profile Frame */
-.mentor-image-container {
-  flex-shrink: 0;
-  position: relative;
-}
-
-.mentor-avatar {
-  width: 280px;
-  height: 280px;
-  object-fit: cover;
-  border-radius: 20px;
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 0 25px rgba(99, 102, 241, 0.5);
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
-}
-
-.mentor-avatar:hover {
-  transform: scale(1.03);
-  box-shadow: 0 0 35px rgba(56, 189, 248, 0.8);
-}
-
-/* Keyframe Animations */
-@keyframes glowShimmer {
+/* ANIMATIONS */
+@keyframes multiColorShine {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
 
-@keyframes shineName {
+@keyframes textShimmer {
   to { background-position: 200% center; }
 }
 
-/* Responsive Mobile Adjustments */
-@media (max-width: 768px) {
-  .mentor-container {
-    flex-direction: column-reverse;
-    text-align: center;
-  }
-  .mentor-avatar {
-    width: 200px;
-    height: 200px;
-  }
-  .mentor-mission {
-    border-left: none;
-    border-top: 2px solid #38bdf8;
-    padding-left: 0;
-    padding-top: 10px;
-  }
+@keyframes pulseGlow {
+  0% { transform: scale(1); filter: drop-shadow(0 0 15px #ff007f); }
+  100% { transform: scale(1.04); filter: drop-shadow(0 0 25px #00dfd8); }
 }
-
 /* ===========================
    MOBILE MENU
 =========================== */
