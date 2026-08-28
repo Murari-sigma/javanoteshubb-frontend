@@ -1843,6 +1843,125 @@ p.toggle-auth:hover {
   transform: translateY(-1px);
 }
 
+/* Mentor Section Heavy Layout */
+.mentor-card-wrapper {
+  margin: 2rem 0;
+  padding: 2.5rem;
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.9));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+}
+
+.mentor-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.mentor-info {
+  flex: 1;
+  min-width: 300px;
+}
+
+/* Glowing Dynamic Header */
+.mentor-badge {
+  font-size: 1.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  background: linear-gradient(90deg, #ff7e5f, #feb47b, #6a11cb, #2575fc);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: glowShimmer 4s ease infinite;
+  margin-bottom: 0.5rem;
+}
+
+/* Chamakne Wala Naam Effect */
+.mentor-name {
+  font-size: 2.4rem;
+  font-weight: 900;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(99, 102, 241, 0.6), 0 0 20px rgba(99, 102, 241, 0.4);
+  margin-bottom: 1.2rem;
+  background: linear-gradient(90deg, #ffffff, #60a5fa, #ffffff);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shineName 3s linear infinite;
+}
+
+.mentor-text {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #cbd5e1;
+  font-weight: 400;
+  margin-bottom: 1rem;
+}
+
+.mentor-mission {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #38bdf8;
+  font-weight: 600;
+  padding-left: 12px;
+  border-left: 3px solid #38bdf8;
+}
+
+/* High-End Profile Frame */
+.mentor-image-container {
+  flex-shrink: 0;
+  position: relative;
+}
+
+.mentor-avatar {
+  width: 280px;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 25px rgba(99, 102, 241, 0.5);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.mentor-avatar:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 35px rgba(56, 189, 248, 0.8);
+}
+
+/* Keyframe Animations */
+@keyframes glowShimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes shineName {
+  to { background-position: 200% center; }
+}
+
+/* Responsive Mobile Adjustments */
+@media (max-width: 768px) {
+  .mentor-container {
+    flex-direction: column-reverse;
+    text-align: center;
+  }
+  .mentor-avatar {
+    width: 200px;
+    height: 200px;
+  }
+  .mentor-mission {
+    border-left: none;
+    border-top: 2px solid #38bdf8;
+    padding-left: 0;
+    padding-top: 10px;
+  }
+}
+
 /* ===========================
    MOBILE MENU
 =========================== */
