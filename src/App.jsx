@@ -13,23 +13,15 @@ const topicsList = [
   "Git & GitHub", "Docker", "AWS", "Interview Questions", "Projects"
 ];
 
-// 1. Helper function jo normal Drive link ko Direct Download Link me badal dega
-const getDirectDriveLink = (shareUrl) => {
-  if (!shareUrl) return "";
-  const match = shareUrl.match(/\/d\/([a-zA-Z0-9_-]+)/);
-  if (match && match[1]) {
-    return `https://drive.google.com/uc?export=download&id=${match[1]}`;
-  }
-  return shareUrl;
-};
+// 1. Dynamic PDF Generator Function for all Java Subtopics
+const getTopicPdfUrl = (topicName) => {
+  if (!topicName) return "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf";
 
-// 2. Default PDF Link (Agar kisi topic ki link na mile toh ye open hogi)
-const DEFAULT_PDF_LINK = "https://drive.google.com/file/d/12G1qSBEugxso5yW_ibHJy9aHQj36QTvu/view?usp=drivesdk";
+  // Topic ke name ko URL-encoded format mein convert karke direct PDF stream generate karna
+  const query = encodeURIComponent(`${topicName} Java Programming Complete Guide`);
 
-// 3. Drive Links Map (Specific topics ke liye)
-const notesPdfLinks = {
-  "Methods (Functions)": "https://drive.google.com/file/d/12G1qSBEugxso5yW_ibHJy9aHQj36QTvu/view?usp=drivesdk",
-  // Baad me yahan naye subtopics ki link add kar sakte hain
+  // Har topic ke liye unique aur detailed PDF open karne ke liye PDF API/Reader URL:
+  return `https://en.wikipedia.org/api/rest_v1/page/pdf/${encodeURIComponent(topicName.replace(/ /g, "_"))}`;
 };
 
     function App() {
@@ -195,13 +187,16 @@ const notesPdfLinks = {
   const [newContent, setNewContent] = useState("");
 
 
- // PDF Download Handler Function (App function ke andar rakhein)
-    const handlePdfDownload = (subtopicName) => {
-      // Agar specific subtopic ka link milega toh wo chalega, nahi toh DEFAULT_PDF_LINK chalega
-      const rawUrl = notesPdfLinks[subtopicName] || DEFAULT_PDF_LINK;
-      const downloadUrl = getDirectDriveLink(rawUrl);
-      window.open(downloadUrl, "_blank");
-    };
+ // 2. Direct PDF Handler Function (App() ke andar rakhein)
+ const handlePdfDownload = (subtopicName) => {
+   if (!subtopicName) return;
+
+   // Har subtopic ke liye alag direct PDF link generate hoga
+   const targetPdfUrl = getTopicPdfUrl(subtopicName);
+
+   // New Tab mein PDF open karne ke liye
+   window.open(targetPdfUrl, "_blank");
+ };
 
   // Check Local Storage on Initial Load
   useEffect(() => {
