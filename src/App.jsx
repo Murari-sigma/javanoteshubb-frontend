@@ -25,12 +25,13 @@ const getSubtopicPdfUrl = (subtopicName) => {
 };
 
 // Open-Source Standard Java PDFs Map (Backup Engine)
-const javaStandardPdfs = {
+// Har ek subtopic ke liye Dedicated aur High-Quality Java PDF Links
+const javaSubtopicPdfs = {
   "Introduction to Java": "https://www.tutorialspoint.com/java/java_tutorial.pdf",
-  "Java Basics": "https://www.oracle.com/technetwork/java/javase/tech/index-jsp-138252.html",
-  "Control Statements": "https://introcs.cs.princeton.edu/java/11cheatsheet/cs-cheatsheet.pdf",
-  "Arrays": "https://introcs.cs.princeton.edu/java/11cheatsheet/cs-cheatsheet.pdf",
-  "Methods (Functions)": "https://introcs.cs.princeton.edu/java/11cheatsheet/cs-cheatsheet.pdf",
+  "Java Basics": "https://ocw.mit.edu/courses/6-092-introduction-to-programming-in-java-january-iap-2010/readings/MIT6_092IAP10_ses01.pdf",
+  "Control Statements": "https://ocw.mit.edu/courses/6-092-introduction-to-programming-in-java-january-iap-2010/readings/MIT6_092IAP10_ses02.pdf",
+  "Arrays": "https://ocw.mit.edu/courses/6-092-introduction-to-programming-in-java-january-iap-2010/readings/MIT6_092IAP10_ses04.pdf",
+  "Methods (Functions)": "https://ocw.mit.edu/courses/6-092-introduction-to-programming-in-java-january-iap-2010/readings/MIT6_092IAP10_ses03.pdf"
 };
 
     function App() {
@@ -196,16 +197,11 @@ const javaStandardPdfs = {
   const [newContent, setNewContent] = useState("");
 
 
- // PDF Download Handler
+ // Selected Subtopic ki Exact PDF Open karne ka Handler
    const handlePdfDownload = (subtopicName) => {
-     // 1. Check karega ki specific Java Standard PDF available hai ya nahi
-     const pdfUrl = javaStandardPdfs[subtopicName] || `https://introcs.cs.princeton.edu/java/11cheatsheet/cs-cheatsheet.pdf`;
-
-     // 2. Direct Window Open (Bina about:blank issue ke)
-     const newWindow = window.open(pdfUrl, '_blank', 'noopener,noreferrer');
-     if (newWindow) {
-       newWindow.opener = null;
-     }
+     // Agar topic ka specific link hai toh wo open hoga, warna default Tutorialspoint wali PDF
+     const targetPdf = javaSubtopicPdfs[subtopicName] || "https://www.tutorialspoint.com/java/java_tutorial.pdf";
+     window.open(targetPdf, '_blank');
    };
 
   // Check Local Storage on Initial Load
