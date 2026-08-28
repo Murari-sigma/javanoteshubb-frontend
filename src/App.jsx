@@ -900,7 +900,6 @@ const handleOpenAddModal = () => {
           </div>
         </div>
       )}
-                      {/* ================= CORE JAVA QUIZ ================= */}
                       {/* DYNAMIC QUIZ PLAY SCREEN FOR ALL 3 TOPICS */}
                       {selectedQuizTopic && currentQuestionsList.length > 0 && !quizResult && (
                         <div className="full-screen-quiz" style={{ padding: '2rem' }}>
@@ -917,6 +916,7 @@ const handleOpenAddModal = () => {
                             >
                               ← Back to Quiz Topics
                             </button>
+
                             <h1>☕ {selectedQuizTopic} Quiz</h1>
                             <p>Question {currentQuestion + 1} of {currentQuestionsList.length}</p>
                           </div>
@@ -940,22 +940,30 @@ const handleOpenAddModal = () => {
                               className="next-question-btn"
                               disabled={!selectedAnswer}
                               onClick={() => {
-                                const isCorrect = selectedAnswer === currentQuestionsList[currentQuestion].answer;
-                                const updatedCorrect = isCorrect ? correctAnswers + 1 : correctAnswers;
+                                const currentQuestionData = currentQuestionsList[currentQuestion];
+                                const isCorrect = selectedAnswer === currentQuestionData.answer;
+                                const newCorrectAnswers = isCorrect
+                                  ? correctAnswers + 1
+                                  : correctAnswers;
 
+                                // QUESTIONS 1 - 19
                                 if (currentQuestion < currentQuestionsList.length - 1) {
-                                  setCorrectAnswers(updatedCorrect);
+                                  setCorrectAnswers(newCorrectAnswers);
                                   setCurrentQuestion(currentQuestion + 1);
                                   setSelectedAnswer(null);
-                                } else {
-                                  const total = currentQuestionsList.length;
-                                  const wrong = total - updatedCorrect;
-                                  const percentage = Math.round((updatedCorrect / total) * 100);
+                                }
+                                // QUESTION 20 (SUBMIT)
+                                else {
+                                  const totalQuestions = currentQuestionsList.length;
+                                  const correct = newCorrectAnswers;
+                                  const wrong = totalQuestions - correct;
+                                  const percentage = Math.round((correct / totalQuestions) * 100);
 
+                                  setCorrectAnswers(correct);
                                   setQuizResult({
                                     topic: selectedQuizTopic,
-                                    total: total,
-                                    correct: updatedCorrect,
+                                    total: totalQuestions,
+                                    correct: correct,
                                     wrong: wrong,
                                     percentage: percentage,
                                   });
@@ -966,57 +974,13 @@ const handleOpenAddModal = () => {
                                 }
                               }}
                             >
-                              {currentQuestion === currentQuestionsList.length - 1 ? "Submit Quiz ✅" : "Next Question →"}
+                              {currentQuestion === currentQuestionsList.length - 1
+                                ? "Submit Quiz ✅"
+                                : "Next Question →"}
                             </button>
                           </div>
                         </div>
                       )}
-                            {/* NEXT / SUBMIT BUTTON */}
-                                  <button
-                                    className="next-question-btn"
-                                    disabled={!selectedAnswer}
-                                    onClick={() => {
-                                      const currentQuestionData = currentQuestionsList[currentQuestion];
-                                      const isCorrect = selectedAnswer === currentQuestionData.answer;
-                                      const newCorrectAnswers = isCorrect
-                                        ? correctAnswers + 1
-                                        : correctAnswers;
-
-                                      // QUESTIONS 1 - 19
-                                      if (currentQuestion < currentQuestionsList.length - 1) {
-                                        setCorrectAnswers(newCorrectAnswers);
-                                        setCurrentQuestion(currentQuestion + 1);
-                                        setSelectedAnswer(null);
-                                      }
-                                      // QUESTION 20 (SUBMIT)
-                                      else {
-                                        const totalQuestions = currentQuestionsList.length;
-                                        const correct = newCorrectAnswers;
-                                        const wrong = totalQuestions - correct;
-                                        const percentage = Math.round((correct / totalQuestions) * 100);
-
-                                        setCorrectAnswers(correct);
-                                        setQuizResult({
-                                          topic: selectedQuizTopic,
-                                          total: totalQuestions,
-                                          correct: correct,
-                                          wrong: wrong,
-                                          percentage: percentage,
-                                        });
-
-                                        setSelectedQuizTopic(null);
-                                        setSelectedAnswer(null);
-                                        setShowQuizTopics(false);
-                                      }
-                                    }}
-                                  >
-                                    {currentQuestion === currentQuestionsList.length - 1
-                                      ? "Submit Quiz ✅"
-                                      : "Next Question →"}
-                                  </button>
-                                </div>
-                              </div>
-                            )}
 
                       {/* ================= RESULT PAGE ================= */}
                       {quizResult && (
