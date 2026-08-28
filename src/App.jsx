@@ -23,9 +23,13 @@ const getDirectDriveLink = (shareUrl) => {
   return shareUrl;
 };
 
-// 2. Drive Links Map
+// 2. Default PDF Link (Agar kisi topic ki link na mile toh ye open hogi)
+const DEFAULT_PDF_LINK = "https://drive.google.com/file/d/12G1qSBEugxso5yW_ibHJy9aHQj36QTvu/view?usp=drivesdk";
+
+// 3. Drive Links Map (Specific topics ke liye)
 const notesPdfLinks = {
-  "Control Statements": "https://drive.google.com/file/d/12G1qSBEugxso5yW_ibHJy9aHQj36QTvu/view?usp=drivesdk",
+  "Methods (Functions)": "https://drive.google.com/file/d/12G1qSBEugxso5yW_ibHJy9aHQj36QTvu/view?usp=drivesdk",
+  // Baad me yahan naye subtopics ki link add kar sakte hain
 };
 
     function App() {
@@ -160,6 +164,7 @@ const notesPdfLinks = {
     ];
 
 
+
   // Auth States
   const [currentUser, setCurrentUser] = useState(null);
   const [isSignup, setIsSignup] = useState(false);
@@ -190,6 +195,13 @@ const notesPdfLinks = {
   const [newContent, setNewContent] = useState("");
 
 
+ // PDF Download Handler Function (App function ke andar rakhein)
+    const handlePdfDownload = (subtopicName) => {
+      // Agar specific subtopic ka link milega toh wo chalega, nahi toh DEFAULT_PDF_LINK chalega
+      const rawUrl = notesPdfLinks[subtopicName] || DEFAULT_PDF_LINK;
+      const downloadUrl = getDirectDriveLink(rawUrl);
+      window.open(downloadUrl, "_blank");
+    };
 
   // Check Local Storage on Initial Load
   useEffect(() => {
@@ -1264,16 +1276,7 @@ const handleOpenAddModal = () => {
                               {/* 📄 NOTES PDF BUTTON (Sirf Drive Link Open Karega) */}
                               <button
                                 className="download-pdf-btn"
-                                onClick={() => {
-                                  const rawUrl = notesPdfLinks[selectedSubtopic];
-
-                                  if (rawUrl && rawUrl.trim() !== "") {
-                                    const downloadUrl = getDirectDriveLink(rawUrl);
-                                    window.open(downloadUrl, "_blank");
-                                  } else {
-                                    alert(`Abhi ${selectedSubtopic} ke paper notes PDF available nahi hain!`);
-                                  }
-                                }}
+                                onClick={() => handlePdfDownload(selectedSubtopic)}
                               >
                                 📄 Notes PDF
                               </button>
