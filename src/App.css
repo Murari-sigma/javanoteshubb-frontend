@@ -1904,6 +1904,73 @@ p.toggle-auth:hover {
   filter: drop-shadow(0 0 15px rgba(168, 85, 247, 0.6));
 }
 
+/* Why Learn With Us Section */
+.why-learn-header {
+  text-align: center;
+  margin: 3rem 0 1.5rem 0;
+}
+
+.why-learn-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #f8fafc;
+  margin-bottom: 0.5rem;
+}
+
+.why-learn-subtitle {
+  color: #94a3b8;
+  font-size: 0.95rem;
+}
+
+.why-learn-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  padding: 2.5rem 2rem;
+  margin: 0 auto 3rem auto;
+  max-width: 650px;
+  color: #ffffff;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.feature-item {
+  margin-bottom: 2.5rem;
+  text-align: left;
+}
+
+.feature-item:last-child {
+  margin-bottom: 0;
+}
+
+.feature-icon-badge {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(56, 189, 248, 0.15);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+}
+
+.feature-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #38bdf8;
+  margin-bottom: 0.5rem;
+}
+
+.feature-desc {
+  color: #cbd5e1;
+  line-height: 1.6;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
 /* 4. LIGHT & HIGH CONTRAST TEXT */
 .mentor-text-light {
   font-size: 1rem;

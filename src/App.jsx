@@ -1209,97 +1209,55 @@ const handleOpenAddModal = () => {
                          </section>
 
                         {/* Why Learn With Us Section */}
-                        <div style={{ textAlign: 'center', margin: '3rem 0 1.5rem 0' }}>
-                          <h2 style={{ fontSize: '2rem', fontWeight: 'bold', color: '#f8fafc', marginBottom: '0.5rem' }}>
-                            Why learn with us?
-                          </h2>
-                          <p style={{ color: '#94a3b8', fontSize: '0.95rem' }}>
+                        <div className="why-learn-header">
+                          <h2 className="why-learn-title">Why learn with us?</h2>
+                          <p className="why-learn-subtitle">
                             Everything you need to boost your technical career in one place.
                           </p>
                         </div>
 
-                        <div style={{
-                          background: 'rgba(255, 255, 255, 0.03)',
-                          backdropFilter: 'blur(12px)',
-                          border: '1px solid rgba(255, 255, 255, 0.1)',
-                          borderRadius: '24px',
-                          padding: '2.5rem 2rem',
-                          margin: '0 auto 3rem auto',
-                          maxWidth: '650px',
-                          color: '#ffffff',
-                          boxShadow: '0 20px 40px rgba(0, 0, 0, 0.4)'
-                        }}>
+                        <div className="why-learn-card">
                           {/* Feature 1: Data Structure */}
-                          <div style={{ marginBottom: '2.5rem', textAlign: 'left' }}>
-                            <div style={{
-                              width: '48px', height: '48px', borderRadius: '12px',
-                              background: 'rgba(56, 189, 248, 0.15)', border: '1px solid rgba(56, 189, 248, 0.3)',
-                              display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem', marginBottom: '1rem'
-                            }}>
-                              🧠
-                            </div>
-                            <h3 style={{ fontSize: '1.3rem', fontWeight: '600', color: '#38bdf8', marginBottom: '0.5rem' }}>Data Structure</h3>
-                            <p style={{ color: '#cbd5e1', lineHeight: '1.6', fontSize: '0.95rem' }}>
+                          <div className="feature-item">
+                            <div className="feature-icon-badge">🧠</div>
+                            <h3 className="feature-title">Data Structure</h3>
+                            <p className="feature-desc">
                               You'll gain the basic to advance knowledge you need to do great in technical interviews and become a coding expert.
                             </p>
                           </div>
 
                           {/* Feature 2: Interactive Topic Quizzes */}
-                          <div style={{ marginBottom: '2.5rem', textAlign: 'left' }}>
-                            <div style={{
-                              width: '48px', height: '48px', borderRadius: '12px',
-                              background: 'rgba(251, 191, 36, 0.15)', border: '1px solid rgba(251, 191, 36, 0.3)',
-                              display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem', marginBottom: '1rem'
-                            }}>
-                              🔔
-                            </div>
-                            <h3 style={{ fontSize: '1.3rem', fontWeight: '600', color: '#fbbf24', marginBottom: '0.5rem' }}>Interactive Topic Quizzes</h3>
-                            <p style={{ color: '#cbd5e1', lineHeight: '1.6', fontSize: '0.95rem' }}>
+                          <div className="feature-item">
+                            <div className="feature-icon-badge">🎯</div>
+                            <h3 className="feature-title">Interactive Topic Quizzes</h3>
+                            <p className="feature-desc">
                               Test your knowledge with multiple quizzes across various Java topics to enhance problem-solving skills and track your interview readiness.
                             </p>
                           </div>
 
                           {/* Feature 3: ATS Resume Checker */}
-                          <div style={{ marginBottom: '2.5rem', textAlign: 'left' }}>
-                            <div style={{
-                              width: '48px', height: '48px', borderRadius: '12px',
-                              background: 'rgba(74, 222, 128, 0.15)', border: '1px solid rgba(74, 222, 128, 0.3)',
-                              display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem', marginBottom: '1rem'
-                            }}>
-                              📄
-                            </div>
-                            <h3 style={{ fontSize: '1.3rem', fontWeight: '600', color: '#4ade80', marginBottom: '0.5rem' }}>ATS Resume Checker</h3>
-                            <p style={{ color: '#cbd5e1', lineHeight: '1.6', fontSize: '0.95rem' }}>
+                          <div className="feature-item">
+                            <div className="feature-icon-badge">📄</div>
+                            <h3 className="feature-title">ATS Resume Checker</h3>
+                            <p className="feature-desc">
                               Free built-in ATS Resume Checker tool to analyze your resume against top industry standards and get instantly shortlisted.
                             </p>
                           </div>
 
                           {/* Feature 4: Download Handwritten Notes */}
-                          <div style={{ marginBottom: '2.5rem', textAlign: 'left' }}>
-                            <div style={{
-                              width: '48px', height: '48px', borderRadius: '12px',
-                              background: 'rgba(251, 113, 133, 0.15)', border: '1px solid rgba(251, 113, 133, 0.3)',
-                              display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem', marginBottom: '1rem'
-                            }}>
-                              📚
-                            </div>
-                            <h3 style={{ fontSize: '1.3rem', fontWeight: '600', color: '#fb7185', marginBottom: '0.5rem' }}>Handwritten Notes Download</h3>
-                            <p style={{ color: '#cbd5e1', lineHeight: '1.6', fontSize: '0.95rem' }}>
+                          <div className="feature-item">
+                            <div className="feature-icon-badge">📚</div>
+                            <h3 className="feature-title">Handwritten Notes Download</h3>
+                            <p className="feature-desc">
                               Get direct access to comprehensive, high-quality PDF notes created by mentors to revise core Java concepts anytime.
                             </p>
                           </div>
 
                           {/* Feature 5: Learn from the Best */}
-                          <div style={{ textAlign: 'left' }}>
-                            <div style={{
-                              width: '48px', height: '48px', borderRadius: '12px',
-                              background: 'rgba(168, 85, 247, 0.15)', border: '1px solid rgba(168, 85, 247, 0.3)',
-                              display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem', marginBottom: '1rem'
-                            }}>
-                              💬
-                            </div>
-                            <h3 style={{ fontSize: '1.3rem', fontWeight: '600', color: '#c084fc', marginBottom: '0.5rem' }}>Learn from the Best</h3>
-                            <p style={{ color: '#cbd5e1', lineHeight: '1.6', fontSize: '0.95rem' }}>
+                          <div className="feature-item">
+                            <div className="feature-icon-badge">💬</div>
+                            <h3 className="feature-title">Learn from the Best</h3>
+                            <p className="feature-desc">
                               Get insights and guidance from an experienced software engineer who has trained over 15,000+ developers across platforms.
                             </p>
                           </div>
