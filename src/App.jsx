@@ -214,15 +214,365 @@ const javaSubtopicPdfs = {
       { question: "What is the default auto-commit mode in JDBC?", options: ["true", "false", "null", "depends on database"], answer: "true" }
     ];
 
- // Topic ke according questions select karne ke liye:
- const getQuestionsForTopic = () => {
-   if (selectedQuizTopic === "Core Java") return coreJavaQuestions;
-   if (selectedQuizTopic === "Advanced Java") return advancedJavaQuestions;
-   if (selectedQuizTopic === "JDBC") return jdbcQuestions;
-   return [];
+   // 4. SERVLET QUESTIONS (20)
+   const servletQuestions = [
+     { question: "Which interface must all servlets implement directly or indirectly?", options: ["GenericServlet", "HttpServlet", "Servlet", "ServletConfig"], answer: "Servlet" },
+     { question: "Which method is called only once in the entire lifecycle of a Servlet?", options: ["service()", "init()", "doGet()", "destroy()"], answer: "init()" },
+     { question: "Which method is invoked by the servlet container to process client requests?", options: ["init()", "service()", "doGet()", "execute()"], answer: "service()" },
+     { question: "Which package contains generic Servlet interfaces and classes?", options: ["javax.servlet.http", "javax.servlet", "java.servlet", "java.web"], answer: "javax.servlet" },
+     { question: "Which HTTP method is invoked by default when accessing a URL via a browser address bar?", options: ["POST", "GET", "PUT", "HEAD"], answer: "GET" },
+     { question: "Which interface is used to read data sent in the request body?", options: ["HttpServletRequest", "HttpServletResponse", "ServletConfig", "ServletContext"], answer: "HttpServletRequest" },
+     { question: "Which method is used to forward a request to another resource?", options: ["response.sendRedirect()", "requestDispatcher.forward()", "request.forward()", "servlet.forward()"], answer: "requestDispatcher.forward()" },
+     { question: "What is the difference between sendRedirect() and forward()?", options: ["sendRedirect works client-side, forward works server-side", "forward changes the URL in the browser", "sendRedirect preserves request attributes", "Both are identical"], answer: "sendRedirect works client-side, forward works server-side" },
+     { question: "Which implicit scope in Servlet is shared across all users and servlets in the app?", options: ["Request scope", "Session scope", "Application/ServletContext scope", "Page scope"], answer: "Application/ServletContext scope" },
+     { question: "Which annotation is used to map a Servlet class to a URL pattern in Servlet 3.0+?", options: ["@WebMapping", "@WebServlet", "@ServletMap", "@Controller"], answer: "@WebServlet" },
+     { question: "How do you retrieve HTTP Session object in a Servlet?", options: ["request.getSession()", "response.getSession()", "new HttpSession()", "ServletContext.getSession()"], answer: "request.getSession()" },
+     { question: "Which status code represents 'Not Found' in HTTP response?", options: ["200", "401", "404", "500"], answer: "404" },
+     { question: "Which class provides a default abstract implementation of the Servlet interface?", options: ["HttpServlet", "GenericServlet", "BaseServlet", "WebComponent"], answer: "GenericServlet" },
+     { question: "Which interface is used to intercept HTTP requests before they reach a Servlet?", options: ["Filter", "Interceptor", "ServletFilter", "RequestFilter"], answer: "Filter" },
+     { question: "Which method of HttpServlet deals with form submissions sent via POST method?", options: ["doGet()", "doPost()", "processPost()", "handlePost()"], answer: "doPost()" },
+     { question: "What is the default scope of a Servlet in a Web Container?", options: ["Prototype", "Singleton", "Request", "Session"], answer: "Singleton" },
+     { question: "Which method removes an attribute stored in the HttpSession?", options: ["session.deleteAttribute()", "session.removeAttribute()", "session.clear()", "session.invalidate()"], answer: "session.removeAttribute()" },
+     { question: "Which interface is used to read initialization parameters defined in web.xml for a specific servlet?", options: ["ServletContext", "ServletConfig", "FilterConfig", "ServletRequest"], answer: "ServletConfig" },
+     { question: "Which method invalidates a session and unbinds any objects bound to it?", options: ["session.destroy()", "session.invalidate()", "session.close()", "session.end()"], answer: "session.invalidate()" },
+     { question: "What deployment descriptor file is traditionally used to configure servlets?", options: ["context.xml", "web.xml", "application.xml", "pom.xml"], answer: "web.xml" }
+   ];
+
+   // 5. JSP QUESTIONS (20)
+   const jspQuestions = [
+     { question: "What does JSP stand for?", options: ["Java Server Pages", "Java Service Pages", "Java Scripting Page", "Java System Pages"], answer: "Java Server Pages" },
+     { question: "Which JSP tag is used to write Java code directly inside HTML?", options: ["<%-- --%>", "<%! %>", "<%= %>", "<% %>"], answer: "<% %>" },
+     { question: "Which tag is used for JSP Expressions to print output directly?", options: ["<% %>", "<%= %>", "<%! %>", "<%@ %>"], answer: "<%= %>" },
+     { question: "Which JSP tag is used to declare variables and methods at the class level?", options: ["<%! %>", "<%= %>", "<% %>", "<%@ %>"], answer: "<%! %>" },
+     { question: "Which JSP directive is used to import packages?", options: ["<%@ include %>", "<%@ page import=\"...\" %>", "<%@ taglib %>", "<%@ import %>"], answer: "<%@ page import=\"...\" %>" },
+     { question: "How many implicit objects are available in JSP by default?", options: ["5", "7", "9", "11"], answer: "9" },
+     { question: "Which implicit object in JSP corresponds to ServletConfig?", options: ["config", "context", "application", "page"], answer: "config" },
+     { question: "Which implicit object is used to write text into the HTTP response stream?", options: ["response", "out", "writer", "print"], answer: "out" },
+     { question: "What is the syntax for Expression Language (EL) in JSP?", options: ["${expression}", "#{expression}", "%{expression}", "*{expression}"], answer: "${expression}" },
+     { question: "Which tag library is standardly used for iteration and condition checks in JSP?", options: ["EL", "JSTL", "Struts", "Spring Tags"], answer: "JSTL" },
+     { question: "Which prefix is commonly used for JSTL Core tags?", options: ["jstl", "c", "core", "fmt"], answer: "c" },
+     { question: "What is the life cycle transition of a JSP page?", options: ["JSP -> Servlet Class -> Compilation -> Execution", "JSP -> Translation to Servlet -> Class Compilation -> Execution", "JSP -> Direct Bytecode Execution", "JSP -> HTML Compilation"], answer: "JSP -> Translation to Servlet -> Class Compilation -> Execution" },
+     { question: "Which directive includes a file during the translation phase of JSP?", options: ["<jsp:include>", "<%@ include file=\"...\" %>", "<c:import>", "<jsp:param>"], answer: "<%@ include file=\"...\" %>" },
+     { question: "What is the difference between <jsp:include> and <%@ include %>?", options: ["<jsp:include> is runtime, <%@ include %> is compile time", "<jsp:include> is compile time, <%@ include %> is runtime", "Both are identical", "<jsp:include> works only with HTML"], answer: "<jsp:include> is runtime, <%@ include %> is compile time" },
+     { question: "Which JSP implicit object holds page scope attributes?", options: ["page", "pageContext", "request", "session"], answer: "pageContext" },
+     { question: "How do you disable session creation in a JSP page?", options: ["<%@ page session=\"false\" %>", "<%@ session off %>", "<jsp:session enable=\"false\"/>", "session.disable()"], answer: "<%@ page session=\"false\" %>" },
+     { question: "Which standard action is used to instantiate or locate a JavaBean class?", options: ["<jsp:useBean>", "<jsp:setProperty>", "<jsp:getProperty>", "<jsp:plugin>"], answer: "<jsp:useBean>" },
+     { question: "How do you write comments in JSP that won't be sent to the browser HTML?", options: ["<!-- comment -->", "// comment", "<%-- comment --%>", "/* comment */"], answer: "<%-- comment --%>" },
+     { question: "Which implicit object in JSP represents the actual generated Servlet instance?", options: ["pageContext", "page", "config", "this"], answer: "page" },
+     { question: "Which page directive attribute specifies an error page to handle unhandled exceptions?", options: ["isErrorPage", "errorPage", "catchError", "exceptionPage"], answer: "errorPage" }
+   ];
+
+   // 6. MAVEN QUESTIONS (20)
+   const mavenQuestions = [
+     { question: "What is the main configuration file used in a Maven project?", options: ["build.xml", "settings.xml", "pom.xml", "maven.json"], answer: "pom.xml" },
+     { question: "What does POM stand for in Maven?", options: ["Project Object Model", "Program Execution Model", "Project Operation Module", "Package Management Model"], answer: "Project Object Model" },
+     { question: "Which Maven lifecycle phase compiles the source code of the project?", options: ["validate", "compile", "test", "package"], answer: "compile" },
+     { question: "Where does Maven store downloaded dependencies locally by default?", options: ["C:\\Program Files\\Maven", "~/.m2/repository", "/usr/bin/maven", "./target/lib"], answer: "~/.m2/repository" },
+     { question: "Which Maven command removes the target directory containing compiled files?", options: ["mvn remove", "mvn clean", "mvn purge", "mvn delete"], answer: "mvn clean" },
+     { question: "Which element in pom.xml uniquely identifies a group or company producing a project?", options: ["artifactId", "groupId", "version", "name"], answer: "groupId" },
+     { question: "Which phase in Maven packages the compiled code into a JAR or WAR file?", options: ["compile", "test-compile", "package", "install"], answer: "package" },
+     { question: "Which command installs the built package into the local Maven repository?", options: ["mvn install", "mvn deploy", "mvn package", "mvn publish"], answer: "mvn install" },
+     { question: "What is the correct order of default Maven lifecycle phases?", options: ["compile -> test -> package -> install", "validate -> package -> compile -> install", "test -> compile -> package -> install", "clean -> build -> run"], answer: "compile -> test -> package -> install" },
+     { question: "Which Maven command skips unit test execution during build?", options: ["mvn package -DskipTests", "mvn package --no-tests", "mvn install -ignoreTests", "mvn clean -noTest"], answer: "mvn package -DskipTests" },
+     { question: "Which scope indicates a dependency is provided by the JDK or runtime container?", options: ["compile", "provided", "runtime", "system"], answer: "provided" },
+     { question: "Which scope is default for Maven dependencies if none is specified?", options: ["compile", "provided", "test", "runtime"], answer: "compile" },
+     { question: "Which dependency scope is only needed for compiling and running tests?", options: ["runtime", "compile", "test", "provided"], answer: "test" },
+     { question: "What tool allows running Maven commands without installing Maven globally?", options: ["Maven Wrapper (mvnw)", "Maven Plugin", "Maven Daemon", "POM Runner"], answer: "Maven Wrapper (mvnw)" },
+     { question: "Which Maven phase copies and deploys the final package to a remote repository?", options: ["install", "deploy", "site", "package"], answer: "deploy" },
+     { question: "Where are global configuration parameters for Maven user mirrors stored?", options: ["pom.xml", "settings.xml", "maven.config", "web.xml"], answer: "settings.xml" },
+     { question: "How do you specify plugins in pom.xml?", options: ["<plugins>", "<dependencies>", "<modules>", "<libraries>"], answer: "<plugins>" },
+     { question: "What is Central Repository in Maven?", options: ["A local folder", "A default remote repository provided by Apache Maven community", "A private server", "A database"], answer: "A default remote repository provided by Apache Maven community" },
+     { question: "What element defines child modules in a multi-module Maven project?", options: ["<modules>", "<projects>", "<children>", "<subprojects>"], answer: "<modules>" },
+     { question: "Which command generates an archetype template for creating a new project?", options: ["mvn archetype:generate", "mvn create-project", "mvn init", "mvn new"], answer: "mvn archetype:generate" }
+   ];
+
+   // 7. HIBERNATE QUESTIONS (20)
+   const hibernateQuestions = [
+     { question: "What type of framework is Hibernate?", options: ["MVC Framework", "ORM Framework", "Testing Framework", "Build Tool"], answer: "ORM Framework" },
+     { question: "What does ORM stand for?", options: ["Object Relational Mapping", "Object Reference Model", "Operational Resource Management", "Object Routing Mapping"], answer: "Object Relational Mapping" },
+     { question: "Which file is default for Hibernate configuration?", options: ["hibernate.xml", "hibernate.cfg.xml", "orm.xml", "application.properties"], answer: "hibernate.cfg.xml" },
+     { question: "Which interface is used to create and open Session objects in Hibernate?", options: ["SessionFactory", "SessionManager", "EntityManagerFactory", "Transaction"], answer: "SessionFactory" },
+     { question: "Is SessionFactory thread-safe and lightweight?", options: ["Thread-safe and heavyweight", "Thread-safe and lightweight", "Not thread-safe and lightweight", "Not thread-safe and heavyweight"], answer: "Thread-safe and heavyweight" },
+     { question: "Which object represents a single unit of work with database in Hibernate?", options: ["SessionFactory", "Session", "Query", "Transaction"], answer: "Session" },
+     { question: "Is Hibernate Session thread-safe?", options: ["Yes", "No", "Depends on database", "Only in Spring environment"], answer: "No" },
+     { question: "Which state describes an entity object not associated with a Session and has no DB representation?", options: ["Persistent", "Transient", "Detached", "Removed"], answer: "Transient" },
+     { question: "Which state describes an object associated with an active Session and database row?", options: ["Transient", "Persistent", "Detached", "Garbage Collected"], answer: "Persistent" },
+     { question: "Which method is used to save or update an entity depending on primary key existence?", options: ["save()", "update()", "saveOrUpdate()", "merge()"], answer: "saveOrUpdate()" },
+     { question: "What language does Hibernate use for object-oriented queries?", options: ["SQL", "HQL (Hibernate Query Language)", "JPQL", "GraphQL"], answer: "HQL (Hibernate Query Language)" },
+     { question: "What is the primary difference between get() and load() methods in Session?", options: ["get() returns null if not found; load() throws ObjectNotFoundException / returns Proxy", "load() returns null; get() throws exception", "get() hits DB lazily; load() hits DB immediately", "Both are exactly same"], answer: "get() returns null if not found; load() throws ObjectNotFoundException / returns Proxy" },
+     { question: "What caching level is enabled by default in Hibernate?", options: ["First Level Cache (Session scope)", "Second Level Cache (SessionFactory scope)", "Query Cache", "No caching"], answer: "First Level Cache (Session scope)" },
+     { question: "Which annotation marks a class as a persistent database entity?", options: ["@Table", "@Entity", "@Model", "@DatabaseObject"], answer: "@Entity" },
+     { question: "Which annotation specifies the primary key of an entity?", options: ["@Key", "@PrimaryKey", "@Id", "@GeneratedValue"], answer: "@Id" },
+     { question: "What does the cascade property in mappings do?", options: ["Automatically propagates operations from parent to child entities", "Deletes database tables", "Creates indexes", "Manages thread safety"], answer: "Automatically propagates operations from parent to child entities" },
+     { question: "Which HQL statement fetches entities without writing native SQL?", options: ["SELECT e FROM Employee e", "SELECT * FROM Employee", "FETCH Employee", "GET Employee"], answer: "SELECT e FROM Employee e" },
+     { question: "What exception occurs when an N+1 query problem happens?", options: ["It is a performance issue, not an exception", "HibernateException", "LazyInitializationException", "SQLException"], answer: "It is a performance issue, not an exception" },
+     { question: "Which exception occurs when accessing uninitialized lazy association outside an active session?", options: ["NullPointerException", "LazyInitializationException", "SessionClosedException", "EntityNotFoundException"], answer: "LazyInitializationException" },
+     { question: "Which generator strategy lets database handle auto-increment column?", options: ["GenerationType.AUTO", "GenerationType.IDENTITY", "GenerationType.SEQUENCE", "GenerationType.TABLE"], answer: "GenerationType.IDENTITY" }
+   ];
+
+   // 8. JPA QUESTIONS (20)
+   const jpaQuestions = [
+     { question: "What does JPA stand for?", options: ["Java Persistence API", "Java Programming Access", "Java Process Application", "Java Package Architecture"], answer: "Java Persistence API" },
+     { question: "Is JPA a specification or an implementation?", options: ["Specification", "Implementation", "Library", "Database"], answer: "Specification" },
+     { question: "Which interface is the main entry point for managing entity lifecycles in JPA?", options: ["Session", "EntityManager", "DbContext", "JpaRepository"], answer: "EntityManager" },
+     { question: "Which interface creates EntityManager instances?", options: ["EntityManagerFactory", "SessionFactory", "PersistenceManager", "EntityBuilder"], answer: "EntityManagerFactory" },
+     { question: "What file contains JPA configuration properties and persistence-unit definitions?", options: ["hibernate.cfg.xml", "persistence.xml", "application.yml", "jpa-config.xml"], answer: "persistence.xml" },
+     { question: "Which annotation specifies the table name mapped to an entity class?", options: ["@Entity", "@Table", "@Column", "@DatabaseTable"], answer: "@Table" },
+     { question: "Which method in EntityManager attaches a transient entity to persistence context?", options: ["persist()", "merge()", "find()", "flush()"], answer: "persist()" },
+     { question: "Which method in EntityManager updates or copies state of detached entity into persistent context?", options: ["persist()", "merge()", "refresh()", "save()"], answer: "merge()" },
+     { question: "What is the default FetchType for `@ManyToOne` and `@OneToOne` relationships in JPA?", options: ["LAZY", "EAGER", "DYNAMIC", "NONE"], answer: "EAGER" },
+     { question: "What is the default FetchType for `@OneToMany` and `@ManyToMany` relationships in JPA?", options: ["EAGER", "LAZY", "JOIN", "BATCH"], answer: "LAZY" },
+     { question: "Which annotation defines a composite primary key class?", options: ["@EmbeddedId", "@IdClass", "Both @EmbeddedId and @IdClass", "@CompositeKey"], answer: "Both @EmbeddedId and @IdClass" },
+     { question: "Which method forces changes in persistence context to sync with the database immediately?", options: ["flush()", "commit()", "sync()", "save()"], answer: "flush()" },
+     { question: "Which JPA query language is used to write DB-agnostic queries against entity models?", options: ["SQL", "JPQL", "HQL", "CQL"], answer: "JPQL" },
+     { question: "Which annotation maps an Enum field to database as a String instead of Ordinal number?", options: ["@Enumerated(EnumType.STRING)", "@EnumString", "@MapEnum", "@Column(type=STRING)"], answer: "@Enumerated(EnumType.STRING)" },
+     { question: "What annotation marks a field that should NOT be persisted in the database?", options: ["@Ignore", "@Transient", "@Skip", "@NonPersistent"], answer: "@Transient" },
+     { question: "Which relationship type requires a join table by default?", options: ["@OneToOne", "@ManyToOne", "@OneToMany", "@ManyToMany"], answer: "@ManyToMany" },
+     { question: "Which locking mechanism prevents concurrent modifications using a version field?", options: ["Pessimistic Locking", "Optimistic Locking", "Exclusive Locking", "Shared Locking"], answer: "Optimistic Locking" },
+     { question: "Which annotation marks a field for Optimistic Locking control?", options: ["@Version", "@Lock", "@Revision", "@Sequence"], answer: "@Version" },
+     { question: "What does `mappedBy` attribute indicate in bidirectional relationships?", options: ["It marks the owning side of the relationship", "It marks the non-owning (inverse) side of the relationship", "It creates a foreign key column", "It enables caching"], answer: "It marks the non-owning (inverse) side of the relationship" },
+     { question: "Which popular ORM framework implements the JPA specification?", options: ["Hibernate", "EclipseLink", "Apache OpenJPA", "All of the above"], answer: "All of the above" }
+   ];
+
+   // 9. SPRING QUESTIONS (20)
+   const springQuestions = [
+     { question: "What is the central concept of the Spring Framework?", options: ["Inversion of Control (IoC) / Dependency Injection (DI)", "Direct Instantiation", "Tight Coupling", "Manual Memory Allocation"], answer: "Inversion of Control (IoC) / Dependency Injection (DI)" },
+     { question: "Which interface represents the Spring IoC container?", options: ["BeanFactory", "ApplicationContext", "Both BeanFactory and ApplicationContext", "SpringContainer"], answer: "Both BeanFactory and ApplicationContext" },
+     { question: "What is the default bean scope in Spring Framework?", options: ["Prototype", "Singleton", "Request", "Session"], answer: "Singleton" },
+     { question: "Which scope creates a new bean instance every time it is requested from the container?", options: ["Singleton", "Prototype", "Request", "GlobalSession"], answer: "Prototype" },
+     { question: "Which annotation marks a class as a Spring component for auto-detection?", options: ["@Component", "@Service", "@Repository", "All of the above"], answer: "All of the above" },
+     { question: "Which annotation is used to inject dependencies automatically by type?", options: ["@Inject", "@Autowired", "@Resource", "All of the above"], answer: "@Autowired" },
+     { question: "Which annotation is used along with @Autowired to resolve ambiguity when multiple beans of same type exist?", options: ["@Primary", "@Qualifier", "Both @Primary and @Qualifier", "@Select"], answer: "Both @Primary and @Qualifier" },
+     { question: "What method is called immediately after a bean's properties are set by the container?", options: ["@PostConstruct", "@PreDestroy", "init()", "afterProperties()"], answer: "@PostConstruct" },
+     { question: "What method is called before a bean is removed from the container?", options: ["@PostConstruct", "@PreDestroy", "destroy()", "cleanUp()"], answer: "@PreDestroy" },
+     { question: "What programming paradigm does Spring AOP support?", options: ["Aspect-Oriented Programming", "Array-Oriented Programming", "Asynchronous Operations", "Applied Object Parsing"], answer: "Aspect-Oriented Programming" },
+     { question: "In Spring AOP, what is a JoinPoint?", options: ["A point during execution of a program, such as method execution", "The advice logic", "The class containing aspects", "A config XML"], answer: "A point during execution of a program, such as method execution" },
+     { question: "Which AOP advice runs both before and after a method execution?", options: ["@Before", "@After", "@Around", "@AfterReturning"], answer: "@Around" },
+     { question: "Which annotation is used to declare Java-based configuration classes?", options: ["@Configuration", "@SpringConfig", "@EnableAutoConfiguration", "@Setup"], answer: "@Configuration" },
+     { question: "Which annotation inside a @Configuration class indicates that a method returns a Spring Bean?", options: ["@Bean", "@Component", "@Service", "@Provide"], answer: "@Bean" },
+     { question: "What is Dependency Injection?", options: ["Creating objects using 'new' keyword inside class", "Passing dependent objects into a class rather than class creating them itself", "Reading XML files", "Database connection pool"], answer: "Passing dependent objects into a class rather than class creating them itself" },
+     { question: "Which injection type is recommended as best practice in Spring?", options: ["Field Injection", "Setter Injection", "Constructor Injection", "Interface Injection"], answer: "Constructor Injection" },
+     { question: "Which module of Spring provides declarative transaction management?", options: ["Spring AOP", "Spring TX (Transactions)", "Spring Core", "Spring ORM"], answer: "Spring TX (Transactions)" },
+     { question: "Which annotation enables declarative transaction management on methods or classes?", options: ["@Transactional", "@EnableTransaction", "@TransactionManagement", "@Tx"], answer: "@Transactional" },
+     { question: "What is Spring MVC?", options: ["A module for building web applications following Model-View-Controller pattern", "A database tool", "A testing framework", "A security layer"], answer: "A module for building web applications following Model-View-Controller pattern" },
+     { question: "Which annotation maps Web request URLs to specific handler methods in Spring MVC?", options: ["@RequestMapping", "@GetMapping", "@PostMapping", "All of the above"], answer: "All of the above" }
+   ];
+
+   // 10. SPRING BOOT QUESTIONS (20)
+   const springBootQuestions = [
+     { question: "What is the primary goal of Spring Boot?", options: ["To replace Java", "To simplify Spring application deployment and configuration (Convention over Configuration)", "To write frontend UI", "To manage SQL databases"], answer: "To simplify Spring application deployment and configuration (Convention over Configuration)" },
+     { question: "Which annotation combines @Configuration, @EnableAutoConfiguration, and @ComponentScan?", options: ["@SpringBootApplication", "@EnableSpringBoot", "@SpringBootConfig", "@MainBoot"], answer: "@SpringBootApplication" },
+     { question: "What file is commonly used for external configuration in Spring Boot?", options: ["application.properties or application.yml", "boot.xml", "spring.json", "config.properties"], answer: "application.properties or application.yml" },
+     { question: "Which Spring Boot dependency provides embedded Tomcat web server and Web MVC starter?", options: ["spring-boot-starter-web", "spring-boot-starter-tomcat", "spring-boot-starter-core", "spring-boot-starter-rest"], answer: "spring-boot-starter-web" },
+     { question: "What is the default embedded application server in Spring Boot Web?", options: ["Jetty", "Undertow", "Apache Tomcat", "GlassFish"], answer: "Apache Tomcat" },
+     { question: "Which Spring Boot module provides production-ready features like metrics, health check, and env info?", options: ["Spring Boot DevTools", "Spring Boot Actuator", "Spring Boot CLI", "Spring Boot Starter"], answer: "Spring Boot Actuator" },
+     { question: "Which Actuator endpoint checks if the application is running fine?", options: ["/metrics", "/health", "/info", "/env"], answer: "/health" },
+     { question: "How do you run a Spring Boot application from Maven command line?", options: ["mvn spring-boot:run", "mvn boot:start", "mvn run", "mvn start-app"], answer: "mvn spring-boot:run" },
+     { question: "Which dependency provides automatic restart and live-reload during development?", options: ["spring-boot-starter-actuator", "spring-boot-devtools", "spring-boot-reloader", "spring-boot-starter-test"], answer: "spring-boot-devtools" },
+     { question: "How do you read a property value from application.properties in a Spring Bean?", options: ["@Value(\"${property.name}\")", "@Property(\"property.name\")", "@Config(\"property.name\")", "Environment.get()"], answer: "@Value(\"${property.name}\")" },
+     { question: "Which annotation maps custom configuration properties classes to structured keys in application.yml?", options: ["@ConfigurationProperties", "@ValueProperties", "@BootProperties", "@AppProps"], answer: "@ConfigurationProperties" },
+     { question: "What type of artifact is generated by Spring Boot that contains all dependencies packaged together?", options: ["Thin JAR", "Fat JAR / Executable JAR", "Plain WAR", "ZIP Bundle"], answer: "Fat JAR / Executable JAR" },
+     { question: "Which annotation creates RESTful webservice controller returning JSON/XML directly?", options: ["@Controller", "@RestController", "@WebController", "@ResponseBodyController"], answer: "@RestController" },
+     { question: "What annotation binds HTTP request body directly to a domain object method parameter?", options: ["@RequestParam", "@PathVariable", "@RequestBody", "@ModelAttribute"], answer: "@RequestBody" },
+     { question: "Which annotation extracts dynamic path variables from request URI (e.g. /users/{id})?", options: ["@RequestParam", "@PathVariable", "@QueryParam", "@HeaderParam"], answer: "@PathVariable" },
+     { question: "Which profile feature allows loading different configurations for Dev, Test, and Prod?", options: ["Spring Profiles (@Profile)", "Spring Environments", "Boot States", "Config Switcher"], answer: "Spring Profiles (@Profile)" },
+     { question: "How do you set active profile via command line during JAR execution?", options: ["java -jar app.jar --spring.profiles.active=dev", "java -jar app.jar -profile=dev", "java -dev app.jar", "mvn active-profile=dev"], answer: "java -jar app.jar --spring.profiles.active=dev" },
+     { question: "Which Spring Boot starter is used to integrate Spring Data JPA and Hibernate?", options: ["spring-boot-starter-data-jpa", "spring-boot-starter-hibernate", "spring-boot-starter-orm", "spring-boot-starter-db"], answer: "spring-boot-starter-data-jpa" },
+     { question: "Interface provided by Spring Data JPA that gives CRUD operations out of the box?", options: ["CrudRepository", "JpaRepository", "PagingAndSortingRepository", "All of the above"], answer: "All of the above" },
+     { question: "What default port does Spring Boot embedded Tomcat run on?", options: ["80", "8080", "8000", "3000"], answer: "8080" }
+   ];
+
+   // 11. SPRING SECURITY QUESTIONS (20)
+   const springSecurityQuestions = [
+     { question: "What is the main purpose of Spring Security?", options: ["Database caching", "Authentication and Authorization", "HTML rendering", "API routing"], answer: "Authentication and Authorization" },
+     { question: "What is Authentication?", options: ["Verifying WHO a user is", "Verifying WHAT a user is allowed to do", "Encrypting passwords", "Generating tokens"], answer: "Verifying WHO a user is" },
+     { question: "What is Authorization?", options: ["Verifying WHO a user is", "Verifying WHAT permissions a user has", "Validating form fields", "Connecting to DB"], answer: "Verifying WHAT permissions a user has" },
+     { question: "Which architectural pattern is Spring Security based on in web applications?", options: ["Servlet Filters (Filter Chain)", "Aspect-Oriented Advice", "Database Triggers", "MVC Interceptors"], answer: "Servlet Filters (Filter Chain)" },
+     { question: "What does JWT stand for?", options: ["Java Web Token", "JSON Web Token", "JavaScript Work Text", "Joint Web Transfer"], answer: "JSON Web Token" },
+     { question: "What three parts make up a JSON Web Token (JWT)?", options: ["Header, Payload, Signature", "Header, Body, Footer", "Key, Secret, Value", "User, Role, Expiry"], answer: "Header, Payload, Signature" },
+     { question: "Which interface in Spring Security is loaded to retrieve user credentials from DB or memory?", options: ["UserDetailsService", "AuthenticationManager", "PasswordEncoder", "SecurityContext"], answer: "UserDetailsService" },
+     { question: "Which interface handles password hashing/verification in Spring Security?", options: ["BCryptEncoder", "PasswordEncoder", "SecurityHash", "DigestEncoder"], answer: "PasswordEncoder" },
+     { question: "Which PasswordEncoder implementation is recommended by default in modern Spring Security?", options: ["NoOpPasswordEncoder", "MD5PasswordEncoder", "BCryptPasswordEncoder", "SHA256Encoder"], answer: "BCryptPasswordEncoder" },
+     { question: "Where is the current authenticated user's details stored during a request execution?", options: ["HttpSession", "SecurityContextHolder", "ApplicationContext", "ServletRequest"], answer: "SecurityContextHolder" },
+     { question: "Which annotation enables method-level security (e.g. @PreAuthorize)?", options: ["@EnableWebSecurity", "@EnableMethodSecurity", "@EnableSecurity", "@SecuredMethod"], answer: "@EnableMethodSecurity" },
+     { question: "What cross-site security threat does Spring Security protect against using tokens by default?", options: ["XSS", "CSRF (Cross-Site Request Forgery)", "SQL Injection", "DDoS"], answer: "CSRF (Cross-Site Request Forgery)" },
+     { question: "In stateless REST APIs using JWT, CSRF protection is usually:", options: ["Disabled", "Enabled", "Mandatory", "Replaced with CORS"], answer: "Disabled" },
+     { question: "What HTTP header is standard for passing JWT tokens?", options: ["Authorization: Bearer <token>", "Authentication: Token <token>", "X-Access-Token: <token>", "Security: <token>"], answer: "Authorization: Bearer <token>" },
+     { question: "Which interface evaluates credentials and returns an authenticated Authentication object?", options: ["AuthenticationManager", "UserDetailsService", "SecurityFilter", "TokenProvider"], answer: "AuthenticationManager" },
+     { question: "Which annotation is applied to a configuration class to configure web security filter chain?", options: ["@EnableWebSecurity", "@SecurityConfig", "@EnableAuth", "@WebSecurity"], answer: "@EnableWebSecurity" },
+     { question: "In SecurityFilterChain configuration, which method permits public access to specific endpoints without authentication?", options: ["permitSelf()", "permitAll()", "anonymous()", "allowPublic()"], answer: "permitAll()" },
+     { question: "Which mechanism allows resources on a web page to be requested from another domain outside the domain from which the first resource was served?", options: ["CORS (Cross-Origin Resource Sharing)", "CSRF", "OAuth2", "JWT"], answer: "CORS (Cross-Origin Resource Sharing)" },
+     { question: "What protocol framework is widely used for delegated authorization (e.g. Login with Google)?", options: ["OAuth2", "HTTP Basic", "Form Login", "SAML 1.0"], answer: "OAuth2" },
+     { question: "Which HTTP status code is returned when authentication fails or is missing?", options: ["401 Unauthorized", "403 Forbidden", "400 Bad Request", "500 Internal Error"], answer: "401 Unauthorized" }
+   ];
+
+   // 12. REST API QUESTIONS (20)
+   const restApiQuestions = [
+     { question: "What does REST stand for?", options: ["Representational State Transfer", "Remote Execution Service System", "Responsive External State Transmission", "Restful Entity Storage Template"], answer: "Representational State Transfer" },
+     { question: "Which HTTP method is idempotent and used to retrieve resources without changing server state?", options: ["POST", "GET", "PUT", "DELETE"], answer: "GET" },
+     { question: "Which HTTP method is used to create a new resource on the server?", options: ["GET", "POST", "PUT", "PATCH"], answer: "POST" },
+     { question: "Which HTTP method is used for full replacement/update of a resource?", options: ["POST", "PATCH", "PUT", "UPDATE"], answer: "PUT" },
+     { question: "Which HTTP method is used for partial update of a resource?", options: ["PUT", "PATCH", "POST", "MODIFY"], answer: "PATCH" },
+     { question: "What property guarantees that multiple identical requests produce the same result as a single request?", options: ["Idempotency", "Statelessness", "Caching", "Scalability"], answer: "Idempotency" },
+     { question: "Which HTTP status code range represents Success?", options: ["1xx", "2xx", "3xx", "4xx"], answer: "2xx" },
+     { question: "Which HTTP status code indicates a resource was successfully created?", options: ["200 OK", "201 Created", "202 Accepted", "204 No Content"], answer: "201 Created" },
+     { question: "Which HTTP status code indicates authentication is required or failed?", options: ["400", "401", "403", "404"], answer: "401" },
+     { question: "Which HTTP status code indicates authenticated user lacks permission to access a resource?", options: ["401 Unauthorized", "403 Forbidden", "404 Not Found", "409 Conflict"], answer: "403 Forbidden" },
+     { question: "What architectural constraint requires REST requests to contain all necessary info without server storing session state?", options: ["Cacheable", "Stateless", "Layered System", "Uniform Interface"], answer: "Stateless" },
+     { question: "What content format is most widely used in modern REST APIs?", options: ["XML", "JSON", "HTML", "YAML"], answer: "JSON" },
+     { question: "What does HATEOAS stand for in advanced REST APIs?", options: ["Hypermedia As The Engine Of Application State", "HTTP And Text Encoding Over Application Service", "Hypertext Application Transfer Endpoint Operating System", "Header Authentication Towards External Operation State"], answer: "Hypermedia As The Engine Of Application State" },
+     { question: "Which HTTP header specifies the format of the response expected by the client?", options: ["Content-Type", "Accept", "Authorization", "User-Agent"], answer: "Accept" },
+     { question: "Which HTTP header specifies the format of data being sent in the request body?", options: ["Accept", "Content-Type", "Content-Encoding", "Host"], answer: "Content-Type" },
+     { question: "Which HTTP status code is used when a request fails due to client input validation error?", options: ["400 Bad Request", "404 Not Found", "500 Internal Server Error", "405 Method Not Allowed"], answer: "400 Bad Request" },
+     { question: "Which HTTP status code is returned when an API method succeeds but has no content to return in response body?", options: ["200 OK", "201 Created", "204 No Content", "304 Not Modified"], answer: "204 No Content" },
+     { question: "What tool/specification is standard for documenting REST APIs interactively?", options: ["Swagger / OpenAPI", "Postman", "JUnit", "Docker"], answer: "Swagger / OpenAPI" },
+     { question: "In RESTful URL conventions, resource names should preferably be:", options: ["Verbs (e.g., /getUser)", "Nouns in plural form (e.g., /users)", "CamelCase strings", "Database table column names"], answer: "Nouns in plural form (e.g., /users)" },
+     { question: "Which HTTP status code indicates an unhandled exception occurred on the server side?", options: ["400", "404", "500 Internal Server Error", "503 Service Unavailable"], answer: "500 Internal Server Error" }
+   ];
+
+   // 13. MICROSERVICES QUESTIONS (20)
+   const microservicesQuestions = [
+     { question: "What is Microservices Architecture?", options: ["Building a single unified codebase for all features", "Architectural style decomposing application into small, independent, loosely-coupled services", "Running database on multiple servers", "Using microcontrollers"], answer: "Architectural style decomposing application into small, independent, loosely-coupled services" },
+     { question: "What is the role of Netflix Eureka or Consul in Microservices?", options: ["Service Discovery and Registration", "API Routing", "Database Storage", "Distributed Tracing"], answer: "Service Discovery and Registration" },
+     { question: "What is the primary role of an API Gateway (e.g. Spring Cloud Gateway)?", options: ["Entry point for clients, routing, rate limiting, authentication", "Running database queries", "Compiling Java code", "Managing Docker containers"], answer: "Entry point for clients, routing, rate limiting, authentication" },
+     { question: "Which design pattern prevents cascading failures across microservices by cutting network calls when downstream service is down?", options: ["Circuit Breaker Pattern (Resilience4j / Hystrix)", "Saga Pattern", "CQRS Pattern", "Sidecar Pattern"], answer: "Circuit Breaker Pattern (Resilience4j / Hystrix)" },
+     { question: "Which pattern manages distributed transactions across multiple microservices without 2-phase commit?", options: ["Saga Pattern", "Factory Pattern", "Singleton Pattern", "Strangler Fig Pattern"], answer: "Saga Pattern" },
+     { question: "What pattern separates read operations from write operations for performance optimization?", options: ["CQRS (Command Query Responsibility Segregation)", "Saga", "Outbox Pattern", "API Gateway"], answer: "CQRS (Command Query Responsibility Segregation)" },
+     { question: "Which component in Spring Cloud centralized configuration across environment profiles?", options: ["Spring Cloud Config Server", "Spring Cloud Eureka", "Spring Cloud Bus", "Spring Cloud Gateway"], answer: "Spring Cloud Config Server" },
+     { question: "Which tool/library is commonly used for distributed tracing across microservices?", options: ["Zipkin / Jaeger / Spring Cloud Sleuth (Micrometer Tracing)", "JUnit", "Log4j", "Maven"], answer: "Zipkin / Jaeger / Spring Cloud Sleuth (Micrometer Tracing)" },
+     { question: "How do microservices communicate synchronously?", options: ["REST APIs or gRPC", "Kafka / RabbitMQ", "Shared SQL Database", "File system"], answer: "REST APIs or gRPC" },
+     { question: "How do microservices communicate asynchronously for event-driven systems?", options: ["Message Brokers like Apache Kafka / RabbitMQ", "Direct HTTP GET calls", "Shared memory", "Direct JDBC connections"], answer: "Message Brokers like Apache Kafka / RabbitMQ" },
+     { question: "What database management strategy is recommended in Microservices?", options: ["Database-per-service", "Single shared database for all services", "No database at all", "Central Excel file"], answer: "Database-per-service" },
+     { question: "What pattern gradually migrates a monolithic application to microservices by replacing features one by one?", options: ["Strangler Fig Pattern", "Bulkhead Pattern", "Saga Pattern", "Proxy Pattern"], answer: "Strangler Fig Pattern" },
+     { question: "What is the Bulkhead Pattern used for?", options: ["Isolating resource pools (threads/connections) so failure in one area doesn't bring down whole service", "Routing HTTP traffic", "Centralized logging", "Encrypting passwords"], answer: "Isolating resource pools (threads/connections) so failure in one area doesn't bring down whole service" },
+     { question: "In a microservice architecture, what propagates correlation IDs across request hops for tracking?", options: ["Distributed Tracing", "API Gateway", "Service Registry", "Load Balancer"], answer: "Distributed Tracing" },
+     { question: "Which Spring Cloud tool is a declarative HTTP client simplifying calls between microservices?", options: ["OpenFeign", "RestTemplate", "WebClient", "HttpClient"], answer: "OpenFeign" },
+     { question: "What is Client-Side Load Balancing tool in Spring Cloud ecosystem?", options: ["Spring Cloud LoadBalancer (formerly Ribbon)", "Eureka", "Zuul", "Sleuth"], answer: "Spring Cloud LoadBalancer (formerly Ribbon)" },
+     { question: "What is the main challenge of Microservices architecture?", options: ["Complexity in monitoring, deployment, network latency, and distributed testing", "Slow single-thread performance", "Inability to use Java", "Limited memory"], answer: "Complexity in monitoring, deployment, network latency, and distributed testing" },
+     { question: "What lightweight container technology is universally paired with Microservices?", options: ["Docker", "VirtualBox", "VMware", "Tomcat"], answer: "Docker" },
+     { question: "What container orchestration engine manages deployment, scaling, and networking of microservices?", options: ["Kubernetes (K8s)", "Jenkins", "GitLab", "Nginx"], answer: "Kubernetes (K8s)" },
+     { question: "Which pattern publishes domain events to a local DB table before sending to a message broker to ensure transactional consistency?", options: ["Transactional Outbox Pattern", "Circuit Breaker", "API Gateway", "Sidecar"], answer: "Transactional Outbox Pattern" }
+   ];
+
+   // 14. MYSQL QUESTIONS (20)
+   const mysqlQuestions = [
+     { question: "Which SQL command is used to retrieve data from a table?", options: ["FETCH", "SELECT", "GET", "EXTRACT"], answer: "SELECT" },
+     { question: "Which clause filters rows based on a specified condition?", options: ["WHERE", "ORDER BY", "GROUP BY", "HAVING"], answer: "WHERE" },
+     { question: "What is the main difference between WHERE and HAVING clauses?", options: ["WHERE filters individual rows before grouping; HAVING filters aggregated groups", "HAVING filters individual rows; WHERE filters groups", "WHERE is only used with JOIN", "They are identical"], answer: "WHERE filters individual rows before grouping; HAVING filters aggregated groups" },
+     { question: "Which JOIN returns all records when there is a match in either left or right table?", options: ["INNER JOIN", "LEFT JOIN", "RIGHT JOIN", "FULL OUTER JOIN"], answer: "FULL OUTER JOIN" },
+     { question: "Which JOIN returns all rows from the left table and matched rows from the right table?", options: ["INNER JOIN", "LEFT JOIN", "RIGHT JOIN", "CROSS JOIN"], answer: "LEFT JOIN" },
+     { question: "What type of key uniquely identifies each record in a table and cannot contain NULL values?", options: ["Foreign Key", "Primary Key", "Unique Key", "Candidate Key"], answer: "Primary Key" },
+     { question: "What type of key enforces referential integrity between two tables?", options: ["Primary Key", "Foreign Key", "Super Key", "Alternate Key"], answer: "Foreign Key" },
+     { question: "Which MySQL constraint ensures all values in a column are distinct?", options: ["UNIQUE", "NOT NULL", "CHECK", "DEFAULT"], answer: "UNIQUE" },
+     { question: "Which command is used to add, delete, or modify columns in an existing table?", options: ["UPDATE TABLE", "ALTER TABLE", "MODIFY TABLE", "CHANGE TABLE"], answer: "ALTER TABLE" },
+     { question: "What is the difference between DELETE and TRUNCATE commands?", options: ["DELETE is DML (can rollback, row-by-row); TRUNCATE is DDL (faster, resets auto-increment)", "TRUNCATE can use WHERE clause; DELETE cannot", "DELETE resets primary key counter; TRUNCATE does not", "Both are DML commands"], answer: "DELETE is DML (can rollback, row-by-row); TRUNCATE is DDL (faster, resets auto-increment)" },
+     { question: "Which aggregate function calculates the average value of a numeric column?", options: ["SUM()", "AVG()", "COUNT()", "MEAN()"], answer: "AVG()" },
+     { question: "Which keyword is used to eliminate duplicate rows from query results?", options: ["UNIQUE", "DISTINCT", "DIFFERENT", "SINGLE"], answer: "DISTINCT" },
+     { question: "What database structure speeds up data retrieval operations at the cost of additional storage and write speed?", options: ["Index", "Trigger", "Stored Procedure", "View"], answer: "Index" },
+     { question: "What is a Stored Procedure?", options: ["A virtual table", "A prepared SQL code segment saved in DB that can be reused", "A backup mechanism", "A transaction log"], answer: "A prepared SQL code segment saved in DB that can be reused" },
+     { question: "What is a MySQL Trigger?", options: ["A set of SQL statements that automatically execute when an INSERT, UPDATE, or DELETE occurs", "A schedule for backups", "A type of database index", "A user permission rule"], answer: "A set of SQL statements that automatically execute when an INSERT, UPDATE, or DELETE occurs" },
+     { question: "Which ACID property ensures that all operations in a transaction complete successfully or none are applied?", options: ["Atomicity", "Consistency", "Isolation", "Durability"], answer: "Atomicity" },
+     { question: "Which ACID property guarantees that committed transaction data is permanently saved even during power failure?", options: ["Atomicity", "Consistency", "Isolation", "Durability"], answer: "Durability" },
+     { question: "Which default storage engine in MySQL supports ACID transactions and foreign keys?", options: ["MyISAM", "InnoDB", "Memory", "CSV"], answer: "InnoDB" },
+     { question: "Which function returns the current date and time in MySQL?", options: ["NOW()", "CURRENT_DATE()", "GETDATE()", "TODAY()"], answer: "NOW()" },
+     { question: "Which clause sorts the result set in descending order?", options: ["ORDER BY col ASC", "ORDER BY col DESC", "SORT BY col DESC", "GROUP BY col DESC"], answer: "ORDER BY col DESC" }
+   ];
+
+   // 15. GIT & GITHUB QUESTIONS (20)
+   const gitQuestions = [
+     { question: "What is Git?", options: ["A centralized cloud database", "A Distributed Version Control System (DVCS)", "A programming language", "A build tool"], answer: "A Distributed Version Control System (DVCS)" },
+     { question: "Which command initializes a new Git repository in the current folder?", options: ["git start", "git init", "git create", "git new"], answer: "git init" },
+     { question: "Which command stages modified files for the next commit?", options: ["git save", "git add .", "git stage", "git push"], answer: "git add ." },
+     { question: "Which command records staged snapshots into project history with a message?", options: ["git commit -m \"message\"", "git push -m \"message\"", "git save -m \"message\"", "git log -m \"message\""], answer: "git commit -m \"message\"" },
+     { question: "Which command checks the status of working directory and staging area?", options: ["git log", "git status", "git diff", "git info"], answer: "git status" },
+     { question: "Which command shows the commit history log?", options: ["git history", "git log", "git commits", "git track"], answer: "git log" },
+     { question: "Which command creates a new branch named 'feature-auth'?", options: ["git branch feature-auth", "git create feature-auth", "git checkout -b feature-auth", "Both git branch feature-auth and git checkout -b feature-auth"], answer: "Both git branch feature-auth and git checkout -b feature-auth" },
+     { question: "Which command switches to an existing branch named 'dev'?", options: ["git switch dev or git checkout dev", "git move dev", "git branch dev", "git change dev"], answer: "git switch dev or git checkout dev" },
+     { question: "Which command merges changes from branch 'dev' into current active branch?", options: ["git combine dev", "git merge dev", "git pull dev", "git join dev"], answer: "git merge dev" },
+     { question: "What is a Merge Conflict in Git?", options: ["When Git cannot automatically resolve differences in code between two commits being merged", "When server is down", "When repository is full", "When a file is deleted locally"], answer: "When Git cannot automatically resolve differences in code between two commits being merged" },
+     { question: "Which command fetches changes from remote repository and immediately merges them into current local branch?", options: ["git fetch", "git pull", "git sync", "git clone"], answer: "git pull" },
+     { question: "What is the difference between git fetch and git pull?", options: ["git fetch updates remote-tracking branches without merging; git pull fetches and merges", "git pull does not merge; git fetch merges", "They are identical", "git fetch works offline"], answer: "git fetch updates remote-tracking branches without merging; git pull fetches and merges" },
+     { question: "Which command uploads local commits to a remote repository?", options: ["git push", "git upload", "git send", "git publish"], answer: "git push" },
+     { question: "Which command downloads an existing remote repository to local machine?", options: ["git download", "git clone", "git copy", "git checkout remote"], answer: "git clone" },
+     { question: "What command temporarily shelves/stashes uncommitted local changes so you can work on something else?", options: ["git stash", "git hold", "git pause", "git hide"], answer: "git stash" },
+     { question: "Which command reapplies previously stashed changes?", options: ["git stash pop", "git stash apply", "Both git stash pop and git stash apply", "git stash get"], answer: "Both git stash pop and git stash apply" },
+     { question: "What GitHub feature allows developers to propose changes from their branch and request code reviews before merging?", options: ["Pull Request (PR)", "Issue", "Fork", "Action"], answer: "Pull Request (PR)" },
+     { question: "What does 'Forking' a repository on GitHub mean?", options: ["Creating a copy of someone else's repository under your GitHub account", "Deleting a repository", "Creating a new branch", "Cloning to local disk"], answer: "Creating a copy of someone else's repository under your GitHub account" },
+     { question: "What file specifies intentionally untracked files that Git should ignore (e.g. node_modules, target)?", options: [".gitconfig", ".gitignore", ".gitkeep", "ignore.txt"], answer: ".gitignore" },
+     { question: "Which command rewrites history by applying commits on top of another base tip?", options: ["git rebase", "git reset", "git revert", "git cherry-pick"], answer: "git rebase" }
+   ];
+
+   // 16. DOCKER QUESTIONS (20)
+   const dockerQuestions = [
+     { question: "What is Docker?", options: ["An OS virtual machine manager", "A platform for containerizing applications and running them in isolated environments", "A Cloud Database", "A Java IDE"], answer: "A platform for containerizing applications and running them in isolated environments" },
+     { question: "What is the main difference between a Docker Container and a Virtual Machine (VM)?", options: ["Containers share host OS kernel and are lightweight; VMs package full OS and are heavy", "VMs share host kernel; Containers do not", "Containers are slower than VMs", "VMs don't need hypervisors"], answer: "Containers share host OS kernel and are lightweight; VMs package full OS and are heavy" },
+     { question: "What text file contains instructions to build a Docker image?", options: ["docker-compose.yml", "Dockerfile", "Docker.config", "Containerfile"], answer: "Dockerfile" },
+     { question: "Which command builds a Docker image from a Dockerfile in current directory?", options: ["docker create -t myapp .", "docker build -t myapp .", "docker run -t myapp .", "docker compile ."], answer: "docker build -t myapp ." },
+     { question: "Which Dockerfile instruction sets the base image for subsequent instructions?", options: ["START", "FROM", "BASE", "IMAGE"], answer: "FROM" },
+     { question: "Which Dockerfile instruction sets executable default command when container runs?", options: ["RUN", "CMD", "ENTRYPOINT", "Both CMD and ENTRYPOINT"], answer: "Both CMD and ENTRYPOINT" },
+     { question: "What is the difference between RUN and CMD in Dockerfile?", options: ["RUN executes during image build phase; CMD executes when container starts", "CMD builds image; RUN starts container", "They are identical", "RUN sets environment variables"], answer: "RUN executes during image build phase; CMD executes when container starts" },
+     { question: "Which command creates and starts a container from a Docker image?", options: ["docker start", "docker run", "docker execute", "docker launch"], answer: "docker run" },
+     { question: "Which flag runs a Docker container in detached (background) mode?", options: ["-d", "-b", "-bg", "--detach-mode"], answer: "-d" },
+     { question: "How do you map host port 8080 to container port 80 during container run?", options: ["-p 8080:80", "-p 80:8080", "-port 8080->80", "-map 8080-80"], answer: "-p 8080:80" },
+     { question: "Which command lists all currently running Docker containers?", options: ["docker ps", "docker list", "docker containers", "docker show"], answer: "docker ps" },
+     { question: "Which command lists ALL containers (both running and stopped)?", options: ["docker ps -a", "docker ps --all", "Both docker ps -a and docker ps --all", "docker list all"], answer: "Both docker ps -a and docker ps --all" },
+     { question: "Which command stops a running container gracefully?", options: ["docker kill <container_id>", "docker stop <container_id>", "docker remove <container_id>", "docker halt"], answer: "docker stop <container_id>" },
+     { question: "Which command removes a stopped container?", options: ["docker rmi", "docker rm", "docker delete", "docker purge"], answer: "docker rm" },
+     { question: "Which command removes a Docker image from local registry?", options: ["docker rm", "docker rmi", "docker delete image", "docker purge image"], answer: "docker rmi" },
+     { question: "What central repository is used to search and download public Docker images?", options: ["Docker Hub", "GitHub Packages", "Maven Central", "Docker Store"], answer: "Docker Hub" },
+     { question: "What tool allows defining and running multi-container Docker applications using a YAML file?", options: ["Docker Swarm", "Docker Compose", "Kubernetes", "Docker Engine"], answer: "Docker Compose" },
+     { question: "What is the default filename used by Docker Compose?", options: ["docker-compose.yml", "docker-container.yml", "compose.json", "docker.yaml"], answer: "docker-compose.yml" },
+     { question: "Which command starts all services defined in docker-compose.yml in background?", options: ["docker-compose start", "docker-compose up -d", "docker-compose run", "docker-compose launch"], answer: "docker-compose up -d" },
+     { question: "What mechanism in Docker persists container data even after container is deleted?", options: ["Docker Volumes", "Docker Networks", "Docker Cache", "Host Memory"], answer: "Docker Volumes" }
+   ];
+
+   // 17. AWS QUESTIONS (20)
+   const awsQuestions = [
+     { question: "What does AWS stand for?", options: ["Amazon Web Services", "Amazon Web Storage", "Automated Web System", "Advanced Web Solutions"], answer: "Amazon Web Services" },
+     { question: "Which AWS service provides resizable virtual compute servers in the cloud?", options: ["Amazon S3", "Amazon EC2", "Amazon RDS", "AWS Lambda"], answer: "Amazon EC2" },
+     { question: "What does EC2 stand for?", options: ["Elastic Compute Cloud", "Elastic Central Computer", "Enterprise Cloud Computing", "External Cloud Engine"], answer: "Elastic Compute Cloud" },
+     { question: "Which AWS service provides object storage for files, images, and backups?", options: ["Amazon EBS", "Amazon S3", "Amazon EFS", "Amazon DynamoDB"], answer: "Amazon S3" },
+     { question: "What does S3 stand for?", options: ["Simple Storage Service", "Secure Storage System", "Scalable Server Storage", "Shared Storage Service"], answer: "Simple Storage Service" },
+     { question: "Which AWS managed service provides relational databases like MySQL, PostgreSQL, Oracle?", options: ["Amazon DynamoDB", "Amazon RDS", "Amazon Redshift", "Amazon ElastiCache"], answer: "Amazon RDS" },
+     { question: "What service controls access permissions and user identities in AWS?", options: ["AWS IAM (Identity and Access Management)", "AWS KMS", "AWS Shield", "AWS Secrets Manager"], answer: "AWS IAM (Identity and Access Management)" },
+     { question: "What service allows running serverless code in response to events without provisioning servers?", options: ["Amazon EC2", "AWS Lambda", "AWS Fargate", "Elastic Beanstalk"], answer: "AWS Lambda" },
+     { question: "What virtual network service isolates your AWS resources in a logically defined cloud network?", options: ["AWS VPC (Virtual Private Cloud)", "AWS Direct Connect", "AWS Route 53", "AWS CloudFront"], answer: "AWS VPC (Virtual Private Cloud)" },
+     { question: "Which AWS service acts as a virtual firewall controlling inbound/outbound traffic for EC2 instances?", options: ["Network ACL", "Security Group", "AWS WAF", "Route Table"], answer: "Security Group" },
+     { question: "Which AWS service is a managed NoSQL key-value database?", options: ["Amazon RDS", "Amazon DynamoDB", "Amazon Aurora", "Amazon DocumentDB"], answer: "Amazon DynamoDB" },
+     { question: "Which AWS service provides DNS routing and domain name registration?", options: ["AWS Route 53", "AWS CloudFront", "AWS API Gateway", "AWS Direct Connect"], answer: "AWS Route 53" },
+     { question: "Which AWS service is a global Content Delivery Network (CDN) for fast static content distribution?", options: ["AWS CloudFront", "AWS Route 53", "AWS S3", "AWS Global Accelerator"], answer: "AWS CloudFront" },
+     { question: "What AWS service automatically adjusts EC2 instance count based on application load?", options: ["AWS Auto Scaling", "Elastic Load Balancing", "AWS CloudWatch", "AWS Launch Template"], answer: "AWS Auto Scaling" },
+     { question: "Which component automatically distributes incoming app traffic across multiple EC2 targets?", options: ["Elastic Load Balancer (ELB)", "Auto Scaling", "Route 53", "Internet Gateway"], answer: "Elastic Load Balancer (ELB)" },
+     { question: "Which service monitors AWS resources and applications in real-time with metrics and alarms?", options: ["Amazon CloudWatch", "AWS CloudTrail", "AWS Config", "AWS X-Ray"], answer: "Amazon CloudWatch" },
+     { question: "Which service records AWS API activity and account audit history for governance?", options: ["Amazon CloudWatch", "AWS CloudTrail", "AWS Trusted Advisor", "AWS GuardDuty"], answer: "AWS CloudTrail" },
+     { question: "What block storage service provides persistent storage volumes for EC2 instances?", options: ["Amazon S3", "Amazon EBS (Elastic Block Store)", "Amazon EFS", "AWS Glacier"], answer: "Amazon EBS (Elastic Block Store)" },
+     { question: "What service allows easy deployment and scaling of Spring Boot/Node apps without managing infrastructure?", options: ["AWS Elastic Beanstalk", "AWS CloudFormation", "AWS ECS", "AWS OpsWorks"], answer: "AWS Elastic Beanstalk" },
+     { question: "What container registry service in AWS stores and manages Docker container images?", options: ["AWS ECR (Elastic Container Registry)", "AWS ECS", "AWS EKS", "Docker Hub"], answer: "AWS ECR (Elastic Container Registry)" }
+   ];
+
+ // 1. Sabhi 17 Topics ki Mapping Object
+ const questionsMap = {
+   "Core Java": coreJavaQuestions,
+   "Advanced Java": advancedJavaQuestions,
+   "JDBC": jdbcQuestions,
+   "Servlet": servletQuestions,
+   "JSP": jspQuestions,
+   "Maven": mavenQuestions,
+   "Hibernate": hibernateQuestions,
+   "JPA": jpaQuestions,
+   "Spring": springQuestions,
+   "Spring Boot": springBootQuestions,
+   "Spring Security": springSecurityQuestions,
+   "REST API": restApiQuestions,
+   "Microservices": microservicesQuestions,
+   "MySQL": mysqlQuestions,
+   "Git & GitHub": gitQuestions,
+   "Docker": dockerQuestions,
+   "AWS": awsQuestions
  };
 
- const currentQuestionsList = getQuestionsForTopic();
+ // 2. Direct 1-Line Dynamic Selector (Isne getQuestionsForTopic() ko replace kar diya)
+ const currentQuestionsList = questionsMap[selectedQuizTopic] || [];
 
 
   // Auth States
@@ -862,45 +1212,114 @@ const handleOpenAddModal = () => {
           </button>
 
                <div className="topics-grid">
-                     {[
-                       {
-                         icon: "{ }",
-                         name: "Core Java",
-                         desc: "OOPs, collections, streams, exceptions & the fundamentals every backend dev needs."
-                       },
-                       {
-                         icon: "☕",
-                         name: "Advanced Java",
-                         desc: "Multithreading, concurrency, JVM internals & memory management."
-                       },
-                       {
-                         icon: "🔌",
-                         name: "JDBC",
-                         desc: "Database connectivity, PreparedStatement, ResultSet & transaction management."
-                       }
-                     ].map((topic) => (
-                       <div
-                         key={topic.name}
-                         className="topic-card"
-                         onClick={() => {
-                           // ✅ FIX: 'if' condition hata kar dynamic 'topic.name' pass kar diya
-                           setSelectedQuizTopic(topic.name);
-                           setCurrentQuestion(0);
-                           setSelectedAnswer(null);
-                           setCorrectAnswers(0);
-                           setQuizResult(null);
-                         }}
-                       >
-                         <span className="topic-icon">{topic.icon}</span>
-                         <h3>{topic.name}</h3>
-                         <p>{topic.desc}</p>
-                       </div>
-                     ))}
+                 {[
+                   {
+                     icon: "{ }",
+                     name: "Core Java",
+                     desc: "OOPs, collections, streams, exceptions & the fundamentals every backend dev needs."
+                   },
+                   {
+                     icon: "☕",
+                     name: "Advanced Java",
+                     desc: "Multithreading, concurrency, JVM internals & memory management."
+                   },
+                   {
+                     icon: "🔌",
+                     name: "JDBC",
+                     desc: "Database connectivity, PreparedStatement, ResultSet & transaction management."
+                   },
+                   {
+                     icon: "🌐",
+                     name: "Servlet",
+                     desc: "HTTP request/response lifecycle, filters, session management & web app fundamentals."
+                   },
+                   {
+                     icon: "📄",
+                     name: "JSP",
+                     desc: "Java Server Pages, JSTL, EL expressions & dynamic web content generation."
+                   },
+                   {
+                     icon: "📦",
+                     name: "Maven",
+                     desc: "Build automation, dependency management, POM.xml & project lifecycle."
+                   },
+                   {
+                     icon: "🗄",
+                     name: "Hibernate",
+                     desc: "ORM mapping, sessions, caching & entity lifecycle."
+                   },
+                   {
+                     icon: "💎",
+                     name: "JPA",
+                     desc: "Repositories, queries, relationships & the Java persistence standard."
+                   },
+                   {
+                     icon: "🌱",
+                     name: "Spring",
+                     desc: "IoC, dependency injection, beans & the core of the Spring ecosystem."
+                   },
+                   {
+                     icon: "🚀",
+                     name: "Spring Boot",
+                     desc: "Auto-configuration, REST APIs, starters & building production-ready apps fast."
+                   },
+                   {
+                     icon: "🔐",
+                     name: "Spring Security",
+                     desc: "Authentication, authorization, JWT & securing your endpoints."
+                   },
+                   {
+                     icon: "🔗",
+                     name: "REST API",
+                     desc: "RESTful design, HTTP methods, status codes & API best practices."
+                   },
+                   {
+                     icon: "🧩",
+                     name: "Microservices",
+                     desc: "Service decomposition, Eureka, API Gateway & distributed systems patterns."
+                   },
+                   {
+                     icon: "🗃️",
+                     name: "MySQL",
+                     desc: "SQL queries, joins, indexes, stored procedures & database design."
+                   },
+                   {
+                     icon: "🐙",
+                     name: "Git & GitHub",
+                     desc: "Version control, branching, merging, pull requests & collaboration."
+                   },
+                   {
+                     icon: "🐳",
+                     name: "Docker",
+                     desc: "Containerization, Dockerfile, images & deploying Java apps with Docker Compose."
+                   },
+                   {
+                     icon: "☁️",
+                     name: "AWS",
+                     desc: "EC2, S3, RDS, IAM & deploying Spring Boot apps on the cloud."
+                   }
+                 ].map((topic) => (
+                   <div
+                     key={topic.name}
+                     className="topic-card"
+                     onClick={() => {
+                       setSelectedQuizTopic(topic.name);
+                       setCurrentQuestion(0);
+                       setSelectedAnswer(null);
+                       setCorrectAnswers(0);
+                       setQuizResult(null);
+                     }}
+                   >
+                     <span className="topic-icon">{topic.icon}</span>
+                     <h3>{topic.name}</h3>
+                     <p>{topic.desc}</p>
                    </div>
+                 ))}
+               </div>
         </div>
       )}
 
-                      {/* DYNAMIC QUIZ PLAY SCREEN FOR ALL 3 TOPICS */}
+                      {/* DYNAMIC QUIZ PLAY SCREEN FOR ALL TOPICS */}
                       {selectedQuizTopic && currentQuestionsList.length > 0 && !quizResult && (
                         <div className="full-screen-quiz" style={{ padding: '2rem' }}>
                           <div className="quiz-header">
@@ -917,7 +1336,8 @@ const handleOpenAddModal = () => {
                               ← Back to Quiz Topics
                             </button>
 
-                            <h1>☕ {selectedQuizTopic} Quiz</h1>
+                            {/* Dynamic Topic Title */}
+                            <h1>{selectedQuizTopic} Quiz</h1>
                             <p>Question {currentQuestion + 1} of {currentQuestionsList.length}</p>
                           </div>
 
@@ -946,14 +1366,12 @@ const handleOpenAddModal = () => {
                                   ? correctAnswers + 1
                                   : correctAnswers;
 
-                                // QUESTIONS 1 - 19
+                                // DYNAMIC NEXT / SUBMIT LOGIC
                                 if (currentQuestion < currentQuestionsList.length - 1) {
                                   setCorrectAnswers(newCorrectAnswers);
                                   setCurrentQuestion(currentQuestion + 1);
                                   setSelectedAnswer(null);
-                                }
-                                // QUESTION 20 (SUBMIT)
-                                else {
+                                } else {
                                   const totalQuestions = currentQuestionsList.length;
                                   const correct = newCorrectAnswers;
                                   const wrong = totalQuestions - correct;
@@ -982,6 +1400,7 @@ const handleOpenAddModal = () => {
                         </div>
                       )}
 
+
                       {/* ================= RESULT PAGE ================= */}
                       {quizResult && (
                         <div className="quiz-result-fullscreen">
@@ -990,7 +1409,8 @@ const handleOpenAddModal = () => {
 
                             <p className="result-completed">QUIZ COMPLETED</p>
 
-                            <h1>Core Java Quiz</h1>
+                            {/* ✅ FIX 1: Dynamic Topic Name (Pehele 'Core Java' hardcoded tha) */}
+                            <h1>{quizResult.topic} Quiz</h1>
 
                             <p className="result-subtitle">
                               Great job! Here is your final performance.
@@ -1041,7 +1461,8 @@ const handleOpenAddModal = () => {
                                   <span>🔥</span>
                                   <div>
                                     <strong>Excellent Performance!</strong>
-                                    <p>You have a strong understanding of Core Java.</p>
+                                    {/* ✅ FIX 1 (Sub): Dynamic Topic in message */}
+                                    <p>You have a strong understanding of {quizResult.topic}.</p>
                                   </div>
                                 </>
                               ) : quizResult.percentage >= 60 ? (
@@ -1057,7 +1478,8 @@ const handleOpenAddModal = () => {
                                   <span>💪</span>
                                   <div>
                                     <strong>Keep Practicing!</strong>
-                                    <p>Revise Core Java concepts and try the quiz again.</p>
+                                    {/* ✅ FIX 1 (Sub): Dynamic Topic in message */}
+                                    <p>Revise {quizResult.topic} concepts and try the quiz again.</p>
                                   </div>
                                 </>
                               )}
@@ -1068,8 +1490,10 @@ const handleOpenAddModal = () => {
                               <button
                                 className="result-primary-btn"
                                 onClick={() => {
+                                  // ✅ FIX 2: Selected topic ko dynamic quizResult.topic se set kiya gaya hai
+                                  const currentTopic = quizResult.topic;
                                   setQuizResult(null);
-                                  setSelectedQuizTopic("Core Java");
+                                  setSelectedQuizTopic(currentTopic);
                                   setCurrentQuestion(0);
                                   setSelectedAnswer(null);
                                   setCorrectAnswers(0);
@@ -1095,7 +1519,6 @@ const handleOpenAddModal = () => {
                           </div>
                         </div>
                       )}
-
 
                     {showContact && (
                       <div className="modal-overlay" onClick={() => setShowContact(false)}>
