@@ -1210,7 +1210,7 @@ const handleOpenAddModal = () => {
 
                          {/* Why Learn With Us Section */}
                          <div style={{ textAlign: 'center', margin: '3rem 0 1.5rem 0' }}>
-                           <h2 style={{ fontSize: '2rem', fontWeight: 'bold', color: '#ffffff', marginBottom: '0.5rem' }}>
+                           <h2 style={{ fontSize: '2rem', fontWeight: 'bold', color: '#f8fafc', marginBottom: '0.5rem' }}>
                              Why learn with us?
                            </h2>
                            <p style={{ color: '#94a3b8', fontSize: '0.95rem' }}>
@@ -1219,24 +1219,27 @@ const handleOpenAddModal = () => {
                          </div>
 
                          <div style={{
-                           backgroundColor: '#d97706',
+                           background: 'rgba(255, 255, 255, 0.03)',
+                           backdropFilter: 'blur(12px)',
+                           border: '1px solid rgba(255, 255, 255, 0.1)',
                            borderRadius: '24px',
                            padding: '2.5rem 2rem',
                            margin: '0 auto 3rem auto',
                            maxWidth: '650px',
                            color: '#ffffff',
-                           boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.3)'
+                           boxShadow: '0 20px 40px rgba(0, 0, 0, 0.4)'
                          }}>
                            {/* Feature 1: Data Structure */}
                            <div style={{ marginBottom: '2.5rem', textAlign: 'left' }}>
                              <div style={{
-                               width: '50px', height: '50px', borderRadius: '50%', backgroundColor: '#38bdf8',
-                               display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem', marginBottom: '1rem'
+                               width: '48px', height: '48px', borderRadius: '12px',
+                               background: 'rgba(56, 189, 248, 0.15)', border: '1px solid rgba(56, 189, 248, 0.3)',
+                               display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem', marginBottom: '1rem'
                              }}>
                                🧠
                              </div>
-                             <h3 style={{ fontSize: '1.4rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>Data Structure</h3>
-                             <p style={{ color: '#fef3c7', lineHeight: '1.5', fontSize: '0.95rem' }}>
+                             <h3 style={{ fontSize: '1.3rem', fontWeight: '600', color: '#38bdf8', marginBottom: '0.5rem' }}>Data Structure</h3>
+                             <p style={{ color: '#cbd5e1', lineHeight: '1.6', fontSize: '0.95rem' }}>
                                You'll gain the basic to advance knowledge you need to do great in technical interviews and become a coding expert.
                              </p>
                            </div>
@@ -1244,13 +1247,14 @@ const handleOpenAddModal = () => {
                            {/* Feature 2: ATS Resume Checker */}
                            <div style={{ marginBottom: '2.5rem', textAlign: 'left' }}>
                              <div style={{
-                               width: '50px', height: '50px', borderRadius: '50%', backgroundColor: '#4ade80',
-                               display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem', marginBottom: '1rem'
+                               width: '48px', height: '48px', borderRadius: '12px',
+                               background: 'rgba(74, 222, 128, 0.15)', border: '1px solid rgba(74, 222, 128, 0.3)',
+                               display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem', marginBottom: '1rem'
                              }}>
                                📄
                              </div>
-                             <h3 style={{ fontSize: '1.4rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>ATS Resume Checker</h3>
-                             <p style={{ color: '#fef3c7', lineHeight: '1.5', fontSize: '0.95rem' }}>
+                             <h3 style={{ fontSize: '1.3rem', fontWeight: '600', color: '#4ade80', marginBottom: '0.5rem' }}>ATS Resume Checker</h3>
+                             <p style={{ color: '#cbd5e1', lineHeight: '1.6', fontSize: '0.95rem' }}>
                                Free built-in ATS Resume Checker tool to analyze your resume against top industry standards and get instantly shortlisted.
                              </p>
                            </div>
@@ -1258,13 +1262,14 @@ const handleOpenAddModal = () => {
                            {/* Feature 3: Download Handwritten Notes */}
                            <div style={{ marginBottom: '2.5rem', textAlign: 'left' }}>
                              <div style={{
-                               width: '50px', height: '50px', borderRadius: '50%', backgroundColor: '#f43f5e',
-                               display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem', marginBottom: '1rem'
+                               width: '48px', height: '48px', borderRadius: '12px',
+                               background: 'rgba(251, 113, 133, 0.15)', border: '1px solid rgba(251, 113, 133, 0.3)',
+                               display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem', marginBottom: '1rem'
                              }}>
                                📚
                              </div>
-                             <h3 style={{ fontSize: '1.4rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>Handwritten Notes Download</h3>
-                             <p style={{ color: '#fef3c7', lineHeight: '1.5', fontSize: '0.95rem' }}>
+                             <h3 style={{ fontSize: '1.3rem', fontWeight: '600', color: '#fb7185', marginBottom: '0.5rem' }}>Handwritten Notes Download</h3>
+                             <p style={{ color: '#cbd5e1', lineHeight: '1.6', fontSize: '0.95rem' }}>
                                Get direct access to comprehensive, high-quality PDF notes created by mentors to revise core Java concepts anytime.
                              </p>
                            </div>
@@ -1272,13 +1277,14 @@ const handleOpenAddModal = () => {
                            {/* Feature 4: Learn from the Best */}
                            <div style={{ textAlign: 'left' }}>
                              <div style={{
-                               width: '50px', height: '50px', borderRadius: '50%', backgroundColor: '#a855f7',
-                               display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem', marginBottom: '1rem'
+                               width: '48px', height: '48px', borderRadius: '12px',
+                               background: 'rgba(168, 85, 247, 0.15)', border: '1px solid rgba(168, 85, 247, 0.3)',
+                               display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem', marginBottom: '1rem'
                              }}>
                                💬
                              </div>
-                             <h3 style={{ fontSize: '1.4rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>Learn from the Best</h3>
-                             <p style={{ color: '#fef3c7', lineHeight: '1.5', fontSize: '0.95rem' }}>
+                             <h3 style={{ fontSize: '1.3rem', fontWeight: '600', color: '#c084fc', marginBottom: '0.5rem' }}>Learn from the Best</h3>
+                             <p style={{ color: '#cbd5e1', lineHeight: '1.6', fontSize: '0.95rem' }}>
                                Get insights and guidance from an experienced software engineer who has trained over 15,000+ developers across platforms.
                              </p>
                            </div>
