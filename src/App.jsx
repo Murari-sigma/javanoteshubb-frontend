@@ -1191,273 +1191,226 @@ const handleOpenAddModal = () => {
                       <ATSChecker onBack={() => setShowATS(false)} />
                     )}
 
-                   {/* HOME VIEW */}
-                   {!selectedTopic && (
-                     <>
-                       {!showTopics && (
-                         <>
-                         {/* Hero Section */}
-                         <section className="hero">
-                           <span className="hero-eyebrow">&lt;/&gt; developer.hub</span>
-                           <h1 className="hero-title">Welcome to Java Developer Hub ☕</h1>
-                           <p className="hero-subtitle">
-                             Your notes, organized — from Core Java basics to Spring Boot in production.
-                           </p>
-                           <button className="start-btn" onClick={() => setShowTopics(true)}>
-                             Start Learning
-                           </button>
-                         </section>
+  {/* MAIN ROUTING LOGIC */}
+  {!selectedTopic ? (
+    !showTopics ? (
+      <>
+        {/* 1. HERO SECTION */}
+        <section className="hero">
+          <span className="hero-eyebrow">&lt;/&gt; developer.hub</span>
+          <h1 className="hero-title">Welcome to Java Developer Hub ☕</h1>
+          <p className="hero-subtitle">
+            Your notes, organized — from Core Java basics to Spring Boot in production.
+          </p>
+          <button className="start-btn" onClick={() => setShowTopics(true)}>
+            Start Learning
+          </button>
+        </section>
 
-                        {/* Why Learn With Us Section */}
-                        <div className="why-learn-header">
-                          <h2 className="why-learn-title">Why learn with us?</h2>
-                          <p className="why-learn-subtitle">
-                            Everything you need to boost your technical career in one place.
-                          </p>
-                        </div>
+        {/* 2. WHY LEARN WITH US */}
+        <div className="why-learn-header">
+          <h2 className="why-learn-title">Why learn with us?</h2>
+          <p className="why-learn-subtitle">
+            Everything you need to boost your technical career in one place.
+          </p>
+        </div>
 
-                        <div className="why-learn-card">
-                          {/* Feature 1: Data Structure */}
-                          <div className="feature-item">
-                            <div className="feature-icon-badge">🧠</div>
-                            <h3 className="feature-title">Data Structure</h3>
-                            <p className="feature-desc">
-                              You'll gain the basic to advance knowledge you need to do great in technical interviews and become a coding expert.
-                            </p>
-                          </div>
+        <div className="why-learn-card">
+          <div className="feature-item">
+            <div className="feature-icon-badge">🧠</div>
+            <h3 className="feature-title">Data Structure</h3>
+            <p className="feature-desc">
+              You'll gain the basic to advance knowledge you need to do great in technical interviews and become a coding expert.
+            </p>
+          </div>
+          <div className="feature-item">
+            <div className="feature-icon-badge">🎯</div>
+            <h3 className="feature-title">Interactive Topic Quizzes</h3>
+            <p className="feature-desc">
+              Test your knowledge with multiple quizzes across various Java topics to enhance problem-solving skills and track your interview readiness.
+            </p>
+          </div>
+          <div className="feature-item">
+            <div className="feature-icon-badge">📄</div>
+            <h3 className="feature-title">ATS Resume Checker</h3>
+            <p className="feature-desc">
+              Free built-in ATS Resume Checker tool to analyze your resume against top industry standards and get instantly shortlisted.
+            </p>
+          </div>
+          <div className="feature-item">
+            <div className="feature-icon-badge">📚</div>
+            <h3 className="feature-title">Handwritten Notes Download</h3>
+            <p className="feature-desc">
+              Get direct access to comprehensive, high-quality PDF notes created by mentors to revise core Java concepts anytime.
+            </p>
+          </div>
+          <div className="feature-item">
+            <div className="feature-icon-badge">💬</div>
+            <h3 className="feature-title">Learn from the Best</h3>
+            <p className="feature-desc">
+              Get insights and guidance from an experienced software engineer who has trained over 15,000+ developers across platforms.
+            </p>
+          </div>
+        </div>
 
-                          {/* Feature 2: Interactive Topic Quizzes */}
-                          <div className="feature-item">
-                            <div className="feature-icon-badge">🎯</div>
-                            <h3 className="feature-title">Interactive Topic Quizzes</h3>
-                            <p className="feature-desc">
-                              Test your knowledge with multiple quizzes across various Java topics to enhance problem-solving skills and track your interview readiness.
-                            </p>
-                          </div>
+        {/* 3. MENTOR SECTION */}
+        <div className="mentor-card-wrapper">
+          <div className="mentor-vertical-container">
+            <img
+              src={mentorPic}
+              alt="Murari Pandey"
+              className="mentor-avatar-glow"
+            />
+            <h2 className="mentor-badge-single">✨ MEET YOUR MENTOR</h2>
+            <h1 className="mentor-name-shining">Murari Pandey</h1>
+            <p className="mentor-text-light">
+              Hey! I am a software engineer by profession and a teacher by heart. I strongly believe
+              <strong style={{ color: "#fde047", fontWeight: "700" }}> "Anyone Can Code"</strong>! No matter what your background and past skill set are, you can learn to program if it is taught in a simplistic way.
+            </p>
+            <p className="mentor-text-light">
+              I love to see my community generating success results as I have trained more than
+              <span style={{ color: "#4ade80", fontWeight: "700" }}> 15,000+ Developer professionals</span> on various platforms like YouTube, LinkedIn, UpGrad, etc.
+            </p>
+            <p className="mentor-mission-light">
+              🎯 My mission is to help professionals like you make sure you are also getting into your dream organizations. Cracked interviews at top brands!
+            </p>
+          </div>
+        </div>
 
-                          {/* Feature 3: ATS Resume Checker */}
-                          <div className="feature-item">
-                            <div className="feature-icon-badge">📄</div>
-                            <h3 className="feature-title">ATS Resume Checker</h3>
-                            <p className="feature-desc">
-                              Free built-in ATS Resume Checker tool to analyze your resume against top industry standards and get instantly shortlisted.
-                            </p>
-                          </div>
+        {/* 4. FOOTER */}
+        <footer className="footer-container">
+          <div className="footer-content">
+            <div className="footer-brand-badge">
+              <img
+                src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg"
+                alt="Java Logo"
+                width="22"
+                height="22"
+              />
+              <span className="footer-brand-title">Java Developer</span>
+            </div>
+            <p className="footer-subtitle">
+              Become a Software Engineer in top product-based companies. Master Java, Data Structures, System Design, and crack your interviews.
+            </p>
+            <div className="footer-nav-links">
+              <a href="#privacy" className="footer-nav-link">Privacy Policy</a>
+              <a href="#terms" className="footer-nav-link">Terms of Use</a>
+              <button onClick={() => setShowContact(true)} className="footer-contact-btn">
+                Contact Us
+              </button>
+              <a href="#refund" className="footer-nav-link">Refund Policy</a>
+            </div>
+            <div className="footer-social-wrapper">
+              <a href="https://linkedin.com/in/murari-sigma7" target="_blank" rel="noreferrer" className="social-icon-card linkedin">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+              </a>
+              <a href="https://github.com/Murari-sigma" target="_blank" rel="noreferrer" className="social-icon-card github">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+                </svg>
+              </a>
+              <a href="https://t.me/murari_ipandey01" target="_blank" rel="noreferrer" className="social-icon-card telegram">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.56 8.16l-2.03 9.56c-.15.68-.55.84-1.12.52l-3.1-2.29-1.5 1.44c-.17.17-.31.31-.63.31l.22-3.16 5.76-5.2c.25-.22-.05-.34-.39-.12l-7.12 4.48-3.07-.96c-.67-.21-.68-.67.14-.99l12.01-4.63c.56-.2 1.05.14.83.84z"/>
+                </svg>
+              </a>
+              <a href="https://instagram.com/jupitar_xyz" target="_blank" rel="noreferrer" className="social-icon-card instagram">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
+                </svg>
+              </a>
+            </div>
+            <div className="footer-divider"></div>
+            <p className="footer-copyright">
+              © {new Date().getFullYear()} Java Developer. Designed for learning & tech interview prep.
+            </p>
+          </div>
+          </footer>
+              </>
+            ) : (
+              /* TOPICS SELECTION VIEW */
+              <>
+                <div className="topic-view-header">
+                  <button className="back-home-btn" onClick={() => setShowTopics(false)}>
+                    ← Back
+                  </button>
+                  <h2 className="topic-view-title">📚 Choose a Topic</h2>
+                </div>
+                <input
+                  type="text"
+                  className="topic-search-input"
+                  placeholder="🔍 Search topic..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  style={{ margin: '0.75rem 0', width: '100%', boxSizing: 'border-box' }}
+                />
+                <hr style={{ margin: '15px 0', borderColor: '#334155' }} />
+                <div className="topics-grid">
+                  {[
+                    { icon: '{ }', name: 'Core Java', desc: 'OOPs, collections, streams, exceptions & the fundamentals every backend dev needs.' },
+                    { icon: '☕', name: 'Advanced Java', desc: 'Multithreading, concurrency, JVM internals & memory management.' },
+                    { icon: '🔌', name: 'JDBC', desc: 'Database connectivity, PreparedStatement, ResultSet & transaction management.' },
+                    { icon: '🌐', name: 'Servlet', desc: 'HTTP request/response lifecycle, filters, session management & web app fundamentals.' },
+                    { icon: '📄', name: 'JSP', desc: 'Java Server Pages, JSTL, EL expressions & dynamic web content generation.' },
+                    { icon: '📦', name: 'Maven', desc: 'Build automation, dependency management, POM.xml & project lifecycle.' },
+                    { icon: '🗄', name: 'Hibernate', desc: 'ORM mapping, sessions, caching & entity lifecycle.' },
+                    { icon: '💎', name: 'JPA', desc: 'Repositories, queries, relationships & the Java persistence standard.' },
+                    { icon: '🌱', name: 'Spring', desc: 'IoC, dependency injection, beans & the core of the Spring ecosystem.' },
+                    { icon: '🚀', name: 'Spring Boot', desc: 'Auto-configuration, REST APIs, starters & building production-ready apps fast.' },
+                    { icon: '🔐', name: 'Spring Security', desc: 'Authentication, authorization, JWT & securing your endpoints.' },
+                    { icon: '🔗', name: 'REST API', desc: 'RESTful design, HTTP methods, status codes & API best practices.' },
+                    { icon: '🧩', name: 'Microservices', desc: 'Service decomposition, Eureka, API Gateway & distributed systems patterns.' },
+                    { icon: '🗃️', name: 'MySQL', desc: 'SQL queries, joins, indexes, stored procedures & database design.' },
+                    { icon: '🐙', name: 'Git & GitHub', desc: 'Version control, branching, merging, pull requests & collaboration.' },
+                    { icon: '🐳', name: 'Docker', desc: 'Containerization, Dockerfile, images & deploying Java apps with Docker Compose.' },
+                    { icon: '☁️', name: 'AWS', desc: 'EC2, S3, RDS, IAM & deploying Spring Boot apps on the cloud.' },
+                    { icon: '🎯', name: 'Interview Questions', desc: 'Top Java & Spring Boot interview questions & HR round preparation.' },
+                    { icon: '🏗️', name: 'Projects', desc: 'End-to-end Java projects — REST APIs, microservices & full-stack apps.' },
+                  ]
+                    .filter(t => t.name.toLowerCase().includes(searchQuery.toLowerCase()))
+                    .map((topic) => (
+                      <div
+                        key={topic.name}
+                        className="topic-card"
+                        onClick={() => {
+                          setSelectedTopic(topic.name);
+                          setShowTopics(false);
+                          setSearchQuery("");
+                        }}
+                      >
+                        <span className="topic-icon">{topic.icon}</span>
+                        <h3>{topic.name}</h3>
+                        <p>{topic.desc}</p>
+                      </div>
+                    ))}
+                </div>
+              </>
+            )
+          ) : (
+            /* TOPIC VIEW - jab topic select ho */
+            <>
+              {/* Topic Header */}
+              <div className="topic-view-header">
+                <button className="back-home-btn" onClick={() => setSelectedTopic(null)}>
+                  ← Back to Home
+                </button>
+                <h2 className="topic-view-title">📘 {selectedTopic}</h2>
 
-                          {/* Feature 4: Download Handwritten Notes */}
-                          <div className="feature-item">
-                            <div className="feature-icon-badge">📚</div>
-                            <h3 className="feature-title">Handwritten Notes Download</h3>
-                            <p className="feature-desc">
-                              Get direct access to comprehensive, high-quality PDF notes created by mentors to revise core Java concepts anytime.
-                            </p>
-                          </div>
+                {/* Search + Add Note */}
+                <div className="topic-view-actions">
+                  <input
+                    type="text"
+                    className="topic-search-input"
+                    placeholder="🔍 Search notes..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                </div>
+              </div>
 
-                          {/* Feature 5: Learn from the Best */}
-                          <div className="feature-item">
-                            <div className="feature-icon-badge">💬</div>
-                            <h3 className="feature-title">Learn from the Best</h3>
-                            <p className="feature-desc">
-                              Get insights and guidance from an experienced software engineer who has trained over 15,000+ developers across platforms.
-                            </p>
-                          </div>
-                        </div>
-
-                         {/* Mentor Section */}
-                         <div className="mentor-card-wrapper">
-                           <div className="mentor-vertical-container">
-                             {/* 1. TOP PHOTO */}
-                             <img
-                               src={mentorPic}
-                               alt="Murari Pandey"
-                               className="mentor-avatar-glow"
-                             />
-
-                             {/* 2. MEET YOUR MENTOR (SINGLE LINE) */}
-                             <h2 className="mentor-badge-single">✨ MEET YOUR MENTOR</h2>
-
-                             {/* 3. SHINING NAME */}
-                             <h1 className="mentor-name-shining">Murari Pandey</h1>
-
-                             {/* 4. LIGHT CLEAR TEXT */}
-                             <p className="mentor-text-light">
-                               Hey! I am a software engineer by profession and a teacher by heart. I strongly believe
-                               <strong style={{ color: "#fde047", fontWeight: "700" }}> "Anyone Can Code"</strong>! No matter what your background and past skill set are, you can learn to program if it is taught in a simplistic way.
-                             </p>
-
-                             <p className="mentor-text-light">
-                               I love to see my community generating success results as I have trained more than
-                               <span style={{ color: "#4ade80", fontWeight: "700" }}> 15,000+ Developer professionals</span> on various platforms like YouTube, LinkedIn, UpGrad, etc.
-                             </p>
-
-                             <p className="mentor-mission-light">
-                               🎯 My mission is to help professionals like you make sure you are also getting into your dream organizations. Cracked interviews at top brands!
-                             </p>
-                           </div>
-                         </div>
-                       </>
-                     )}
-
-
-                   {/* Professional Footer Section */}
-                   <footer className="footer-container">
-                     <div className="footer-content">
-
-                       {/* Brand Logo & Name */}
-                       <div className="footer-brand-badge">
-                         <img
-                           src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg"
-                           alt="Java Logo"
-                           width="22"
-                           height="22"
-                         />
-                         <span className="footer-brand-title">Java Developer</span>
-                       </div>
-
-                       {/* Subtitle / Tagline */}
-                       <p className="footer-subtitle">
-                         Become a Software Engineer in top product-based companies. Master Java, Data Structures, System Design, and crack your interviews.
-                       </p>
-
-                       {/* Navigation Links */}
-                       <div className="footer-nav-links">
-                         <a href="#privacy" className="footer-nav-link">Privacy Policy</a>
-                         <a href="#terms" className="footer-nav-link">Terms of Use</a>
-                         <button onClick={() => setShowContact(true)} className="footer-contact-btn">
-                           Contact Us
-                         </button>
-                         <a href="#refund" className="footer-nav-link">Refund Policy</a>
-                       </div>
-
-                       {/* Social Icons */}
-                       <div className="footer-social-wrapper">
-                         {/* LinkedIn */}
-                         <a href="https://linkedin.com/in/murari-sigma7" target="_blank" rel="noreferrer" className="social-icon-card linkedin">
-                           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                             <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                           </svg>
-                         </a>
-
-                         {/* GitHub */}
-                         <a href="https://github.com/Murari-sigma" target="_blank" rel="noreferrer" className="social-icon-card github">
-                           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                             <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
-                           </svg>
-                         </a>
-
-                         {/* Telegram */}
-                         <a href="https://t.me/murari_ipandey01" target="_blank" rel="noreferrer" className="social-icon-card telegram">
-                           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                             <path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.56 8.16l-2.03 9.56c-.15.68-.55.84-1.12.52l-3.1-2.29-1.5 1.44c-.17.17-.31.31-.63.31l.22-3.16 5.76-5.2c.25-.22-.05-.34-.39-.12l-7.12 4.48-3.07-.96c-.67-.21-.68-.67.14-.99l12.01-4.63c.56-.2 1.05.14.83.84z"/>
-                           </svg>
-                         </a>
-
-                         {/* Instagram */}
-                         <a href="https://instagram.com/jupitar_xyz" target="_blank" rel="noreferrer" className="social-icon-card instagram">
-                           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                             <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
-                           </svg>
-                         </a>
-                       </div>
-
-                       {/* Divider */}
-                       <div className="footer-divider"></div>
-
-                       {/* Copyright Notice */}
-                       <p className="footer-copyright">
-                         © {new Date().getFullYear()} Java Developer. Designed for learning & tech interview prep.
-                       </p>
-                     </div>
-                   </footer>
-
-
-                     {/* Topics Selection View */}
-                     {showTopics && (
-                       <>
-                         <div className="topic-view-header">
-                           <button className="back-home-btn" onClick={() => setShowTopics(false)}>
-                             ← Back
-                           </button>
-                           <h2 className="topic-view-title">📚 Choose a Topic</h2>
-                         </div>
-                         <input
-                           type="text"
-                           className="topic-search-input"
-                           placeholder="🔍 Search topic..."
-                           value={searchQuery}
-                           onChange={(e) => setSearchQuery(e.target.value)}
-                           style={{ margin: '0.75rem 0', width: '100%', boxSizing: 'border-box' }}
-                         />
-                         <hr style={{ margin: '15px 0', borderColor: '#334155' }} />
-                         <div className="topics-grid">
-                           {[
-                             { icon: '{ }', name: 'Core Java', desc: 'OOPs, collections, streams, exceptions & the fundamentals every backend dev needs.' },
-                             { icon: '☕', name: 'Advanced Java', desc: 'Multithreading, concurrency, JVM internals & memory management.' },
-                             { icon: '🔌', name: 'JDBC', desc: 'Database connectivity, PreparedStatement, ResultSet & transaction management.' },
-                             { icon: '🌐', name: 'Servlet', desc: 'HTTP request/response lifecycle, filters, session management & web app fundamentals.' },
-                             { icon: '📄', name: 'JSP', desc: 'Java Server Pages, JSTL, EL expressions & dynamic web content generation.' },
-                             { icon: '📦', name: 'Maven', desc: 'Build automation, dependency management, POM.xml & project lifecycle.' },
-                             { icon: '🗄', name: 'Hibernate', desc: 'ORM mapping, sessions, caching & entity lifecycle.' },
-                             { icon: '💎', name: 'JPA', desc: 'Repositories, queries, relationships & the Java persistence standard.' },
-                             { icon: '🌱', name: 'Spring', desc: 'IoC, dependency injection, beans & the core of the Spring ecosystem.' },
-                             { icon: '🚀', name: 'Spring Boot', desc: 'Auto-configuration, REST APIs, starters & building production-ready apps fast.' },
-                             { icon: '🔐', name: 'Spring Security', desc: 'Authentication, authorization, JWT & securing your endpoints.' },
-                             { icon: '🔗', name: 'REST API', desc: 'RESTful design, HTTP methods, status codes & API best practices.' },
-                             { icon: '🧩', name: 'Microservices', desc: 'Service decomposition, Eureka, API Gateway & distributed systems patterns.' },
-                             { icon: '🗃️', name: 'MySQL', desc: 'SQL queries, joins, indexes, stored procedures & database design.' },
-                             { icon: '🐙', name: 'Git & GitHub', desc: 'Version control, branching, merging, pull requests & collaboration.' },
-                             { icon: '🐳', name: 'Docker', desc: 'Containerization, Dockerfile, images & deploying Java apps with Docker Compose.' },
-                             { icon: '☁️', name: 'AWS', desc: 'EC2, S3, RDS, IAM & deploying Spring Boot apps on the cloud.' },
-                             { icon: '🎯', name: 'Interview Questions', desc: 'Top Java & Spring Boot interview questions & HR round preparation.' },
-                             { icon: '🏗️', name: 'Projects', desc: 'End-to-end Java projects — REST APIs, microservices & full-stack apps.' },
-                           ]
-                             .filter(t => t.name.toLowerCase().includes(searchQuery.toLowerCase()))
-                             .map((topic) => (
-                               <div
-                                 key={topic.name}
-                                 className="topic-card"
-                                 onClick={() => {
-                                   setSelectedTopic(topic.name);
-                                   setShowTopics(false);
-                                   setSearchQuery("");
-                                 }}
-                               >
-                                 <span className="topic-icon">{topic.icon}</span>
-                                 <h3>{topic.name}</h3>
-                                 <p>{topic.desc}</p>
-                               </div>
-                             ))}
-                         </div>
-                       </>
-                     )}
-                     </>
-                   )}
-
-                   {/* TOPIC VIEW - jab topic select ho */}
-                   {selectedTopic && (
-                     <>
-                       {/* Topic Header */}
-                       <div className="topic-view-header">
-                         <button className="back-home-btn" onClick={() => setSelectedTopic(null)}>
-                           ← Back to Home
-                         </button>
-                         <h2 className="topic-view-title">📘 {selectedTopic}</h2>
-
-                         {/* Search + Add Note */}
-                         <div className="topic-view-actions">
-                           <input
-                             type="text"
-                             className="topic-search-input"
-                             placeholder="🔍 Search notes..."
-                             value={searchQuery}
-                             onChange={(e) => setSearchQuery(e.target.value)}
-                           />
-
-                         </div>
-                       </div>
-
-                       <hr style={{ margin: '15px 0', borderColor: '#334155' }} />
-
+              <hr style={{ margin: '15px 0', borderColor: '#334155' }} />
                        {loading && <p>Loading notes...</p>}
 
                       {selectedSubtopic && (
