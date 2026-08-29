@@ -1615,7 +1615,7 @@ const handleOpenAddModal = () => {
                     )}
 
   {/* MAIN ROUTING LOGIC */}
-  {!selectedTopic ? (
+  {!selectedTopic && !selectedQuizTopic && !quizResult ? (
     !showTopics ? (
       <>
         {/* 1. HERO SECTION */}

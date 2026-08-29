@@ -954,7 +954,7 @@ p.toggle-auth:hover {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: #ffffff; /* Apne background layout ke hisab se color rakhein */
+  /* background-color: #ffffff; <-- Isko hata dein */
   z-index: 9999;
   overflow-y: auto;
 }
