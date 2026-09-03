@@ -1750,6 +1750,33 @@ const handleOpenAddModal = () => {
               © {new Date().getFullYear()} Java Developer. Designed for learning & tech interview prep.
             </p>
           </div>
+          {/* Feature Banner Section */}
+          <div className="feature-banner-container">
+            <div className="feature-card">
+              <div className="card-badge">✨ FAST TRACK YOUR CAREER</div>
+              <h2 className="card-title">
+                Learn Faster. <br />
+                <span className="highlight-text">Crack Interviews.</span>
+              </h2>
+              <p className="card-description">
+                Master Java, Spring Boot & Microservices with industry-grade notes, mock interviews, and real-time guidance.
+              </p>
+
+              <div className="card-stats">
+                <div className="stat-item">
+                  <span className="stat-number">10x</span>
+                  <span className="stat-label">Faster Learning</span>
+                </div>
+                <div className="stat-divider"></div>
+                <div className="stat-item">
+                  <span className="stat-number">100%</span>
+                  <span className="stat-label">Interview Ready</span>
+                </div>
+              </div>
+
+              <button className="feature-btn">Get Started Now →</button>
+            </div>
+          </div>
           </footer>
               </>
             ) : (
