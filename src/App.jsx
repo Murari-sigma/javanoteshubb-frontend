@@ -1676,29 +1676,7 @@ const handleOpenAddModal = () => {
           </div>
         </div>
 
-        {/* 3. MENTOR SECTION */}
-        <div className="mentor-card-wrapper">
-          <div className="mentor-vertical-container">
-            <img
-              src={mentorPic}
-              alt="Murari Pandey"
-              className="mentor-avatar-glow"
-            />
-            <h2 className="mentor-badge-single">✨ MEET YOUR MENTOR</h2>
-            <h1 className="mentor-name-shining">Murari Pandey</h1>
-            <p className="mentor-text-light">
-              Hey! I am a software engineer by profession and a teacher by heart. I strongly believe
-              <strong style={{ color: "#fde047", fontWeight: "700" }}> "Anyone Can Code"</strong>! No matter what your background and past skill set are, you can learn to program if it is taught in a simplistic way.
-            </p>
-            <p className="mentor-text-light">
-              I love to see my community generating success results as I have trained more than
-              <span style={{ color: "#4ade80", fontWeight: "700" }}> 15,000+ Developer professionals</span> on various platforms like YouTube, LinkedIn, UpGrad, etc.
-            </p>
-            <p className="mentor-mission-light">
-              🎯 My mission is to help professionals like you make sure you are also getting into your dream organizations. Cracked interviews at top brands!
-            </p>
-          </div>
-        </div>
+
 
          {/* Feature Banner Section */}
                   <div className="feature-banner-container">
